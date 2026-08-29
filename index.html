@@ -202,9 +202,11 @@ footer.site{background:var(--ink);color:#c9d8e1;text-align:center;padding:30px 0
 .admin-nav button.active{background:var(--blue);color:#fff}
 .admin-sidebar .logout{margin:12px 12px 0;padding:0 2px}
 .admin-main{flex-grow:1;min-width:0}
-.admin-topbar{background:#fff;border-bottom:1px solid var(--line);padding:16px 30px;display:flex;justify-content:space-between;align-items:center}
+.admin-topbar{background:#fff;border-bottom:1px solid var(--line);padding:16px 30px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 .admin-topbar .who b{display:block;font-size:14px}
 .admin-topbar .who span{font-size:12px;color:var(--slate)}
+.admin-menu-toggle{display:none;align-items:center;gap:8px;background:none;border:1px solid var(--line);border-radius:20px;padding:8px 14px;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer}
+.admin-sidebar-backdrop{display:none}
 .admin-content{padding:30px}
 .admin-content h2{font-family:var(--font-display);font-weight:800;font-size:24px;margin-bottom:4px}
 .admin-content .sub{color:var(--slate);font-size:13.5px;margin-bottom:26px}
@@ -236,9 +238,10 @@ table.admin-table td.actions{display:flex;gap:6px}
   nav.main{display:none}
   .menu-toggle{display:block}
   .hero-inner,.grid-2,.summary-grid,.obj-grid,.mgmt-grid,.branch-grid,.grid-3,.grid-4,.product-grid,.activity-grid,.contact-grid,.partners-grid,.stat-grid{grid-template-columns:repeat(2,1fr)}
-  .admin-sidebar{width:76px}
-  .admin-sidebar .brand span.label,.admin-nav button .label{display:none}
-  .admin-sidebar .brand{justify-content:center}
+  .admin-menu-toggle{display:flex}
+  .admin-sidebar{position:fixed;top:0;bottom:0;right:0;width:min(280px,80vw);z-index:120;transform:translateX(100%);transition:transform .2s;overflow-y:auto}
+  .admin-sidebar.open{transform:translateX(0)}
+  .admin-sidebar-backdrop.open{display:block;position:fixed;inset:0;background:rgba(13,42,63,.5);z-index:110}
 }
 @media(max-width:640px){
   .summary-grid,.obj-grid,.mgmt-grid,.branch-grid,.grid-3,.grid-4,.product-grid,.activity-grid,.contact-grid,.partners-grid,.stat-grid,.grid-2,.hero-inner{grid-template-columns:1fr}
@@ -463,7 +466,8 @@ html[dir="ltr"] .contact-card .num{text-align:left}
 
   <!-- dashboard shell -->
   <div class="admin-shell hidden" id="adminShell">
-    <aside class="admin-sidebar">
+    <div class="admin-sidebar-backdrop" id="adminSidebarBackdrop"></div>
+    <aside class="admin-sidebar" id="adminSidebar">
       <div class="brand"><span class="capsule" data-size="22"></span><span class="label">لوحة سبأ</span></div>
       <nav class="admin-nav" id="adminNav">
         <button data-view="overview" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg><span class="label">نظرة عامة</span></button>
@@ -480,6 +484,7 @@ html[dir="ltr"] .contact-card .num{text-align:left}
 
     <div class="admin-main">
       <div class="admin-topbar">
+        <button class="admin-menu-toggle" id="adminMenuToggle">☰ <span>الأقسام</span></button>
         <div class="who"><b id="whoName">—</b><span id="whoRole">—</span></div>
         <a href="#/" class="btn ghost">↩ عرض الموقع العام</a>
       </div>
@@ -1135,7 +1140,18 @@ document.getElementById('adminNav').addEventListener('click', (e)=>{
   const btn = e.target.closest('button[data-view]');
   if(!btn || btn.classList.contains('hidden')) return;
   setAdminView(btn.dataset.view);
+  closeAdminSidebar();
 });
+function openAdminSidebar(){
+  document.getElementById('adminSidebar').classList.add('open');
+  document.getElementById('adminSidebarBackdrop').classList.add('open');
+}
+function closeAdminSidebar(){
+  document.getElementById('adminSidebar').classList.remove('open');
+  document.getElementById('adminSidebarBackdrop').classList.remove('open');
+}
+document.getElementById('adminMenuToggle').addEventListener('click', openAdminSidebar);
+document.getElementById('adminSidebarBackdrop').addEventListener('click', closeAdminSidebar);
 function setAdminView(view){
   currentAdminView = view;
   document.querySelectorAll('#adminNav button').forEach(b=> b.classList.toggle('active', b.dataset.view===view));
