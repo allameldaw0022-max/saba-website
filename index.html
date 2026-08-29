@@ -246,6 +246,12 @@ table.admin-table td.actions{display:flex;gap:6px}
   .admin-content{padding:18px}
   .admin-topbar{padding:14px 18px}
 }
+
+/* ============ LTR (English) overrides — public site only, admin stays RTL ============ */
+html[dir="ltr"] .search-box input{padding:13px 16px 13px 44px}
+html[dir="ltr"] .search-box svg{right:auto;left:16px}
+html[dir="ltr"] .product-note{border-right:none;border-left:4px solid var(--sand)}
+html[dir="ltr"] .contact-card .num{text-align:left}
 </style>
 </head>
 <body>
@@ -253,16 +259,16 @@ table.admin-table td.actions{display:flex;gap:6px}
 <!-- ===================== HEADER ===================== -->
 <header class="site" id="siteHeader">
   <div class="nav-row">
-    <a href="#/" class="brand"><span class="capsule" id="brandMark"></span> سبأ للأنشطة المتعددة</a>
+    <a href="#/" class="brand"><span class="capsule" id="brandMark"></span> <span data-i18n="brand_full">سبأ للأنشطة المتعددة</span></a>
     <nav class="main" id="mainNav">
-      <a href="#/" data-route="/">الرئيسية</a>
-      <a href="#/about" data-route="/about">من نحن</a>
-      <a href="#/products" data-route="/products">المنتجات</a>
-      <a href="#/activities" data-route="/activities">الأنشطة الأخرى</a>
-      <a href="#/contact" data-route="/contact">تواصل معنا</a>
+      <a href="#/" data-route="/" data-i18n="nav_home">الرئيسية</a>
+      <a href="#/about" data-route="/about" data-i18n="nav_about">من نحن</a>
+      <a href="#/products" data-route="/products" data-i18n="nav_products">المنتجات</a>
+      <a href="#/activities" data-route="/activities" data-i18n="nav_activities">الأنشطة الأخرى</a>
+      <a href="#/contact" data-route="/contact" data-i18n="nav_contact">تواصل معنا</a>
     </nav>
     <div class="nav-actions">
-      <button class="lang-btn" onclick="toast('النسخة الإنجليزية الكاملة ستُضاف في المرحلة التالية.','error')">English</button>
+      <button class="lang-btn" id="langBtn">English</button>
       <button class="menu-toggle" id="menuToggle">☰</button>
     </div>
   </div>
@@ -275,11 +281,11 @@ table.admin-table td.actions{display:flex;gap:6px}
   <div class="hero">
     <div class="hero-inner">
       <div>
-        <h1>سبأ <span>للأنشطة المتعددة</span></h1>
+        <h1><span data-i18n="hero_h1_pre">سبأ</span> <span data-i18n="hero_h1_span">للأنشطة المتعددة</span></h1>
         <p id="heroSubtitle">نحو مستقبل أفضل من خلال تنوع الأنشطة، الشراكات الدولية، الجودة، والالتزام بخدمة المجتمع.</p>
         <div class="btn-row">
-          <a href="#/about" class="btn primary">تعرف علينا</a>
-          <a href="#/contact" class="btn secondary">تواصل معنا</a>
+          <a href="#/about" class="btn primary" data-i18n="btn_about">تعرف علينا</a>
+          <a href="#/contact" class="btn secondary" data-i18n="nav_contact">تواصل معنا</a>
         </div>
       </div>
       <div class="hero-art"><span class="capsule" data-size="120"></span></div>
@@ -288,7 +294,7 @@ table.admin-table td.actions{display:flex;gap:6px}
 
   <section>
     <div class="wrap">
-      <div class="section-title"><h2>لمحة سريعة عن سبأ</h2><p>كل ما تحتاج معرفته عن المجموعة في مكان واحد</p></div>
+      <div class="section-title"><h2 data-i18n="home_summary_title">لمحة سريعة عن سبأ</h2><p data-i18n="home_summary_sub">كل ما تحتاج معرفته عن المجموعة في مكان واحد</p></div>
       <div class="summary-grid" id="homeSummaryGrid"></div>
     </div>
   </section>
@@ -298,19 +304,19 @@ table.admin-table td.actions{display:flex;gap:6px}
 <section class="page hidden" id="page-about">
   <section style="padding-top:50px">
     <div class="wrap">
-      <div class="section-title"><h2>من نحن</h2><p>سبأ للأنشطة المتعددة — سبأ الطبية</p></div>
+      <div class="section-title"><h2 data-i18n="nav_about">من نحن</h2><p data-i18n="about_sub">سبأ للأنشطة المتعددة — سبأ الطبية</p></div>
       <div class="grid-2">
         <div class="card">
-          <h3 style="font-family:var(--font-display);color:var(--blue);margin-bottom:12px">نبذة عن الشركة</h3>
+          <h3 style="font-family:var(--font-display);color:var(--blue);margin-bottom:12px" data-i18n="about_company_title">نبذة عن الشركة</h3>
           <p id="aboutNabza" style="margin-bottom:12px">مجموعة سبأ للأنشطة المتعددة هي شركة سودانية خالصة، تأسست بجهد سوداني ورؤية وطنية طموحة، إيمانًا بأن القطاع الخاص يمكن أن يكون ركيزة أساسية في دعم الاقتصاد السوداني وبناء مستقبل أكثر إنتاجًا واستدامة.</p>
-          <p style="margin-bottom:12px">تركز المجموعة بصورة أساسية على المجال الطبي والدوائي، من خلال صناعة واستيراد وتوزيع وتسويق الدواء، وتسعى إلى استجلاب الخبرات والمصانع الدولية وتوطين صناعة الدواء داخل السودان.</p>
-          <p>كما تمتد أنشطة المجموعة إلى مجالات أخرى مهمة، من بينها النشاط الزراعي والهندسي والخدمي، بما يعزز مساهمتها في الاقتصاد الوطني.</p>
+          <p style="margin-bottom:12px" data-i18n="about_p2">تركز المجموعة بصورة أساسية على المجال الطبي والدوائي، من خلال صناعة واستيراد وتوزيع وتسويق الدواء، وتسعى إلى استجلاب الخبرات والمصانع الدولية وتوطين صناعة الدواء داخل السودان.</p>
+          <p data-i18n="about_p3">كما تمتد أنشطة المجموعة إلى مجالات أخرى مهمة، من بينها النشاط الزراعي والهندسي والخدمي، بما يعزز مساهمتها في الاقتصاد الوطني.</p>
         </div>
         <div class="card">
-          <h3 style="font-family:var(--font-display);color:var(--blue);margin-bottom:12px">رؤيتنا</h3>
-          <p style="margin-bottom:20px">أن نكون مؤسسة سودانية رائدة وموثوقة في القطاع الطبي والدوائي، وأن نساهم في بناء منظومة صحية وصناعية متطورة تجعل السودان قادرًا على تلبية احتياجاته الدوائية.</p>
-          <h3 style="font-family:var(--font-display);color:var(--blue);margin-bottom:12px">رسالتنا</h3>
-          <p>تقديم منتجات وخدمات طبية ودوائية موثوقة، وبناء شراكات دولية فاعلة، ونقل المعرفة والخبرة، وتطوير الكفاءات السودانية بمهنية ومسؤولية.</p>
+          <h3 style="font-family:var(--font-display);color:var(--blue);margin-bottom:12px" data-i18n="about_vision_title">رؤيتنا</h3>
+          <p style="margin-bottom:20px" data-i18n="about_vision">أن نكون مؤسسة سودانية رائدة وموثوقة في القطاع الطبي والدوائي، وأن نساهم في بناء منظومة صحية وصناعية متطورة تجعل السودان قادرًا على تلبية احتياجاته الدوائية.</p>
+          <h3 style="font-family:var(--font-display);color:var(--blue);margin-bottom:12px" data-i18n="about_mission_title">رسالتنا</h3>
+          <p data-i18n="about_mission">تقديم منتجات وخدمات طبية ودوائية موثوقة، وبناء شراكات دولية فاعلة، ونقل المعرفة والخبرة، وتطوير الكفاءات السودانية بمهنية ومسؤولية.</p>
         </div>
       </div>
     </div>
@@ -318,25 +324,25 @@ table.admin-table td.actions{display:flex;gap:6px}
 
   <section style="background:#fff">
     <div class="wrap">
-      <div class="section-title"><h2>أهدافنا وتطلعاتنا</h2><p>رؤية وطنية طموحة ومسؤولية تجاه صحة الإنسان والاقتصاد السوداني</p></div>
+      <div class="section-title"><h2 data-i18n="objectives_title">أهدافنا وتطلعاتنا</h2><p data-i18n="objectives_sub">رؤية وطنية طموحة ومسؤولية تجاه صحة الإنسان والاقتصاد السوداني</p></div>
       <div class="obj-grid" id="objectivesGrid"></div>
       <div class="card" style="margin-top:26px;text-align:center">
-        <h3 style="font-family:var(--font-display);color:var(--blue);margin-bottom:10px">غايتنا</h3>
-        <p>نعمل ونتطلع إلى وطنٍ معافى وسليم، وثقافة صحية واعية، وأن يصبح السودان قبلةً يتجه إليها الجميع لتلقي العلاج.</p>
+        <h3 style="font-family:var(--font-display);color:var(--blue);margin-bottom:10px" data-i18n="goal_title">غايتنا</h3>
+        <p data-i18n="goal_text">نعمل ونتطلع إلى وطنٍ معافى وسليم، وثقافة صحية واعية، وأن يصبح السودان قبلةً يتجه إليها الجميع لتلقي العلاج.</p>
       </div>
     </div>
   </section>
 
   <section>
     <div class="wrap">
-      <div class="section-title"><h2>الإدارة التنفيذية</h2><p>قيادة مهنية نحو مستقبل دوائي وصحي أفضل</p></div>
+      <div class="section-title"><h2 data-i18n="management_title">الإدارة التنفيذية</h2><p data-i18n="management_sub">قيادة مهنية نحو مستقبل دوائي وصحي أفضل</p></div>
       <div class="mgmt-grid" id="managementGrid"></div>
     </div>
   </section>
 
   <section style="background:#fff">
     <div class="wrap">
-      <div class="section-title"><h2>المركز الرئيسي والأفرع</h2><p>حضور متنامٍ لسبأ الطبية داخل السودان</p></div>
+      <div class="section-title"><h2 data-i18n="branches_title">المركز الرئيسي والأفرع</h2><p data-i18n="branches_sub">حضور متنامٍ لسبأ الطبية داخل السودان</p></div>
       <div id="branchesArea"></div>
     </div>
   </section>
@@ -346,54 +352,54 @@ table.admin-table td.actions{display:flex;gap:6px}
 <section class="page hidden" id="page-products">
   <section style="padding-top:50px">
     <div class="wrap">
-      <div class="section-title"><h2>منتجات سبأ الطبية</h2><p>مجموعة مختارة من المنتجات الدوائية والصحية، قابلة للفلترة والبحث</p></div>
+      <div class="section-title"><h2 data-i18n="products_title">منتجات سبأ الطبية</h2><p data-i18n="products_sub">مجموعة مختارة من المنتجات الدوائية والصحية، قابلة للفلترة والبحث</p></div>
 
       <div class="filter-bar">
         <div class="search-box">
-          <input type="text" id="productSearch" placeholder="ابحث بالاسم التجاري أو الاسم العلمي...">
+          <input type="text" id="productSearch" placeholder="ابحث بالاسم التجاري أو الاسم العلمي..." data-i18n-ph="search_placeholder">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
         </div>
         <div class="filter-group">
-          <span class="flabel">التصنيف العلاجي</span>
+          <span class="flabel" data-i18n="filter_category">التصنيف العلاجي</span>
           <div class="chip-row" id="catFilters"></div>
         </div>
         <div class="filter-group" style="margin-top:14px">
-          <span class="flabel">الشكل الصيدلاني</span>
+          <span class="flabel" data-i18n="filter_form">الشكل الصيدلاني</span>
           <div class="chip-row" id="formFilters"></div>
         </div>
         <div class="filter-group" style="margin-top:14px">
-          <span class="flabel">الشركة المصنّعة</span>
+          <span class="flabel" data-i18n="filter_mfr">الشركة المصنّعة</span>
           <div class="chip-row" id="mfrFilters"></div>
         </div>
       </div>
 
       <div class="results-count" id="resultsCount"></div>
       <div class="product-grid" id="productGrid"></div>
-      <div class="empty-state hidden" id="emptyState">لا توجد منتجات مطابقة لبحثك. جرّب تعديل الفلاتر.</div>
+      <div class="empty-state hidden" id="emptyState" data-i18n="empty_state">لا توجد منتجات مطابقة لبحثك. جرّب تعديل الفلاتر.</div>
 
       <div class="product-note">
-        <strong>تنبيه طبي:</strong> المعلومات الواردة في هذا القسم تعريفية وليست بديلًا عن النشرة الدوائية أو استشارة الطبيب والصيدلي. المضادات الحيوية والأدوية ذات الجرعات العالية تُستخدم وفق التشخيص والوصفة الطبية واللوائح المحلية.
+        <strong data-i18n="product_note_label">تنبيه طبي:</strong> <span data-i18n="product_note">المعلومات الواردة في هذا القسم تعريفية وليست بديلًا عن النشرة الدوائية أو استشارة الطبيب والصيدلي. المضادات الحيوية والأدوية ذات الجرعات العالية تُستخدم وفق التشخيص والوصفة الطبية واللوائح المحلية.</span>
       </div>
     </div>
   </section>
 
   <section style="background:#fff">
     <div class="wrap">
-      <div class="section-title"><h2>شركاؤنا الدوليون</h2><p>شراكات استراتيجية نحو مستقبل دوائي أفضل</p></div>
+      <div class="section-title"><h2 data-i18n="partners_title">شركاؤنا الدوليون</h2><p data-i18n="partners_sub">شراكات استراتيجية نحو مستقبل دوائي أفضل</p></div>
       <div class="partners-grid">
         <div class="partner-card">
-          <div class="flag">🇵🇰 باكستان</div>
+          <div class="flag">🇵🇰 <span data-i18n="pakistan">باكستان</span></div>
           <h4>SAMI Pharmaceuticals (Pvt.) Ltd.</h4>
-          <p>شريك دوائي من باكستان ضمن توجه سبأ الطبية لبناء علاقات تصنيع وتوريد دولية.</p>
-          <a href="https://samipharma.com/" target="_blank" rel="noopener">الموقع الرسمي للشركة ↗</a>
+          <p data-i18n="partner1_desc">شريك دوائي من باكستان ضمن توجه سبأ الطبية لبناء علاقات تصنيع وتوريد دولية.</p>
+          <a href="https://samipharma.com/" target="_blank" rel="noopener" data-i18n="partner_link">الموقع الرسمي للشركة ↗</a>
         </div>
         <div class="partner-card">
-          <div class="flag">🇵🇰 باكستان</div>
+          <div class="flag">🇵🇰 <span data-i18n="pakistan">باكستان</span></div>
           <h4>Midmark Health Care</h4>
-          <p>شريك التصنيع الدوائي لعدد من منتجات سبأ الطبية، ومن بينها Vimacef وLevocure وLulast.</p>
+          <p data-i18n="partner2_desc">شريك التصنيع الدوائي لعدد من منتجات سبأ الطبية، ومن بينها Vimacef وLevocure وLulast.</p>
         </div>
       </div>
-      <p class="assumption-note">* ربط بعض المنتجات بالشركة المصنّعة في هذا العرض التوضيحي افتراضي حيثما لم يُذكر صراحة، ويجب تأكيده من الشركة قبل الإطلاق.</p>
+      <p class="assumption-note" data-i18n="partners_note">* ربط بعض المنتجات بالشركة المصنّعة في هذا العرض التوضيحي افتراضي حيثما لم يُذكر صراحة، ويجب تأكيده من الشركة قبل الإطلاق.</p>
     </div>
   </section>
 </section>
@@ -402,11 +408,11 @@ table.admin-table td.actions{display:flex;gap:6px}
 <section class="page hidden" id="page-activities">
   <section style="padding-top:50px">
     <div class="wrap">
-      <div class="section-title"><h2>الأنشطة الأخرى للمجموعة</h2><p id="activitiesIntro">إلى جانب سبأ الطبية، تضم سبأ للأنشطة المتعددة أنشطة أخرى متنوعة.</p></div>
+      <div class="section-title"><h2 data-i18n="activities_title">الأنشطة الأخرى للمجموعة</h2><p id="activitiesIntro">إلى جانب سبأ الطبية، تضم سبأ للأنشطة المتعددة أنشطة أخرى متنوعة.</p></div>
       <div class="activity-grid" id="activitiesGrid"></div>
       <div class="card focus-note">
-        <h3 style="font-family:var(--font-display);color:var(--blue);margin-bottom:8px">سبأ الطبية هي محور الموقع</h3>
-        <p>يعرض هذا الموقع بصورة أساسية أعمال سبأ الطبية ومنتجاتها وشراكاتها وخدماتها، بينما توضح هذه الصفحة بقية أنشطة المجموعة بصورة مختصرة.</p>
+        <h3 style="font-family:var(--font-display);color:var(--blue);margin-bottom:8px" data-i18n="activities_focus_title">سبأ الطبية هي محور الموقع</h3>
+        <p data-i18n="activities_focus">يعرض هذا الموقع بصورة أساسية أعمال سبأ الطبية ومنتجاتها وشراكاتها وخدماتها، بينما توضح هذه الصفحة بقية أنشطة المجموعة بصورة مختصرة.</p>
       </div>
     </div>
   </section>
@@ -416,13 +422,13 @@ table.admin-table td.actions{display:flex;gap:6px}
 <section class="page hidden" id="page-contact">
   <section style="padding-top:50px">
     <div class="wrap">
-      <div class="section-title"><h2>تواصل معنا</h2><p>يسعدنا استقبال استفساراتكم وتواصلكم مع الإدارات المختصة</p></div>
+      <div class="section-title"><h2 data-i18n="nav_contact">تواصل معنا</h2><p data-i18n="contact_sub">يسعدنا استقبال استفساراتكم وتواصلكم مع الإدارات المختصة</p></div>
       <div class="contact-grid" id="contactGrid"></div>
     </div>
   </section>
 </section>
 
-<!-- ===================== PAGE: ADMIN ===================== -->
+<!-- ===================== PAGE: ADMIN (internal tool — Arabic only, RTL always) ===================== -->
 <section class="page hidden" id="page-admin">
 
   <!-- login -->
@@ -483,13 +489,153 @@ table.admin-table td.actions{display:flex;gap:6px}
 </main>
 
 <footer class="site" id="siteFooter">
-  <div class="wrap">© 2026 Saba Multi-Activities Group — جميع الحقوق محفوظة</div>
+  <div class="wrap" data-i18n="footer_copy">© 2026 Saba Multi-Activities Group — جميع الحقوق محفوظة</div>
 </footer>
 
 <div id="toast"></div>
 <div id="modalRoot"></div>
 
 <script>
+/* ======================================================================
+   I18N — public site is bilingual (AR/EN); the admin panel stays Arabic-only
+   ====================================================================== */
+const I18N = {
+  ar: {
+    brand_full:'سبأ للأنشطة المتعددة',
+    nav_home:'الرئيسية', nav_about:'من نحن', nav_products:'المنتجات', nav_activities:'الأنشطة الأخرى', nav_contact:'تواصل معنا',
+    hero_h1_pre:'سبأ', hero_h1_span:'للأنشطة المتعددة',
+    btn_about:'تعرف علينا',
+    home_summary_title:'لمحة سريعة عن سبأ', home_summary_sub:'كل ما تحتاج معرفته عن المجموعة في مكان واحد',
+    card_about_more:'اقرأ المزيد ←', card_products_more:'تصفح كل المنتجات ←',
+    card_activities_desc:'الزراعية، الهندسية، والاستيراد والتصدير — إلى جانب سبأ الطبية.', card_activities_more:'استعرض الأنشطة ←',
+    card_contact_more:'كل بيانات التواصل ←', products_count_suffix:'منتجات دوائية متوفرة حاليًا',
+
+    about_sub:'سبأ للأنشطة المتعددة — سبأ الطبية',
+    about_company_title:'نبذة عن الشركة',
+    about_p2:'تركز المجموعة بصورة أساسية على المجال الطبي والدوائي، من خلال صناعة واستيراد وتوزيع وتسويق الدواء، وتسعى إلى استجلاب الخبرات والمصانع الدولية وتوطين صناعة الدواء داخل السودان.',
+    about_p3:'كما تمتد أنشطة المجموعة إلى مجالات أخرى مهمة، من بينها النشاط الزراعي والهندسي والخدمي، بما يعزز مساهمتها في الاقتصاد الوطني.',
+    about_vision_title:'رؤيتنا',
+    about_vision:'أن نكون مؤسسة سودانية رائدة وموثوقة في القطاع الطبي والدوائي، وأن نساهم في بناء منظومة صحية وصناعية متطورة تجعل السودان قادرًا على تلبية احتياجاته الدوائية.',
+    about_mission_title:'رسالتنا',
+    about_mission:'تقديم منتجات وخدمات طبية ودوائية موثوقة، وبناء شراكات دولية فاعلة، ونقل المعرفة والخبرة، وتطوير الكفاءات السودانية بمهنية ومسؤولية.',
+    objectives_title:'أهدافنا وتطلعاتنا', objectives_sub:'رؤية وطنية طموحة ومسؤولية تجاه صحة الإنسان والاقتصاد السوداني',
+    goal_title:'غايتنا', goal_text:'نعمل ونتطلع إلى وطنٍ معافى وسليم، وثقافة صحية واعية، وأن يصبح السودان قبلةً يتجه إليها الجميع لتلقي العلاج.',
+    management_title:'الإدارة التنفيذية', management_sub:'قيادة مهنية نحو مستقبل دوائي وصحي أفضل',
+    branches_title:'المركز الرئيسي والأفرع', branches_sub:'حضور متنامٍ لسبأ الطبية داخل السودان',
+    head_office_label:'المركز الرئيسي',
+
+    products_title:'منتجات سبأ الطبية', products_sub:'مجموعة مختارة من المنتجات الدوائية والصحية، قابلة للفلترة والبحث',
+    search_placeholder:'ابحث بالاسم التجاري أو الاسم العلمي...',
+    filter_category:'التصنيف العلاجي', filter_form:'الشكل الصيدلاني', filter_mfr:'الشركة المصنّعة', filter_all:'الكل',
+    empty_state:'لا توجد منتجات مطابقة لبحثك. جرّب تعديل الفلاتر.',
+    product_note_label:'تنبيه طبي:',
+    product_note:'المعلومات الواردة في هذا القسم تعريفية وليست بديلًا عن النشرة الدوائية أو استشارة الطبيب والصيدلي. المضادات الحيوية والأدوية ذات الجرعات العالية تُستخدم وفق التشخيص والوصفة الطبية واللوائح المحلية.',
+    partners_title:'شركاؤنا الدوليون', partners_sub:'شراكات استراتيجية نحو مستقبل دوائي أفضل',
+    pakistan:'باكستان',
+    partner1_desc:'شريك دوائي من باكستان ضمن توجه سبأ الطبية لبناء علاقات تصنيع وتوريد دولية.',
+    partner2_desc:'شريك التصنيع الدوائي لعدد من منتجات سبأ الطبية، ومن بينها Vimacef وLevocure وLulast.',
+    partner_link:'الموقع الرسمي للشركة ↗',
+    partners_note:'* ربط بعض المنتجات بالشركة المصنّعة في هذا العرض التوضيحي افتراضي حيثما لم يُذكر صراحة، ويجب تأكيده من الشركة قبل الإطلاق.',
+    field_form:'الشكل:', field_mfr:'المصنّع:',
+
+    activities_title:'الأنشطة الأخرى للمجموعة',
+    activities_focus_title:'سبأ الطبية هي محور الموقع',
+    activities_focus:'يعرض هذا الموقع بصورة أساسية أعمال سبأ الطبية ومنتجاتها وشراكاتها وخدماتها، بينما توضح هذه الصفحة بقية أنشطة المجموعة بصورة مختصرة.',
+
+    contact_sub:'يسعدنا استقبال استفساراتكم وتواصلكم مع الإدارات المختصة',
+    call_btn:'اتصال', whatsapp_btn:'واتساب مباشر',
+    footer_copy:'© 2026 Saba Multi-Activities Group — جميع الحقوق محفوظة',
+  },
+  en: {
+    brand_full:'Saba Multi-Activities Group',
+    nav_home:'Home', nav_about:'About Us', nav_products:'Products', nav_activities:'Other Activities', nav_contact:'Contact Us',
+    hero_h1_pre:'Saba', hero_h1_span:'Multi-Activities Group',
+    btn_about:'Learn More',
+    home_summary_title:'A Quick Look at Saba', home_summary_sub:'Everything you need to know about the Group in one place',
+    card_about_more:'Read more ←', card_products_more:'Browse all products ←',
+    card_activities_desc:'Agriculture, engineering, and import & export — alongside Saba Medical.', card_activities_more:'View activities ←',
+    card_contact_more:'All contact details ←', products_count_suffix:'medical products currently available',
+
+    about_sub:'Saba Multi-Activities Group — Saba Medical',
+    about_company_title:'About the Company',
+    about_p2:'The Group focuses primarily on the medical and pharmaceutical field, through manufacturing, importing, distributing and marketing medicine, and seeks to attract international expertise and factories and localize pharmaceutical manufacturing within Sudan.',
+    about_p3:'The Group\'s activities also extend to other important fields, including agriculture, engineering and services, enhancing its contribution to the national economy.',
+    about_vision_title:'Our Vision',
+    about_vision:'To be a leading and trusted Sudanese institution in the medical and pharmaceutical sector, and to contribute to building an advanced health and industrial system that makes Sudan able to meet its pharmaceutical needs.',
+    about_mission_title:'Our Mission',
+    about_mission:'Providing reliable medical and pharmaceutical products and services, building effective international partnerships, transferring knowledge and expertise, and developing Sudanese talent professionally and responsibly.',
+    objectives_title:'Our Objectives & Aspirations', objectives_sub:'An ambitious national vision and a responsibility toward human health and the Sudanese economy',
+    goal_title:'Our Goal', goal_text:'We work toward and aspire to a healthy and sound nation, an aware health culture, and for Sudan to become a destination everyone turns to for treatment.',
+    management_title:'Executive Management', management_sub:'Professional leadership toward a better pharmaceutical and health future',
+    branches_title:'Head Office & Branches', branches_sub:'A growing presence for Saba Medical across Sudan',
+    head_office_label:'Head Office',
+
+    products_title:'Saba Medical Products', products_sub:'A curated selection of pharmaceutical and health products, filterable and searchable',
+    search_placeholder:'Search by trade name or generic name...',
+    filter_category:'Therapeutic Category', filter_form:'Pharmaceutical Form', filter_mfr:'Manufacturer', filter_all:'All',
+    empty_state:'No products match your search. Try adjusting the filters.',
+    product_note_label:'Medical Notice:',
+    product_note:'The information in this section is for reference only and is not a substitute for the package insert or consulting a physician or pharmacist. Antibiotics and high-dose medications are used according to diagnosis, prescription, and local regulations.',
+    partners_title:'Our International Partners', partners_sub:'Strategic partnerships toward a better pharmaceutical future',
+    pakistan:'Pakistan',
+    partner1_desc:'A pharmaceutical partner from Pakistan as part of Saba Medical\'s drive to build international manufacturing and supply relationships.',
+    partner2_desc:'The pharmaceutical manufacturing partner for a number of Saba Medical products, including Vimacef, Levocure and Lulast.',
+    partner_link:'Company official website ↗',
+    partners_note:'* Linking some products to their manufacturer in this demo view is assumed where not explicitly stated, and should be confirmed with the company before launch.',
+    field_form:'Form:', field_mfr:'Manufacturer:',
+
+    activities_title:'Other Activities of the Group',
+    activities_focus_title:'Saba Medical Is the Focus of This Site',
+    activities_focus:'This site primarily showcases Saba Medical\'s work, products, partnerships and services, while this page briefly outlines the Group\'s other activities.',
+
+    contact_sub:'We are happy to receive your inquiries and connect you with the relevant departments',
+    call_btn:'Call', whatsapp_btn:'WhatsApp',
+    footer_copy:'© 2026 Saba Multi-Activities Group — All rights reserved',
+  },
+};
+
+// canonical (Arabic, as stored in the DB) → bilingual display labels for fixed taxonomy values
+const CATEGORY_LABELS = {
+  'مضادات العدوى البكتيرية': { ar:'مضادات العدوى البكتيرية', en:'Antibacterial Infections' },
+  'الجهاز التنفسي والحساسية': { ar:'الجهاز التنفسي والحساسية', en:'Respiratory & Allergy' },
+  'فيتامين D وصحة العظام': { ar:'فيتامين D وصحة العظام', en:'Vitamin D & Bone Health' },
+};
+const FORM_LABELS = {
+  'كبسولات': { ar:'كبسولات', en:'Capsules' },
+  'مسحوق لتحضير معلق': { ar:'مسحوق لتحضير معلق', en:'Powder for Oral Suspension' },
+  'أقراص': { ar:'أقراص', en:'Tablets' },
+  'أمبول للحقن': { ar:'أمبول للحقن', en:'Injectable Ampoule' },
+  'كبسولة جيلاتينية رخوة': { ar:'كبسولة جيلاتينية رخوة', en:'Soft Gelatin Capsule' },
+};
+const STATUS_LABELS = { 'متوفر': { ar:'متوفر', en:'Available' } };
+
+let currentLang = localStorage.getItem('saba_lang') === 'en' ? 'en' : 'ar';
+function t(key){ return (I18N[currentLang] && I18N[currentLang][key]) ?? I18N.ar[key] ?? key; }
+function trLabel(map, value){ const e = map[value]; return e ? e[currentLang] : (value || ''); }
+function applyStaticI18n(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{ el.placeholder = t(el.dataset.i18nPh); });
+  document.getElementById('langBtn').textContent = currentLang === 'ar' ? 'English' : 'العربية';
+  document.title = currentLang === 'ar'
+    ? 'سبأ للأنشطة المتعددة | Saba Multi-Activities Group'
+    : 'Saba Multi-Activities Group | سبأ للأنشطة المتعددة';
+}
+function setLang(lang){
+  currentLang = lang;
+  localStorage.setItem('saba_lang', lang);
+  applyPageDirection();
+  applyStaticI18n();
+  router(true);
+}
+// admin panel always stays Arabic/RTL regardless of the public-site language toggle
+function applyPageDirection(){
+  const onAdmin = location.hash.replace('#','') === '/admin';
+  const dir = onAdmin ? 'rtl' : (currentLang === 'ar' ? 'rtl' : 'ltr');
+  const lang = onAdmin ? 'ar' : currentLang;
+  document.documentElement.dir = dir;
+  document.documentElement.lang = lang;
+}
+
 /* ======================================================================
    DATA — single source of truth, reused across pages (no duplication)
    ====================================================================== */
@@ -504,7 +650,7 @@ let BRANCHES = [];
 let HEAD_OFFICE = null;
 let OBJECTIVES = [];
 let ACTIVITIES = [];
-let CONTENT = { home_hero_subtitle:'', about_nabza:'', activities_intro:'' };
+let CONTENT = { home_hero_subtitle:'', about_nabza:'', activities_intro:'', home_hero_subtitle_en:'', about_nabza_en:'', activities_intro_en:'' };
 
 const CATEGORIES = ['مضادات العدوى البكتيرية','الجهاز التنفسي والحساسية','فيتامين D وصحة العظام'];
 const FORMS = ['كبسولات','مسحوق لتحضير معلق','أقراص','أمبول للحقن','كبسولة جيلاتينية رخوة'];
@@ -542,15 +688,18 @@ async function fetchPublicData(){
     sb.from('page_content').select('*'),
   ]);
   [p,c,m,b,o,a,pc].forEach(r=>{ if(r.error) console.error(r.error); });
-  PRODUCTS = (p.data||[]).map(x=>({id:x.id, name:x.name, generic:x.generic, category:x.category, form:x.form, uses:x.uses, manufacturer:x.manufacturer, status:x.status}));
-  CONTACTS = (c.data||[]).map(x=>({id:x.id, role:x.role, phone:x.phone, whatsapp:x.whatsapp}));
-  MANAGEMENT = (m.data||[]).map(x=>({num:x.num, name:x.name, role:x.role}));
+  PRODUCTS = (p.data||[]).map(x=>({id:x.id, name:x.name, name_en:x.name_en, generic:x.generic, generic_en:x.generic_en, category:x.category, form:x.form, uses:x.uses, uses_en:x.uses_en, manufacturer:x.manufacturer, status:x.status}));
+  CONTACTS = (c.data||[]).map(x=>({id:x.id, role:x.role, role_en:x.role_en, phone:x.phone, whatsapp:x.whatsapp}));
+  MANAGEMENT = (m.data||[]).map(x=>({num:x.num, name:x.name, role:x.role, role_en:x.role_en}));
   const branchRows = b.data||[];
   HEAD_OFFICE = branchRows.find(x=>x.is_head_office) || null;
   BRANCHES = branchRows.filter(x=>!x.is_head_office);
-  OBJECTIVES = (o.data||[]).map(x=>({t:x.title, d:x.description}));
-  ACTIVITIES = (a.data||[]).map(x=>({t:x.title, d:x.description, icon:x.icon}));
-  (pc.data||[]).forEach(row=>{ CONTENT[row.page+'_'+row.field_key] = row.field_value; });
+  OBJECTIVES = (o.data||[]).map(x=>({t:x.title, t_en:x.title_en, d:x.description, d_en:x.description_en}));
+  ACTIVITIES = (a.data||[]).map(x=>({t:x.title, t_en:x.title_en, d:x.description, d_en:x.description_en, icon:x.icon}));
+  (pc.data||[]).forEach(row=>{
+    CONTENT[row.page+'_'+row.field_key] = row.field_value;
+    CONTENT[row.page+'_'+row.field_key+'_en'] = row.field_value_en;
+  });
 }
 
 async function fetchEmployeesIfAllowed(){
@@ -619,57 +768,60 @@ function closeModal(){ document.getElementById('modalRoot').innerHTML = ''; }
    RENDER: HOME
    ====================================================================== */
 function renderHome(){
-  const featured = PRODUCTS.slice(0,3).map(p=>`<span>${p.name}</span>`).join('');
+  const featured = PRODUCTS.slice(0,3).map(p=>`<span>${(currentLang==='en' ? (p.name_en||p.name) : p.name)}</span>`).join('');
   const primaryContact = CONTACTS[0];
+  const aboutText = currentLang==='en' ? (CONTENT.about_nabza_en||CONTENT.about_nabza) : CONTENT.about_nabza;
   document.getElementById('homeSummaryGrid').innerHTML = `
     <a href="#/about" class="summary-card">
       <div class="ic">${ICONS.about}</div>
-      <h3>من نحن</h3>
-      <p>${(CONTENT.about_nabza||'').slice(0,90)}…</p>
-      <span class="go">اقرأ المزيد ←</span>
+      <h3>${t('nav_about')}</h3>
+      <p>${(aboutText||'').slice(0,90)}…</p>
+      <span class="go">${t('card_about_more')}</span>
     </a>
     <a href="#/products" class="summary-card">
       <div class="ic">${ICONS.products}</div>
-      <h3>المنتجات</h3>
-      <p>${PRODUCTS.length} منتجات دوائية متوفرة حاليًا</p>
+      <h3>${t('nav_products')}</h3>
+      <p>${PRODUCTS.length} ${t('products_count_suffix')}</p>
       <div class="mini-list">${featured}</div>
-      <span class="go">تصفح كل المنتجات ←</span>
+      <span class="go">${t('card_products_more')}</span>
     </a>
     <a href="#/activities" class="summary-card">
       <div class="ic">${ICONS.activities}</div>
-      <h3>الأنشطة الأخرى</h3>
-      <p>الزراعية، الهندسية، والاستيراد والتصدير — إلى جانب سبأ الطبية.</p>
-      <span class="go">استعرض الأنشطة ←</span>
+      <h3>${t('nav_activities')}</h3>
+      <p>${t('card_activities_desc')}</p>
+      <span class="go">${t('card_activities_more')}</span>
     </a>
     <a href="#/contact" class="summary-card">
       <div class="ic">${ICONS.contact}</div>
-      <h3>تواصل معنا</h3>
-      <p>${primaryContact ? primaryContact.role : ''}</p>
+      <h3>${t('nav_contact')}</h3>
+      <p>${primaryContact ? (currentLang==='en' ? (primaryContact.role_en||primaryContact.role) : primaryContact.role) : ''}</p>
       <div class="mini-list">${primaryContact ? `<span dir="ltr">${primaryContact.phone}</span>` : ''}</div>
-      <span class="go">كل بيانات التواصل ←</span>
+      <span class="go">${t('card_contact_more')}</span>
     </a>
   `;
-  document.getElementById('heroSubtitle').textContent = CONTENT.home_hero_subtitle || document.getElementById('heroSubtitle').textContent;
+  const heroSubtitle = currentLang==='en' ? (CONTENT.home_hero_subtitle_en||CONTENT.home_hero_subtitle) : CONTENT.home_hero_subtitle;
+  document.getElementById('heroSubtitle').textContent = heroSubtitle || document.getElementById('heroSubtitle').textContent;
 }
 
 /* ======================================================================
    RENDER: ABOUT
    ====================================================================== */
 function renderAbout(){
-  document.getElementById('aboutNabza').textContent = CONTENT.about_nabza || document.getElementById('aboutNabza').textContent;
+  const nabza = currentLang==='en' ? (CONTENT.about_nabza_en||CONTENT.about_nabza) : CONTENT.about_nabza;
+  document.getElementById('aboutNabza').textContent = nabza || document.getElementById('aboutNabza').textContent;
 
   document.getElementById('objectivesGrid').innerHTML = OBJECTIVES.map(o=>`
-    <div class="obj-card"><h4>${o.t}</h4><p>${o.d}</p></div>
+    <div class="obj-card"><h4>${currentLang==='en' ? (o.t_en||o.t) : o.t}</h4><p>${currentLang==='en' ? (o.d_en||o.d) : o.d}</p></div>
   `).join('');
 
   document.getElementById('managementGrid').innerHTML = MANAGEMENT.map(m=>`
-    <div class="mgmt-card"><div class="num">${m.num||''}</div><h4>${m.name}</h4><p>${m.role}</p></div>
+    <div class="mgmt-card"><div class="num">${m.num||''}</div><h4>${m.name}</h4><p>${currentLang==='en' ? (m.role_en||m.role) : m.role}</p></div>
   `).join('');
 
   document.getElementById('branchesArea').innerHTML = `
-    <div class="branch-head"><span>المركز الرئيسي</span><h4>${HEAD_OFFICE ? HEAD_OFFICE.name : '—'}</h4></div>
+    <div class="branch-head"><span>${t('head_office_label')}</span><h4>${HEAD_OFFICE ? (currentLang==='en' ? (HEAD_OFFICE.name_en||HEAD_OFFICE.name) : HEAD_OFFICE.name) : '—'}</h4></div>
     <div class="branch-grid">
-      ${BRANCHES.map(b=>`<div class="branch-card"><span>${b.state}</span><h4>${b.name}</h4></div>`).join('')}
+      ${BRANCHES.map(b=>`<div class="branch-card"><span>${currentLang==='en' ? (b.state_en||b.state) : b.state}</span><h4>${currentLang==='en' ? (b.name_en||b.name) : b.name}</h4></div>`).join('')}
     </div>
   `;
 }
@@ -681,14 +833,15 @@ function buildChip(label, group, value, active){
   return `<button class="fchip ${active?'active':''}" data-group="${group}" data-value="${value}">${label}</button>`;
 }
 function renderProductFilters(){
+  const all = t('filter_all');
   document.getElementById('catFilters').innerHTML =
-    buildChip('الكل','cat','الكل', productFilters.cat==='الكل') +
-    CATEGORIES.map(c=>buildChip(c,'cat',c, productFilters.cat===c)).join('');
+    buildChip(all,'cat','الكل', productFilters.cat==='الكل') +
+    CATEGORIES.map(c=>buildChip(trLabel(CATEGORY_LABELS,c),'cat',c, productFilters.cat===c)).join('');
   document.getElementById('formFilters').innerHTML =
-    buildChip('الكل','form','الكل', productFilters.form==='الكل') +
-    FORMS.map(f=>buildChip(f,'form',f, productFilters.form===f)).join('');
+    buildChip(all,'form','الكل', productFilters.form==='الكل') +
+    FORMS.map(f=>buildChip(trLabel(FORM_LABELS,f),'form',f, productFilters.form===f)).join('');
   document.getElementById('mfrFilters').innerHTML =
-    buildChip('الكل','mfr','الكل', productFilters.mfr==='الكل') +
+    buildChip(all,'mfr','الكل', productFilters.mfr==='الكل') +
     MANUFACTURERS.map(m=>buildChip(m,'mfr',m, productFilters.mfr===m)).join('');
 
   document.querySelectorAll('.filter-bar .fchip').forEach(btn=>{
@@ -705,22 +858,24 @@ function renderProductGrid(){
     if(productFilters.cat!=='الكل' && p.category!==productFilters.cat) return false;
     if(productFilters.form!=='الكل' && p.form!==productFilters.form) return false;
     if(productFilters.mfr!=='الكل' && p.manufacturer!==productFilters.mfr) return false;
-    if(q && !(p.name.toLowerCase().includes(q) || p.generic.toLowerCase().includes(q))) return false;
+    if(q && !(p.name.toLowerCase().includes(q) || p.generic.toLowerCase().includes(q) || (p.name_en||'').toLowerCase().includes(q) || (p.generic_en||'').toLowerCase().includes(q))) return false;
     return true;
   });
-  document.getElementById('resultsCount').textContent = `${filtered.length} من ${PRODUCTS.length} منتج`;
+  document.getElementById('resultsCount').textContent = currentLang==='en'
+    ? `${filtered.length} of ${PRODUCTS.length} products`
+    : `${filtered.length} من ${PRODUCTS.length} منتج`;
   document.getElementById('emptyState').classList.toggle('hidden', filtered.length>0);
   document.getElementById('productGrid').innerHTML = filtered.map(p=>`
     <div class="pcard">
       <div class="img">${ICONS.pill}</div>
       <div class="body">
-        <span class="cat">${p.category}</span>
-        <h4>${p.name}</h4>
-        <div class="gen">${p.generic}</div>
-        <div class="meta"><strong>الشكل:</strong> ${p.form}</div>
-        <div class="meta">${p.uses}</div>
-        <div class="meta"><strong>المصنّع:</strong> ${p.manufacturer||'—'}</div>
-        <span class="badge">${p.status}</span>
+        <span class="cat">${trLabel(CATEGORY_LABELS,p.category)}</span>
+        <h4>${currentLang==='en' ? (p.name_en||p.name) : p.name}</h4>
+        <div class="gen">${currentLang==='en' ? (p.generic_en||p.generic) : p.generic}</div>
+        <div class="meta"><strong>${t('field_form')}</strong> ${trLabel(FORM_LABELS,p.form)}</div>
+        <div class="meta">${currentLang==='en' ? (p.uses_en||p.uses) : p.uses}</div>
+        <div class="meta"><strong>${t('field_mfr')}</strong> ${p.manufacturer||'—'}</div>
+        <span class="badge">${trLabel(STATUS_LABELS,p.status)}</span>
       </div>
     </div>
   `).join('');
@@ -737,9 +892,10 @@ function renderProducts(){
    RENDER: ACTIVITIES
    ====================================================================== */
 function renderActivities(){
-  document.getElementById('activitiesIntro').textContent = CONTENT.activities_intro || document.getElementById('activitiesIntro').textContent;
+  const intro = currentLang==='en' ? (CONTENT.activities_intro_en||CONTENT.activities_intro) : CONTENT.activities_intro;
+  document.getElementById('activitiesIntro').textContent = intro || document.getElementById('activitiesIntro').textContent;
   document.getElementById('activitiesGrid').innerHTML = ACTIVITIES.map(a=>`
-    <div class="activity-card"><div class="ic">${ICONS[a.icon]||ICONS.other}</div><div><h4>${a.t}</h4><p>${a.d}</p></div></div>
+    <div class="activity-card"><div class="ic">${ICONS[a.icon]||ICONS.other}</div><div><h4>${currentLang==='en' ? (a.t_en||a.t) : a.t}</h4><p>${currentLang==='en' ? (a.d_en||a.d) : a.d}</p></div></div>
   `).join('');
 }
 
@@ -749,11 +905,11 @@ function renderActivities(){
 function renderContact(){
   document.getElementById('contactGrid').innerHTML = CONTACTS.map(c=>`
     <div class="contact-card">
-      <div class="role">${c.role}</div>
+      <div class="role">${currentLang==='en' ? (c.role_en||c.role) : c.role}</div>
       <div class="num" dir="ltr">${c.phone}</div>
       <div class="actions">
-        <a class="btn small" style="background:#ffffff1a;color:#fff" href="tel:${c.phone}">اتصال</a>
-        ${c.whatsapp ? `<a class="btn small wa" style="background:#ffffff1a" href="https://wa.me/249${c.phone.replace(/^0/,'')}" target="_blank">واتساب مباشر</a>` : ''}
+        <a class="btn small" style="background:#ffffff1a;color:#fff" href="tel:${c.phone}">${t('call_btn')}</a>
+        ${c.whatsapp ? `<a class="btn small wa" style="background:#ffffff1a" href="https://wa.me/249${c.phone.replace(/^0/,'')}" target="_blank">${t('whatsapp_btn')}</a>` : ''}
       </div>
     </div>
   `).join('');
@@ -764,7 +920,7 @@ function renderContact(){
    ====================================================================== */
 const ROUTES = ['/','/about','/products','/activities','/contact','/admin'];
 let dataLoaded = false;
-async function router(){
+async function router(skipDataFetch){
   let hash = location.hash.replace('#','') || '/';
   if(!ROUTES.includes(hash)) hash = '/';
 
@@ -773,13 +929,15 @@ async function router(){
     dataLoaded = true;
   }
 
+  applyPageDirection();
+
   document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
   const map = {'/':'page-home','/about':'page-about','/products':'page-products','/activities':'page-activities','/contact':'page-contact','/admin':'page-admin'};
   document.getElementById(map[hash]).classList.remove('hidden');
   document.querySelectorAll('nav.main a').forEach(a=> a.classList.toggle('active', a.dataset.route===hash));
   document.getElementById('siteFooter').classList.toggle('hidden', hash==='/admin');
   document.getElementById('siteHeader').classList.toggle('hidden', hash==='/admin');
-  window.scrollTo({top:0, behavior:'instant'});
+  if(!skipDataFetch) window.scrollTo({top:0, behavior:'instant'});
   if(hash==='/') renderHome();
   if(hash==='/about') renderAbout();
   if(hash==='/products') renderProducts();
@@ -789,6 +947,7 @@ async function router(){
   document.getElementById('mainNav').style.display='';
 }
 window.addEventListener('hashchange', router);
+document.getElementById('langBtn').addEventListener('click', ()=> setLang(currentLang==='ar' ? 'en' : 'ar'));
 
 /* ======================================================================
    ADMIN — auth (Supabase Auth email+password, gated by phone+email match)
@@ -912,10 +1071,13 @@ function adminOverview(){
 function adminContentHome(){
   return `
     <h2>محتوى الصفحة الرئيسية</h2>
-    <p class="sub">النص المعروض أسفل عنوان البطل في الصفحة الرئيسية</p>
+    <p class="sub">النص المعروض أسفل عنوان البطل في الصفحة الرئيسية — بالعربية والإنجليزية</p>
     <div class="admin-panel">
-      <div class="form-row"><label>الوصف التعريفي (Hero Subtitle)</label>
+      <div class="form-row"><label>الوصف التعريفي (عربي)</label>
         <textarea id="editHeroSubtitle">${CONTENT.home_hero_subtitle||''}</textarea>
+      </div>
+      <div class="form-row"><label>الوصف التعريفي (إنجليزي)</label>
+        <textarea id="editHeroSubtitleEn" dir="ltr" style="text-align:left">${CONTENT.home_hero_subtitle_en||''}</textarea>
       </div>
       <button class="btn primary" id="saveHero">حفظ ونشر</button>
     </div>
@@ -924,10 +1086,13 @@ function adminContentHome(){
 function adminContentAbout(){
   return `
     <h2>محتوى صفحة «من نحن»</h2>
-    <p class="sub">الفقرة الأولى من نبذة الشركة — بقية الحقول (الرؤية، الأهداف، الإدارة، الأفرع) تُدار من جداول منفصلة بنفس المبدأ</p>
+    <p class="sub">الفقرة الأولى من نبذة الشركة (عربي وإنجليزي) — بقية الحقول (الرؤية، الأهداف، الإدارة، الأفرع) تُدار من جداول منفصلة بنفس المبدأ</p>
     <div class="admin-panel">
-      <div class="form-row"><label>نبذة عن الشركة — الفقرة الأولى</label>
+      <div class="form-row"><label>نبذة عن الشركة (عربي)</label>
         <textarea id="editNabza">${CONTENT.about_nabza||''}</textarea>
+      </div>
+      <div class="form-row"><label>نبذة عن الشركة (إنجليزي)</label>
+        <textarea id="editNabzaEn" dir="ltr" style="text-align:left">${CONTENT.about_nabza_en||''}</textarea>
       </div>
       <button class="btn primary" id="saveNabza">حفظ ونشر</button>
     </div>
@@ -936,10 +1101,13 @@ function adminContentAbout(){
 function adminContentActivities(){
   return `
     <h2>محتوى صفحة «الأنشطة الأخرى»</h2>
-    <p class="sub">مقدمة الصفحة — قائمة الأنشطة أدناه للاطلاع (تعديلها التفصيلي عبر نفس مبدأ الجداول)</p>
+    <p class="sub">مقدمة الصفحة (عربي وإنجليزي) — قائمة الأنشطة أدناه للاطلاع (تعديلها التفصيلي عبر نفس مبدأ الجداول)</p>
     <div class="admin-panel">
-      <div class="form-row"><label>مقدمة الصفحة</label>
+      <div class="form-row"><label>مقدمة الصفحة (عربي)</label>
         <textarea id="editActivitiesIntro">${CONTENT.activities_intro||''}</textarea>
+      </div>
+      <div class="form-row"><label>مقدمة الصفحة (إنجليزي)</label>
+        <textarea id="editActivitiesIntroEn" dir="ltr" style="text-align:left">${CONTENT.activities_intro_en||''}</textarea>
       </div>
       <button class="btn primary" id="saveActivities">حفظ ونشر</button>
     </div>
@@ -1026,27 +1194,33 @@ function bindAdminViewEvents(view){
   if(view==='content-home'){
     document.getElementById('saveHero').addEventListener('click', async ()=>{
       const val = document.getElementById('editHeroSubtitle').value;
-      const { error } = await sb.from('page_content').upsert({ page:'home', field_key:'hero_subtitle', field_value: val }, { onConflict:'page,field_key' });
+      const valEn = document.getElementById('editHeroSubtitleEn').value;
+      const { error } = await sb.from('page_content').upsert({ page:'home', field_key:'hero_subtitle', field_value: val, field_value_en: valEn }, { onConflict:'page,field_key' });
       if(error){ toast('تعذّر الحفظ: ' + error.message, 'error'); return; }
       CONTENT.home_hero_subtitle = val;
+      CONTENT.home_hero_subtitle_en = valEn;
       toast('تم حفظ محتوى الصفحة الرئيسية ونشره');
     });
   }
   if(view==='content-about'){
     document.getElementById('saveNabza').addEventListener('click', async ()=>{
       const val = document.getElementById('editNabza').value;
-      const { error } = await sb.from('page_content').upsert({ page:'about', field_key:'nabza', field_value: val }, { onConflict:'page,field_key' });
+      const valEn = document.getElementById('editNabzaEn').value;
+      const { error } = await sb.from('page_content').upsert({ page:'about', field_key:'nabza', field_value: val, field_value_en: valEn }, { onConflict:'page,field_key' });
       if(error){ toast('تعذّر الحفظ: ' + error.message, 'error'); return; }
       CONTENT.about_nabza = val;
+      CONTENT.about_nabza_en = valEn;
       toast('تم حفظ محتوى «من نحن» ونشره');
     });
   }
   if(view==='content-activities'){
     document.getElementById('saveActivities').addEventListener('click', async ()=>{
       const val = document.getElementById('editActivitiesIntro').value;
-      const { error } = await sb.from('page_content').upsert({ page:'activities', field_key:'intro', field_value: val }, { onConflict:'page,field_key' });
+      const valEn = document.getElementById('editActivitiesIntroEn').value;
+      const { error } = await sb.from('page_content').upsert({ page:'activities', field_key:'intro', field_value: val, field_value_en: valEn }, { onConflict:'page,field_key' });
       if(error){ toast('تعذّر الحفظ: ' + error.message, 'error'); return; }
       CONTENT.activities_intro = val;
+      CONTENT.activities_intro_en = valEn;
       toast('تم حفظ محتوى الأنشطة الأخرى ونشره');
     });
   }
@@ -1103,17 +1277,20 @@ function confirmDelete(msg, onConfirm){
 function openAddProductModal(){
   openModal(`
     <h3>إضافة منتج جديد</h3>
-    <p class="sub">سيظهر المنتج فورًا في صفحة المنتجات العامة بعد الحفظ</p>
+    <p class="sub">سيظهر المنتج فورًا في صفحة المنتجات العامة بعد الحفظ — الحقول الإنجليزية اختيارية</p>
     <form id="addProductForm">
-      <div class="form-row"><label>الاسم التجاري</label><input type="text" id="npName" required></div>
+      <div class="form-row"><label>الاسم التجاري (عربي/الاسم الأصلي)</label><input type="text" id="npName" required></div>
+      <div class="form-row"><label>الاسم التجاري (إنجليزي)</label><input type="text" id="npNameEn" dir="ltr" style="text-align:left"></div>
       <div class="form-row"><label>الاسم العلمي / المادة الفعالة</label><input type="text" id="npGeneric" required></div>
+      <div class="form-row"><label>الاسم العلمي (إنجليزي)</label><input type="text" id="npGenericEn" dir="ltr" style="text-align:left"></div>
       <div class="form-row"><label>التصنيف العلاجي</label>
         <select id="npCategory">${CATEGORIES.map(c=>`<option>${c}</option>`).join('')}</select></div>
       <div class="form-row"><label>الشكل الصيدلاني</label>
         <select id="npForm">${FORMS.map(f=>`<option>${f}</option>`).join('')}</select></div>
       <div class="form-row"><label>الشركة المصنّعة</label>
         <select id="npMfr">${MANUFACTURERS.map(m=>`<option>${m}</option>`).join('')}</select></div>
-      <div class="form-row"><label>الاستخدامات الرئيسية</label><textarea id="npUses" required></textarea></div>
+      <div class="form-row"><label>الاستخدامات الرئيسية (عربي)</label><textarea id="npUses" required></textarea></div>
+      <div class="form-row"><label>الاستخدامات الرئيسية (إنجليزي)</label><textarea id="npUsesEn" dir="ltr" style="text-align:left"></textarea></div>
       <div class="modal-actions">
         <button type="submit" class="btn primary block">حفظ ونشر</button>
         <button type="button" class="btn secondary block" id="cancelAddProduct">إلغاء</button>
@@ -1129,10 +1306,13 @@ function openAddProductModal(){
     if(!name || !generic || !uses){ toast('الرجاء تعبئة كل الحقول المطلوبة','error'); return; }
     const row = {
       name, generic,
+      name_en: document.getElementById('npNameEn').value.trim() || null,
+      generic_en: document.getElementById('npGenericEn').value.trim() || null,
       category: document.getElementById('npCategory').value,
       form: document.getElementById('npForm').value,
       manufacturer: document.getElementById('npMfr').value,
-      uses, status:'متوفر',
+      uses, uses_en: document.getElementById('npUsesEn').value.trim() || null,
+      status:'متوفر',
     };
     const { data, error } = await sb.from('products').insert(row).select().single();
     if(error){ toast('تعذّر الحفظ: ' + error.message, 'error'); return; }
@@ -1147,7 +1327,7 @@ function openAddProductModal(){
 function openAddEmployeeModal(){
   openModal(`
     <h3>إضافة موظف جديد</h3>
-    <p class="sub">الدخول للوحة التحكم يتم عبر رقم الهاتف السوداني والبريد الإلكتروني، ثم رمز يُرسل بالبريد</p>
+    <p class="sub">الدخول للوحة التحكم يتم عبر رقم الهاتف السوداني والبريد الإلكتروني وكلمة مرور</p>
     <form id="addEmployeeForm">
       <div class="form-row"><label>الاسم الكامل</label><input type="text" id="neName" required></div>
       <div class="form-row" id="nePhoneRow"><label>رقم الهاتف السوداني</label><input type="text" id="nePhone" dir="ltr" style="text-align:left" placeholder="09xxxxxxxx">
@@ -1199,6 +1379,8 @@ document.getElementById('menuToggle').addEventListener('click', ()=>{
 /* ======================================================================
    INIT
    ====================================================================== */
+applyPageDirection();
+applyStaticI18n();
 mountCapsules();
 router();
 </script>
