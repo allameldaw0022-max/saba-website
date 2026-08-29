@@ -689,11 +689,13 @@ let CONTENT = { home_hero_subtitle:'', about_nabza:'', activities_intro:'', home
 const CATEGORIES = ['مضادات العدوى البكتيرية','الجهاز التنفسي والحساسية','فيتامين D وصحة العظام'];
 const FORMS = ['كبسولات','مسحوق لتحضير معلق','أقراص','أمبول للحقن','كبسولة جيلاتينية رخوة'];
 const MANUFACTURERS = ['Midmark Health Care','SAMI Pharmaceuticals'];
+// least-privileged first: this order also drives the default selection in the
+// add-employee form, so a forgotten dropdown never silently grants full admin
 const ROLE_DESCRIPTIONS = {
-  'مدير النظام':'صلاحية كاملة: إدارة الصفحات، المنتجات، التواصل، وإضافة/تعطيل الموظفين.',
-  'محرر محتوى':'تعديل نصوص وصور صفحات: الرئيسية، من نحن، الأنشطة الأخرى.',
-  'مسؤول منتجات':'إضافة/تعديل/حذف المنتجات والفلاتر فقط.',
   'مسؤول تواصل':'تعديل بيانات صفحة تواصل معنا فقط.',
+  'مسؤول منتجات':'إضافة/تعديل/حذف المنتجات والفلاتر فقط.',
+  'محرر محتوى':'تعديل نصوص وصور صفحات: الرئيسية، من نحن، الأنشطة الأخرى.',
+  'مدير النظام':'صلاحية كاملة: إدارة الصفحات، المنتجات، التواصل، وإضافة/تعطيل الموظفين.',
 };
 // which sidebar views each role may see — mirrors the PRD permissions table
 const ROLE_VIEWS = {
@@ -1301,6 +1303,7 @@ function adminOrders(){
 }
 
 function adminEmployees(){
+  const myId = currentSession?.user?.id;
   return `
     <h2>الموظفون والصلاحيات</h2>
     <p class="sub">من يملك حق الدخول للوحة التحكم والتعديل — يظهر هذا القسم فقط لمدير النظام</p>
@@ -1311,16 +1314,19 @@ function adminEmployees(){
       </div>
       <table class="admin-table">
         <thead><tr><th>الاسم</th><th>الهاتف</th><th>البريد الإلكتروني</th><th>الدور</th><th>الحالة</th><th></th></tr></thead>
-        <tbody>${EMPLOYEES.map(emp=>`
+        <tbody>${EMPLOYEES.map(emp=>{
+          const isMe = !!myId && emp.user_id === myId;
+          return `
           <tr>
-            <td>${emp.name}</td><td dir="ltr" style="text-align:right">${emp.phone}</td><td dir="ltr" style="text-align:right">${emp.email}</td>
+            <td>${emp.name}${isMe ? ' <span style="color:var(--slate);font-size:11px">(أنت)</span>' : ''}</td><td dir="ltr" style="text-align:right">${emp.phone}</td><td dir="ltr" style="text-align:right">${emp.email}</td>
             <td>${emp.role}</td>
             <td><span class="status-pill ${emp.active?'on':'off'}">${emp.active?'نشط':'معطل'}</span></td>
-            <td class="actions">
-              <button class="icon-btn" data-toggle-emp="${emp.id}">${ICONS.power}</button>
-              <button class="icon-btn del" data-del-emp="${emp.id}">${ICONS.trash}</button>
+            <td class="actions">${isMe
+              ? `<span style="color:var(--slate);font-size:11.5px">لا يمكنك تعديل حسابك من هنا</span>`
+              : `<button class="icon-btn" data-toggle-emp="${emp.id}">${ICONS.power}</button>
+                 <button class="icon-btn del" data-del-emp="${emp.id}">${ICONS.trash}</button>`}
             </td>
-          </tr>`).join('')}
+          </tr>`;}).join('')}
         </tbody>
       </table>
     </div>
@@ -1403,6 +1409,7 @@ function bindAdminViewEvents(view){
     document.querySelectorAll('[data-toggle-emp]').forEach(btn=>{
       btn.addEventListener('click', async ()=>{
         const emp = EMPLOYEES.find(x=> x.id === btn.dataset.toggleEmp);
+        if(emp.user_id === currentSession?.user?.id){ toast('لا يمكنك تعديل حسابك الخاص من هنا','error'); return; }
         const { error } = await sb.from('employees').update({ active: !emp.active }).eq('id', emp.id);
         if(error){ toast('تعذّر التحديث: ' + error.message, 'error'); return; }
         emp.active = !emp.active;
@@ -1411,13 +1418,17 @@ function bindAdminViewEvents(view){
       });
     });
     document.querySelectorAll('[data-del-emp]').forEach(btn=>{
-      btn.addEventListener('click', ()=> confirmDelete('هل تريد حذف بيانات هذا الموظف نهائيًا؟', async ()=>{
-        const { error } = await sb.from('employees').delete().eq('id', btn.dataset.delEmp);
-        if(error){ toast('تعذّر الحذف: ' + error.message, 'error'); return; }
-        EMPLOYEES = EMPLOYEES.filter(x=> x.id !== btn.dataset.delEmp);
-        toast('تم حذف الموظف');
-        setAdminView('employees');
-      }));
+      btn.addEventListener('click', ()=>{
+        const emp = EMPLOYEES.find(x=> x.id === btn.dataset.delEmp);
+        if(emp.user_id === currentSession?.user?.id){ toast('لا يمكنك حذف حسابك الخاص من هنا','error'); return; }
+        confirmDelete('هل تريد حذف بيانات هذا الموظف نهائيًا؟', async ()=>{
+          const { error } = await sb.from('employees').delete().eq('id', btn.dataset.delEmp);
+          if(error){ toast('تعذّر الحذف: ' + error.message, 'error'); return; }
+          EMPLOYEES = EMPLOYEES.filter(x=> x.id !== btn.dataset.delEmp);
+          toast('تم حذف الموظف');
+          setAdminView('employees');
+        });
+      });
     });
   }
 }
@@ -1498,7 +1509,7 @@ function openAddEmployeeModal(){
         <div class="err">بريد إلكتروني غير صحيح</div></div>
       <div class="form-row"><label>الصلاحية</label>
         <select id="neRole">${Object.keys(ROLE_DESCRIPTIONS).map(r=>`<option>${r}</option>`).join('')}</select>
-        <div class="role-desc" id="neRoleDesc">${ROLE_DESCRIPTIONS['مدير النظام']}</div>
+        <div class="role-desc" id="neRoleDesc">${ROLE_DESCRIPTIONS[Object.keys(ROLE_DESCRIPTIONS)[0]]}</div>
       </div>
       <div class="modal-actions">
         <button type="submit" class="btn primary block">إضافة الموظف</button>
