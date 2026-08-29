@@ -443,19 +443,14 @@ table.admin-table td.actions{display:flex;gap:6px}
           <input type="email" id="loginEmail" placeholder="name@sabamed.sd" dir="ltr" style="text-align:left">
           <div class="err">الرجاء إدخال بريد إلكتروني صحيح، أو غير مسجّل في قائمة الموظفين</div>
         </div>
-        <button type="submit" class="btn primary block" id="loginSubmitBtn">إرسال رمز الدخول</button>
-      </form>
-      <form id="otpForm" class="hidden">
-        <div class="form-row" id="otpRow">
-          <label>رمز الدخول المُرسل إلى بريدك الإلكتروني</label>
-          <input type="text" id="loginOtp" placeholder="123456" dir="ltr" style="text-align:left;letter-spacing:4px">
-          <div class="hint">تحقق من صندوق الوارد (وصندوق الرسائل غير المرغوبة) وأدخل الرمز المكوّن من 6 أرقام</div>
-          <div class="err">رمز غير صحيح أو منتهي الصلاحية</div>
+        <div class="form-row" id="passwordRow">
+          <label>كلمة المرور</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" dir="ltr" style="text-align:left">
+          <div class="err">كلمة المرور غير صحيحة</div>
         </div>
-        <button type="submit" class="btn primary block">تأكيد الدخول</button>
-        <button type="button" class="btn ghost block" id="backToPhoneBtn" style="margin-top:6px">رجوع</button>
+        <button type="submit" class="btn primary block" id="loginSubmitBtn">دخول</button>
       </form>
-      <div class="demo-note">الدخول محمي فعليًا عبر Supabase Auth (رمز لمرة واحدة يُرسل بالبريد الإلكتروني)، بعد التحقق من تطابق رقم الهاتف والبريد مع سجل موظف نشط.</div>
+      <div class="demo-note">الدخول محمي فعليًا عبر Supabase Auth (بريد إلكتروني وكلمة مرور)، بعد التحقق من تطابق رقم الهاتف والبريد مع سجل موظف نشط.</div>
     </div>
   </div>
 
@@ -532,7 +527,6 @@ let productFilters = { cat:'الكل', form:'الكل', mfr:'الكل', q:'' };
 let currentAdminView = 'overview';
 let currentUser = null;      // { name, role } — from employees table, once authenticated
 let currentSession = null;   // Supabase auth session
-let pendingLoginEmail = null;
 
 /* ======================================================================
    DATA FETCHERS — every read goes through Supabase (RLS decides what's visible)
@@ -797,7 +791,7 @@ async function router(){
 window.addEventListener('hashchange', router);
 
 /* ======================================================================
-   ADMIN — auth (Supabase Auth email OTP, gated by phone+email match)
+   ADMIN — auth (Supabase Auth email+password, gated by phone+email match)
    ====================================================================== */
 function isValidSudanPhone(v){
   return /^0(1|9)\d{8}$/.test(v.trim());
@@ -820,7 +814,6 @@ async function renderAdminEntry(){
   document.getElementById('adminLoginView').classList.toggle('hidden', !!currentUser);
   document.getElementById('adminShell').classList.toggle('hidden', !currentUser);
   document.getElementById('loginForm').classList.remove('hidden');
-  document.getElementById('otpForm').classList.add('hidden');
   if(currentUser){
     document.getElementById('whoName').textContent = currentUser.name;
     document.getElementById('whoRole').textContent = currentUser.role;
@@ -838,47 +831,33 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   e.preventDefault();
   const phone = document.getElementById('loginPhone').value;
   const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
   const phoneRow = document.getElementById('phoneRow');
   const emailRow = document.getElementById('emailRow');
+  const passwordRow = document.getElementById('passwordRow');
   let ok = true;
   if(!isValidSudanPhone(phone)){ phoneRow.classList.add('invalid'); ok=false; } else phoneRow.classList.remove('invalid');
   if(!isValidEmail(email)){ emailRow.classList.add('invalid'); ok=false; } else emailRow.classList.remove('invalid');
-  if(!ok){ toast('تحقق من صحة رقم الهاتف والبريد الإلكتروني','error'); return; }
+  if(!password){ passwordRow.classList.add('invalid'); ok=false; } else passwordRow.classList.remove('invalid');
+  if(!ok){ toast('تحقق من صحة البيانات المُدخلة','error'); return; }
 
   const btn = document.getElementById('loginSubmitBtn');
   btn.disabled = true; btn.textContent = 'جارٍ التحقق...';
   const { data: isEmployee, error: verifyErr } = await sb.rpc('verify_employee_login', { p_phone: phone.trim(), p_email: email.trim() });
   if(verifyErr || !isEmployee){
-    btn.disabled = false; btn.textContent = 'إرسال رمز الدخول';
+    btn.disabled = false; btn.textContent = 'دخول';
     toast('رقم الهاتف والبريد الإلكتروني غير مطابقين لأي موظف نشط','error');
     return;
   }
-  const { error: otpErr } = await sb.auth.signInWithOtp({ email: email.trim(), options: { shouldCreateUser: true } });
-  btn.disabled = false; btn.textContent = 'إرسال رمز الدخول';
-  if(otpErr){ toast('تعذّر إرسال رمز الدخول: ' + otpErr.message, 'error'); return; }
-  pendingLoginEmail = email.trim();
-  document.getElementById('loginForm').classList.add('hidden');
-  document.getElementById('otpForm').classList.remove('hidden');
-  toast('تم إرسال رمز الدخول إلى بريدك الإلكتروني');
-});
-
-document.getElementById('backToPhoneBtn').addEventListener('click', ()=>{
-  document.getElementById('otpForm').classList.add('hidden');
-  document.getElementById('loginForm').classList.remove('hidden');
-});
-
-document.getElementById('otpForm').addEventListener('submit', async function(e){
-  e.preventDefault();
-  const code = document.getElementById('loginOtp').value.trim();
-  const otpRow = document.getElementById('otpRow');
-  const { error } = await sb.auth.verifyOtp({ email: pendingLoginEmail, token: code, type: 'email' });
-  if(error){
-    otpRow.classList.add('invalid');
-    toast('تعذّر تأكيد الرمز: ' + error.message, 'error');
+  const { error: passErr } = await sb.auth.signInWithPassword({ email: email.trim(), password });
+  btn.disabled = false; btn.textContent = 'دخول';
+  if(passErr){
+    passwordRow.classList.add('invalid');
+    toast('تعذّر تسجيل الدخول: ' + passErr.message, 'error');
     return;
   }
-  otpRow.classList.remove('invalid');
-  document.getElementById('loginOtp').value = '';
+  passwordRow.classList.remove('invalid');
+  document.getElementById('loginPassword').value = '';
   toast('تم تسجيل الدخول بنجاح');
   await renderAdminEntry();
 });
