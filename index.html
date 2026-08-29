@@ -1497,16 +1497,29 @@ function openAddProductModal(){
 }
 
 /* ---- add employee modal ---- */
+function suggestPassword(){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+  let out = '';
+  for(let i=0;i<8;i++) out += chars[Math.floor(Math.random()*chars.length)];
+  return out + '#' + Math.floor(Math.random()*90+10);
+}
 function openAddEmployeeModal(){
   openModal(`
     <h3>إضافة موظف جديد</h3>
-    <p class="sub">الدخول للوحة التحكم يتم عبر رقم الهاتف السوداني والبريد الإلكتروني وكلمة مرور</p>
+    <p class="sub">حدّد كلمة مرور دخوله الآن — كل موظف له كلمة مرور خاصة به، منفصلة عن كلمة مرورك</p>
     <form id="addEmployeeForm">
       <div class="form-row"><label>الاسم الكامل</label><input type="text" id="neName" required></div>
       <div class="form-row" id="nePhoneRow"><label>رقم الهاتف السوداني</label><input type="text" id="nePhone" dir="ltr" style="text-align:left" placeholder="09xxxxxxxx">
         <div class="err">صيغة رقم هاتف سوداني غير صحيحة</div></div>
       <div class="form-row" id="neEmailRow"><label>البريد الإلكتروني</label><input type="email" id="neEmail" dir="ltr" style="text-align:left" placeholder="name@sabamed.sd">
         <div class="err">بريد إلكتروني غير صحيح</div></div>
+      <div class="form-row" id="nePasswordRow"><label>كلمة مرور دخوله للوحة التحكم</label>
+        <div style="display:flex;gap:8px">
+          <input type="text" id="nePassword" dir="ltr" style="text-align:left;font-family:var(--font-mono)" value="${suggestPassword()}">
+          <button type="button" class="btn secondary small" id="regenPassword" style="white-space:nowrap">توليد جديدة</button>
+        </div>
+        <div class="hint">يمكنك تعديلها كما تشاء (6 أحرف على الأقل) — شاركها مع الموظف بعد الحفظ</div>
+        <div class="err">كلمة المرور يجب ألا تقل عن 6 أحرف</div></div>
       <div class="form-row"><label>الصلاحية</label>
         <select id="neRole">${Object.keys(ROLE_DESCRIPTIONS).map(r=>`<option>${r}</option>`).join('')}</select>
         <div class="role-desc" id="neRoleDesc">${ROLE_DESCRIPTIONS[Object.keys(ROLE_DESCRIPTIONS)[0]]}</div>
@@ -1518,6 +1531,9 @@ function openAddEmployeeModal(){
     </form>
   `);
   document.getElementById('cancelAddEmp').addEventListener('click', closeModal);
+  document.getElementById('regenPassword').addEventListener('click', ()=>{
+    document.getElementById('nePassword').value = suggestPassword();
+  });
   document.getElementById('neRole').addEventListener('change', (e)=>{
     document.getElementById('neRoleDesc').textContent = ROLE_DESCRIPTIONS[e.target.value];
   });
@@ -1526,10 +1542,12 @@ function openAddEmployeeModal(){
     const name = document.getElementById('neName').value.trim();
     const phone = document.getElementById('nePhone').value.trim();
     const email = document.getElementById('neEmail').value.trim();
+    const password = document.getElementById('nePassword').value;
     let ok = true;
     if(!isValidSudanPhone(phone)){ document.getElementById('nePhoneRow').classList.add('invalid'); ok=false; } else document.getElementById('nePhoneRow').classList.remove('invalid');
     if(!isValidEmail(email)){ document.getElementById('neEmailRow').classList.add('invalid'); ok=false; } else document.getElementById('neEmailRow').classList.remove('invalid');
-    if(!name || !ok){ toast('تحقق من الاسم ورقم الهاتف والبريد الإلكتروني','error'); return; }
+    if(password.length < 6){ document.getElementById('nePasswordRow').classList.add('invalid'); ok=false; } else document.getElementById('nePasswordRow').classList.remove('invalid');
+    if(!name || !ok){ toast('تحقق من الاسم ورقم الهاتف والبريد الإلكتروني وكلمة المرور','error'); return; }
     const submitBtn = e.target.querySelector('button[type="submit"]');
     submitBtn.disabled = true;
     const row = { name, phone, email, role: document.getElementById('neRole').value, active:true };
@@ -1537,7 +1555,7 @@ function openAddEmployeeModal(){
     if(error){ submitBtn.disabled = false; toast('تعذّر الإضافة: ' + error.message, 'error'); return; }
     EMPLOYEES.push(data);
 
-    const { data: fnData, error: fnError } = await sb.functions.invoke('admin-create-employee', { body: { email } });
+    const { data: fnData, error: fnError } = await sb.functions.invoke('admin-create-employee', { body: { email, password } });
     closeModal();
     setAdminView('employees');
     if(fnError || !fnData || fnData.error){
@@ -1546,10 +1564,10 @@ function openAddEmployeeModal(){
     }
     openModal(`
       <h3>تم إضافة الموظف بنجاح</h3>
-      <p class="sub">شارك بيانات الدخول التالية مع الموظف — لن تظهر كلمة المرور مرة أخرى</p>
+      <p class="sub">شارك بيانات الدخول التالية مع الموظف</p>
       <div class="form-row"><label>رقم الهاتف</label><input type="text" readonly value="${phone}" dir="ltr" style="text-align:left"></div>
       <div class="form-row"><label>البريد الإلكتروني</label><input type="text" readonly value="${email}" dir="ltr" style="text-align:left"></div>
-      <div class="form-row"><label>كلمة المرور المؤقتة</label><input type="text" readonly value="${fnData.password}" dir="ltr" style="text-align:left;font-family:var(--font-mono)"></div>
+      <div class="form-row"><label>كلمة المرور</label><input type="text" readonly value="${fnData.password}" dir="ltr" style="text-align:left;font-family:var(--font-mono)"></div>
       <div class="modal-actions"><button type="button" class="btn primary block" id="closeNewEmpCreds">تم</button></div>
     `);
     document.getElementById('closeNewEmpCreds').addEventListener('click', closeModal);
