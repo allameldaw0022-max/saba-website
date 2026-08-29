@@ -471,6 +471,7 @@ html[dir="ltr"] .contact-card .num{text-align:left}
         <button data-view="content-home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span class="label">محتوى الرئيسية</span></button>
         <button data-view="content-about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span class="label">من نحن</span></button>
         <button data-view="products"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="8" width="16" height="9" rx="4"/><path d="M12 8v9"/></svg><span class="label">المنتجات</span></button>
+        <button data-view="orders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/><path d="M9 13h6M9 17h6"/></svg><span class="label">الطلبات</span></button>
         <button data-view="content-activities"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M12 20V4M20 20v-7"/></svg><span class="label">الأنشطة الأخرى</span></button>
         <button data-view="contacts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L7.9 9.7a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2.3Z"/></svg><span class="label">تواصل معنا</span></button>
         <button data-view="employees"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2 21c0-3.5 3-6 7-6s7 2.5 7 6"/><circle cx="18" cy="8" r="2.5"/><path d="M22 21c0-2.6-1.8-4.7-4.3-5.5"/></svg><span class="label">الموظفون</span></button>
@@ -547,6 +548,20 @@ const I18N = {
     contact_sub:'يسعدنا استقبال استفساراتكم وتواصلكم مع الإدارات المختصة',
     call_btn:'اتصال', whatsapp_btn:'واتساب مباشر',
     footer_copy:'© 2026 Saba Multi-Activities Group — جميع الحقوق محفوظة',
+
+    order_now:'اطلب الآن',
+    order_modal_title:'طلب منتج',
+    order_modal_sub:'أدخل بياناتك وسيتواصل معك فريقنا بخصوص:',
+    order_label_name:'الاسم الكامل',
+    order_label_phone:'رقم الهاتف',
+    order_err_phone:'الرجاء إدخال رقم هاتف سوداني صحيح',
+    order_label_email:'البريد الإلكتروني (اختياري)',
+    order_err_email:'بريد إلكتروني غير صحيح',
+    order_submit:'إرسال الطلب',
+    order_cancel:'إلغاء',
+    order_fill_required:'الرجاء تعبئة الاسم ورقم هاتف صحيح',
+    order_error:'تعذّر إرسال الطلب',
+    order_success:'تم استلام طلبك بنجاح، سيتواصل معك فريقنا قريبًا',
   },
   en: {
     brand_full:'Saba Multi-Activities Group',
@@ -593,6 +608,20 @@ const I18N = {
     contact_sub:'We are happy to receive your inquiries and connect you with the relevant departments',
     call_btn:'Call', whatsapp_btn:'WhatsApp',
     footer_copy:'© 2026 Saba Multi-Activities Group — All rights reserved',
+
+    order_now:'Order Now',
+    order_modal_title:'Order a Product',
+    order_modal_sub:'Enter your details and our team will contact you regarding:',
+    order_label_name:'Full Name',
+    order_label_phone:'Phone Number',
+    order_err_phone:'Please enter a valid Sudanese phone number',
+    order_label_email:'Email (optional)',
+    order_err_email:'Invalid email address',
+    order_submit:'Submit Order',
+    order_cancel:'Cancel',
+    order_fill_required:'Please fill in your name and a valid phone number',
+    order_error:'Could not submit the order',
+    order_success:'Your order has been received — our team will contact you shortly',
   },
 };
 
@@ -647,6 +676,7 @@ const sb = window.supabase.createClient(window.SUPABASE_CONFIG.url, window.SUPAB
 let PRODUCTS = [];
 let CONTACTS = [];
 let EMPLOYEES = [];      // only ever populated for مدير النظام (RLS-enforced)
+let ORDERS = [];         // only ever populated for admin roles allowed to view orders (RLS-enforced)
 let MANAGEMENT = [];
 let BRANCHES = [];
 let HEAD_OFFICE = null;
@@ -665,9 +695,9 @@ const ROLE_DESCRIPTIONS = {
 };
 // which sidebar views each role may see — mirrors the PRD permissions table
 const ROLE_VIEWS = {
-  'مدير النظام': ['overview','content-home','content-about','products','content-activities','contacts','employees'],
+  'مدير النظام': ['overview','content-home','content-about','products','orders','content-activities','contacts','employees'],
   'محرر محتوى': ['overview','content-home','content-about','content-activities'],
-  'مسؤول منتجات': ['overview','products'],
+  'مسؤول منتجات': ['overview','products','orders'],
   'مسؤول تواصل': ['overview','contacts'],
 };
 
@@ -708,6 +738,12 @@ async function fetchEmployeesIfAllowed(){
   const { data, error } = await sb.from('employees').select('*').order('created_at');
   if(error){ EMPLOYEES = []; return; }
   EMPLOYEES = data || [];
+}
+
+async function fetchOrdersIfAllowed(){
+  const { data, error } = await sb.from('orders').select('*').order('created_at', { ascending:false });
+  if(error){ ORDERS = []; return; }
+  ORDERS = data || [];
 }
 
 /* ======================================================================
@@ -878,9 +914,16 @@ function renderProductGrid(){
         <div class="meta">${currentLang==='en' ? (p.uses_en||p.uses) : p.uses}</div>
         <div class="meta"><strong>${t('field_mfr')}</strong> ${p.manufacturer||'—'}</div>
         <span class="badge">${trLabel(STATUS_LABELS,p.status)}</span>
+        <button class="btn primary block" style="margin-top:12px" data-order-product="${p.id}">${t('order_now')}</button>
       </div>
     </div>
   `).join('');
+  document.querySelectorAll('[data-order-product]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const product = PRODUCTS.find(p=> p.id === Number(btn.dataset.orderProduct));
+      openOrderModal(product);
+    });
+  });
 }
 function renderProducts(){
   renderProductFilters();
@@ -888,6 +931,59 @@ function renderProducts(){
   const search = document.getElementById('productSearch');
   search.value = productFilters.q;
   search.oninput = ()=>{ productFilters.q = search.value; renderProductGrid(); };
+}
+
+/* ======================================================================
+   ORDER NOW — public order-request form (bilingual), writes to `orders`
+   ====================================================================== */
+function openOrderModal(product){
+  if(!product) return;
+  const productLabel = currentLang==='en' ? (product.name_en||product.name) : product.name;
+  openModal(`
+    <h3>${t('order_modal_title')}</h3>
+    <p class="sub">${t('order_modal_sub')} <strong>${productLabel}</strong></p>
+    <form id="orderForm">
+      <div class="form-row" id="ordNameRow"><label>${t('order_label_name')}</label><input type="text" id="ordName" required></div>
+      <div class="form-row" id="ordPhoneRow"><label>${t('order_label_phone')}</label><input type="text" id="ordPhone" dir="ltr" style="text-align:left" placeholder="0912345678">
+        <div class="err">${t('order_err_phone')}</div></div>
+      <div class="form-row" id="ordEmailRow"><label>${t('order_label_email')}</label><input type="email" id="ordEmail" dir="ltr" style="text-align:left" placeholder="name@example.com">
+        <div class="err">${t('order_err_email')}</div></div>
+      <div class="modal-actions">
+        <button type="submit" class="btn primary block">${t('order_submit')}</button>
+        <button type="button" class="btn secondary block" id="cancelOrder">${t('order_cancel')}</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('cancelOrder').addEventListener('click', closeModal);
+  document.getElementById('orderForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const name = document.getElementById('ordName').value.trim();
+    const phone = document.getElementById('ordPhone').value.trim();
+    const email = document.getElementById('ordEmail').value.trim();
+    const nameRow = document.getElementById('ordNameRow');
+    const phoneRow = document.getElementById('ordPhoneRow');
+    const emailRow = document.getElementById('ordEmailRow');
+    let ok = true;
+    if(!name){ nameRow.classList.add('invalid'); ok=false; } else nameRow.classList.remove('invalid');
+    if(!isValidSudanPhone(phone)){ phoneRow.classList.add('invalid'); ok=false; } else phoneRow.classList.remove('invalid');
+    if(email && !isValidEmail(email)){ emailRow.classList.add('invalid'); ok=false; } else emailRow.classList.remove('invalid');
+    if(!ok){ toast(t('order_fill_required'),'error'); return; }
+
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    const { error } = await sb.from('orders').insert({
+      product_id: product.id,
+      product_name: product.name,
+      product_name_en: product.name_en || null,
+      customer_name: name,
+      customer_phone: phone,
+      customer_email: email || null,
+    });
+    submitBtn.disabled = false;
+    if(error){ toast(t('order_error') + ': ' + error.message, 'error'); return; }
+    closeModal();
+    toast(t('order_success'));
+  });
 }
 
 /* ======================================================================
@@ -978,8 +1074,9 @@ async function renderAdminEntry(){
   if(currentUser){
     document.getElementById('whoName').textContent = currentUser.name;
     document.getElementById('whoRole').textContent = currentUser.role;
-    if(currentUser.role === 'مدير النظام'){ await fetchEmployeesIfAllowed(); }
     const allowed = ROLE_VIEWS[currentUser.role] || ['overview'];
+    if(currentUser.role === 'مدير النظام'){ await fetchEmployeesIfAllowed(); }
+    if(allowed.includes('orders')){ await fetchOrdersIfAllowed(); }
     document.querySelectorAll('#adminNav button[data-view]').forEach(b=>{
       b.classList.toggle('hidden', !allowed.includes(b.dataset.view));
     });
@@ -1047,7 +1144,7 @@ function setAdminView(view){
   document.querySelectorAll('#adminNav button').forEach(b=> b.classList.toggle('active', b.dataset.view===view));
   const renderers = {
     overview: adminOverview, 'content-home': adminContentHome, 'content-about': adminContentAbout,
-    products: adminProducts, 'content-activities': adminContentActivities, contacts: adminContacts, employees: adminEmployees,
+    products: adminProducts, orders: adminOrders, 'content-activities': adminContentActivities, contacts: adminContacts, employees: adminEmployees,
   };
   document.getElementById('adminContent').innerHTML = renderers[view] ? renderers[view]() : '';
   bindAdminViewEvents(view);
@@ -1062,6 +1159,7 @@ function adminOverview(){
       <div class="stat-card"><div class="n">${EMPLOYEES.length || '—'}</div><div class="l">موظف مُفعّل للوحة التحكم</div></div>
       <div class="stat-card"><div class="n">${BRANCHES.length + (HEAD_OFFICE?1:0)}</div><div class="l">فرع + المركز الرئيسي</div></div>
       <div class="stat-card"><div class="n">${CONTACTS.length}</div><div class="l">جهة تواصل رسمية</div></div>
+      ${(ROLE_VIEWS[currentUser?.role]||[]).includes('orders') ? `<div class="stat-card"><div class="n">${ORDERS.filter(o=>o.status==='جديد').length}</div><div class="l">طلب جديد لم يُتابَع بعد</div></div>` : ''}
     </div>
     <div class="admin-panel">
       <h3 style="font-family:var(--font-display);margin-bottom:10px">أهلًا بك، ${currentUser ? currentUser.name : ''}</h3>
@@ -1162,6 +1260,33 @@ function adminContacts(){
   `;
 }
 
+function adminOrders(){
+  return `
+    <h2>الطلبات</h2>
+    <p class="sub">طلبات "اطلب الآن" الواردة من صفحة المنتجات العامة، ببيانات العميل الكاملة</p>
+    <div class="admin-panel">
+      <div class="panel-head"><h3>كل الطلبات (${ORDERS.length})</h3></div>
+      <table class="admin-table">
+        <thead><tr><th>التاريخ</th><th>اسم العميل</th><th>رقم الهاتف</th><th>البريد الإلكتروني</th><th>المنتج المطلوب</th><th>الحالة</th><th></th></tr></thead>
+        <tbody>${ORDERS.map(o=>`
+          <tr>
+            <td>${new Date(o.created_at).toLocaleString('ar-SD', { dateStyle:'medium', timeStyle:'short' })}</td>
+            <td>${o.customer_name}</td>
+            <td dir="ltr" style="text-align:right"><a href="tel:${o.customer_phone}" style="color:inherit;text-decoration:underline">${o.customer_phone}</a></td>
+            <td dir="ltr" style="text-align:right">${o.customer_email ? `<a href="mailto:${o.customer_email}" style="color:inherit;text-decoration:underline">${o.customer_email}</a>` : '—'}</td>
+            <td>${o.product_name}</td>
+            <td><span class="status-pill ${o.status==='تم التواصل'?'on':'off'}">${o.status}</span></td>
+            <td class="actions">
+              <button class="icon-btn" data-toggle-order="${o.id}" title="${o.status==='جديد'?'تعليم كـ تم التواصل':'إرجاع إلى جديد'}">${ICONS.power}</button>
+              <button class="icon-btn del" data-del-order="${o.id}">${ICONS.trash}</button>
+            </td>
+          </tr>`).join('') || `<tr><td colspan="7" style="text-align:center;color:var(--slate);padding:24px">لا توجد طلبات بعد</td></tr>`}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
 function adminEmployees(){
   return `
     <h2>الموظفون والصلاحيات</h2>
@@ -1235,6 +1360,28 @@ function bindAdminViewEvents(view){
         PRODUCTS = PRODUCTS.filter(p=> p.id !== Number(btn.dataset.delProduct));
         toast('تم حذف المنتج');
         setAdminView('products');
+      }));
+    });
+  }
+  if(view==='orders'){
+    document.querySelectorAll('[data-toggle-order]').forEach(btn=>{
+      btn.addEventListener('click', async ()=>{
+        const order = ORDERS.find(o=> String(o.id) === btn.dataset.toggleOrder);
+        const newStatus = order.status === 'جديد' ? 'تم التواصل' : 'جديد';
+        const { error } = await sb.from('orders').update({ status: newStatus }).eq('id', order.id);
+        if(error){ toast('تعذّر التحديث: ' + error.message, 'error'); return; }
+        order.status = newStatus;
+        toast('تم تحديث حالة الطلب');
+        setAdminView('orders');
+      });
+    });
+    document.querySelectorAll('[data-del-order]').forEach(btn=>{
+      btn.addEventListener('click', ()=> confirmDelete('هل تريد حذف هذا الطلب نهائيًا؟', async ()=>{
+        const { error } = await sb.from('orders').delete().eq('id', Number(btn.dataset.delOrder));
+        if(error){ toast('تعذّر الحذف: ' + error.message, 'error'); return; }
+        ORDERS = ORDERS.filter(o=> o.id !== Number(btn.dataset.delOrder));
+        toast('تم حذف الطلب');
+        setAdminView('orders');
       }));
     });
   }
