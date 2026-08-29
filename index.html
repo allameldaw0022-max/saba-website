@@ -1519,13 +1519,29 @@ function openAddEmployeeModal(){
     if(!isValidSudanPhone(phone)){ document.getElementById('nePhoneRow').classList.add('invalid'); ok=false; } else document.getElementById('nePhoneRow').classList.remove('invalid');
     if(!isValidEmail(email)){ document.getElementById('neEmailRow').classList.add('invalid'); ok=false; } else document.getElementById('neEmailRow').classList.remove('invalid');
     if(!name || !ok){ toast('تحقق من الاسم ورقم الهاتف والبريد الإلكتروني','error'); return; }
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
     const row = { name, phone, email, role: document.getElementById('neRole').value, active:true };
     const { data, error } = await sb.from('employees').insert(row).select().single();
-    if(error){ toast('تعذّر الإضافة: ' + error.message, 'error'); return; }
+    if(error){ submitBtn.disabled = false; toast('تعذّر الإضافة: ' + error.message, 'error'); return; }
     EMPLOYEES.push(data);
+
+    const { data: fnData, error: fnError } = await sb.functions.invoke('admin-create-employee', { body: { email } });
     closeModal();
-    toast('تم إضافة الموظف بنجاح — سيتمكن من الدخول فور أول محاولة تسجيل دخول بنفس البريد');
     setAdminView('employees');
+    if(fnError || !fnData || fnData.error){
+      toast('أُضيف الموظف في السجل، لكن تعذّر إنشاء حساب الدخول: ' + (fnData?.error || fnError?.message || ''), 'error');
+      return;
+    }
+    openModal(`
+      <h3>تم إضافة الموظف بنجاح</h3>
+      <p class="sub">شارك بيانات الدخول التالية مع الموظف — لن تظهر كلمة المرور مرة أخرى</p>
+      <div class="form-row"><label>رقم الهاتف</label><input type="text" readonly value="${phone}" dir="ltr" style="text-align:left"></div>
+      <div class="form-row"><label>البريد الإلكتروني</label><input type="text" readonly value="${email}" dir="ltr" style="text-align:left"></div>
+      <div class="form-row"><label>كلمة المرور المؤقتة</label><input type="text" readonly value="${fnData.password}" dir="ltr" style="text-align:left;font-family:var(--font-mono)"></div>
+      <div class="modal-actions"><button type="button" class="btn primary block" id="closeNewEmpCreds">تم</button></div>
+    `);
+    document.getElementById('closeNewEmpCreds').addEventListener('click', closeModal);
   });
 }
 
