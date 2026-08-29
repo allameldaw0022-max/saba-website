@@ -1556,15 +1556,23 @@ function openAddEmployeeModal(){
     EMPLOYEES.push(data);
 
     const { data: fnData, error: fnError } = await sb.functions.invoke('admin-create-employee', { body: { email, password } });
-    closeModal();
-    setAdminView('employees');
     if(fnError || !fnData || fnData.error){
+      closeModal();
+      setAdminView('employees');
       toast('أُضيف الموظف في السجل، لكن تعذّر إنشاء حساب الدخول: ' + (fnData?.error || fnError?.message || ''), 'error');
       return;
     }
+    // an existing auth account (e.g. from a previously deleted employee with the
+    // same email) doesn't fire the usual insert trigger that links user_id — do it here
+    if(fnData.reused && fnData.userId){
+      await sb.from('employees').update({ user_id: fnData.userId }).eq('id', data.id);
+      data.user_id = fnData.userId;
+    }
+    closeModal();
+    setAdminView('employees');
     openModal(`
       <h3>تم إضافة الموظف بنجاح</h3>
-      <p class="sub">شارك بيانات الدخول التالية مع الموظف</p>
+      <p class="sub">شارك بيانات الدخول التالية مع الموظف${fnData.reused ? ' — كان هناك حساب سابق بنفس البريد فأُعيد تعيين كلمة مروره' : ''}</p>
       <div class="form-row"><label>رقم الهاتف</label><input type="text" readonly value="${phone}" dir="ltr" style="text-align:left"></div>
       <div class="form-row"><label>البريد الإلكتروني</label><input type="text" readonly value="${email}" dir="ltr" style="text-align:left"></div>
       <div class="form-row"><label>كلمة المرور</label><input type="text" readonly value="${fnData.password}" dir="ltr" style="text-align:left;font-family:var(--font-mono)"></div>
