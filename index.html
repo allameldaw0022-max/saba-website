@@ -36,7 +36,6 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 header.site{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);box-shadow:0 2px 15px rgba(13,42,63,.06)}
 .nav-row{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;gap:18px;max-width:1200px;margin:0 auto}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:800;font-size:18px}
-.brand .capsule{transform:rotate(45deg)}
 nav.main{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 nav.main a{font-weight:600;font-size:14px;color:#23465c;padding:9px 12px;border-radius:20px;transition:.15s}
 nav.main a:hover{color:var(--blue);background:#eef6fb}
@@ -771,19 +770,10 @@ const ICONS = {
   pill: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><rect x="10" y="16" width="28" height="16" rx="8"/><path d="M24 16v16"/></svg>',
 };
 
-function capsuleSVG(size){
-  const w = size, h = size*0.4;
-  return `<svg width="${w}" height="${h}" viewBox="0 0 120 48" style="overflow:visible">
-    <path d="M60,0 H24 A24,24 0 0 0 24,48 H60 Z" fill="#ef3340"/>
-    <path d="M60,0 H96 A24,24 0 0 1 96,48 H60 Z" fill="#1976b9"/>
-    <rect x="58" y="0" width="4" height="48" fill="#f7fafc"/>
-  </svg>`;
-}
 function mountCapsules(){
   document.querySelectorAll('.capsule').forEach(el=>{
     const size = el.dataset.size || 24;
-    el.innerHTML = capsuleSVG(size);
-    el.style.transform = 'rotate(45deg)';
+    el.innerHTML = `<img src="saba-medical-icon.png" alt="Saba Pharmaceutical Group" style="width:${size}px;height:${size}px;object-fit:contain;border-radius:50%">`;
   });
 }
 
