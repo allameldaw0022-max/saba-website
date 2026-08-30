@@ -132,7 +132,6 @@ nav.main a.active{color:#fff;background:var(--blue)}
 .pcard .badge{font-size:11px;font-weight:700;padding:5px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:5px;margin-top:8px;background:#eaf7ef;color:var(--success)}
 .pcard .badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
 .empty-state{text-align:center;padding:60px 20px;color:var(--slate)}
-.product-note{margin-top:34px;padding:18px 22px;background:#fff7e8;border-right:4px solid var(--sand);border-radius:10px;font-size:13.5px;line-height:1.9}
 .partners-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:16px}
 .partner-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}
 .partner-card .logo{height:40px;margin-bottom:14px}
@@ -253,7 +252,6 @@ table.admin-table td.actions{display:flex;gap:6px}
 /* ============ LTR (English) overrides — public site only, admin stays RTL ============ */
 html[dir="ltr"] .search-box input{padding:13px 16px 13px 44px}
 html[dir="ltr"] .search-box svg{right:auto;left:16px}
-html[dir="ltr"] .product-note{border-right:none;border-left:4px solid var(--sand)}
 html[dir="ltr"] .contact-card .num{text-align:left}
 </style>
 </head>
@@ -381,10 +379,6 @@ html[dir="ltr"] .contact-card .num{text-align:left}
       <div class="results-count" id="resultsCount"></div>
       <div class="product-grid" id="productGrid"></div>
       <div class="empty-state hidden" id="emptyState" data-i18n="empty_state">لا توجد منتجات مطابقة لبحثك. جرّب تعديل الفلاتر.</div>
-
-      <div class="product-note">
-        <strong data-i18n="product_note_label">تنبيه طبي:</strong> <span data-i18n="product_note">المعلومات الواردة في هذا القسم تعريفية وليست بديلًا عن النشرة الدوائية أو استشارة الطبيب والصيدلي. المضادات الحيوية والأدوية ذات الجرعات العالية تُستخدم وفق التشخيص والوصفة الطبية واللوائح المحلية.</span>
-      </div>
     </div>
   </section>
 
@@ -537,8 +531,6 @@ const I18N = {
     search_placeholder:'ابحث بالاسم التجاري أو الاسم العلمي...',
     filter_category:'التصنيف العلاجي', filter_form:'الشكل الصيدلاني', filter_mfr:'الشركة المصنّعة', filter_all:'الكل',
     empty_state:'لا توجد منتجات مطابقة لبحثك. جرّب تعديل الفلاتر.',
-    product_note_label:'تنبيه طبي:',
-    product_note:'المعلومات الواردة في هذا القسم تعريفية وليست بديلًا عن النشرة الدوائية أو استشارة الطبيب والصيدلي. المضادات الحيوية والأدوية ذات الجرعات العالية تُستخدم وفق التشخيص والوصفة الطبية واللوائح المحلية.',
     partners_title:'شركاؤنا الدوليون', partners_sub:'شراكات استراتيجية نحو مستقبل دوائي أفضل',
     pakistan:'باكستان',
     partner1_desc:'شريك دوائي من باكستان ضمن توجه سبأ الطبية لبناء علاقات تصنيع وتوريد دولية.',
@@ -596,8 +588,6 @@ const I18N = {
     search_placeholder:'Search by trade name or generic name...',
     filter_category:'Therapeutic Category', filter_form:'Pharmaceutical Form', filter_mfr:'Manufacturer', filter_all:'All',
     empty_state:'No products match your search. Try adjusting the filters.',
-    product_note_label:'Medical Notice:',
-    product_note:'The information in this section is for reference only and is not a substitute for the package insert or consulting a physician or pharmacist. Antibiotics and high-dose medications are used according to diagnosis, prescription, and local regulations.',
     partners_title:'Our International Partners', partners_sub:'Strategic partnerships toward a better pharmaceutical future',
     pakistan:'Pakistan',
     partner1_desc:'A pharmaceutical partner from Pakistan as part of Saba Medical\'s drive to build international manufacturing and supply relationships.',
