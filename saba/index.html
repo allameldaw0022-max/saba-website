@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سبأ للأنشطة المتعددة | Saba Multi-Activities Group</title>
+<meta name="description" content="الموقع الرسمي لشركة سبأ للأنشطة المتعددة - السودان">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="supabase-config.js"></script>
+<style>
+:root{
+  --blue:#1976b9; --blue-deep:#124d75; --red:#ef3340; --ink:#0d2a3f;
+  --paper:#f7fafc; --sand:#d79a27; --slate:#64798a; --line:#dfe8ee;
+  --success:#1c8a5a; --danger:#c62828; --white:#fff;
+  --font-display:'Cairo',Arial,Tahoma,sans-serif;
+  --font-body:'IBM Plex Sans Arabic',Arial,Tahoma,sans-serif;
+  --font-mono:'IBM Plex Mono',Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);color:var(--ink);background:var(--paper);line-height:1.75;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+img,svg{display:block}
+ul{list-style:none}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+::selection{background:var(--red);color:#fff}
+.wrap{max-width:1200px;margin:0 auto;padding:0 22px}
+.hidden{display:none !important}
+.capsule{display:inline-block}
+.capsule svg{display:block}
+
+/* ============ HEADER ============ */
+header.site{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);box-shadow:0 2px 15px rgba(13,42,63,.06)}
+.nav-row{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;gap:18px;max-width:1200px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:800;font-size:18px}
+.brand .capsule{transform:rotate(45deg)}
+nav.main{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+nav.main a{font-weight:600;font-size:14px;color:#23465c;padding:9px 12px;border-radius:20px;transition:.15s}
+nav.main a:hover{color:var(--blue);background:#eef6fb}
+nav.main a.active{color:#fff;background:var(--blue)}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.lang-btn{border:1px solid #d8e4ec;border-radius:20px;padding:7px 14px;color:var(--blue);background:#fff;font-weight:700;font-size:13px;cursor:pointer}
+.menu-toggle{display:none;background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink)}
+
+/* ============ BUTTONS ============ */
+.btn{padding:12px 24px;border-radius:30px;font-weight:700;font-size:14.5px;display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;transition:.15s}
+.btn.primary{background:var(--blue);color:#fff}
+.btn.primary:hover{background:var(--blue-deep)}
+.btn.secondary{background:#fff;border:1.5px solid var(--blue);color:var(--blue)}
+.btn.secondary:hover{background:#eef6fb}
+.btn.danger{background:#fdeeee;color:var(--danger);border:1.5px solid #f3c9c9}
+.btn.danger:hover{background:#f9dcdc}
+.btn.ghost{background:none;color:var(--blue);text-decoration:underline;padding:8px 4px}
+.btn.small{padding:8px 16px;font-size:13px}
+.btn.block{width:100%;justify-content:center}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* ============ GENERIC LAYOUT ============ */
+.page section{padding:70px 0}
+.section-title{text-align:center;margin-bottom:42px}
+.section-title h2{font-family:var(--font-display);font-weight:800;font-size:32px;color:var(--blue);margin-bottom:8px}
+.section-title p{color:var(--slate);font-size:15px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:20px;padding:28px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+
+/* ============ HERO (home) ============ */
+.hero{min-height:64vh;display:flex;align-items:center;background:radial-gradient(ellipse 900px 500px at 50% -10%,#e9f3fa 0,transparent 60%),linear-gradient(135deg,#f7fbfe,#eef7fc 60%,#fff)}
+.hero-inner{max-width:1200px;margin:auto;padding:60px 22px;display:grid;grid-template-columns:1.05fr .95fr;gap:45px;align-items:center}
+.hero h1{font-family:var(--font-display);font-weight:900;font-size:clamp(36px,5vw,60px);line-height:1.15;margin-bottom:16px;color:var(--ink)}
+.hero h1 span{color:var(--red)}
+.hero p{font-size:18px;max-width:600px;color:var(--slate)}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.hero-art{background:#fff;border-radius:28px;padding:36px;box-shadow:0 20px 50px rgba(30,100,140,.14);display:flex;align-items:center;justify-content:center;min-height:220px}
+
+/* ============ SUMMARY CARDS (home) ============ */
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.summary-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:12px;transition:.15s}
+.summary-card:hover{box-shadow:0 14px 34px rgba(13,42,63,.08);transform:translateY(-2px)}
+.summary-card .ic{width:38px;height:38px;color:var(--blue)}
+.summary-card h3{font-family:var(--font-display);font-weight:800;font-size:17px}
+.summary-card p{color:var(--slate);font-size:13.5px;flex-grow:1}
+.summary-card .mini-list{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0}
+.summary-card .mini-list span{font-size:11px;background:#eef6fb;color:var(--blue-deep);padding:4px 9px;border-radius:10px;font-weight:600}
+.summary-card .go{font-size:13px;font-weight:700;color:var(--blue);margin-top:auto}
+
+/* ============ ABOUT ============ */
+.obj-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.obj-card{background:#fff;border-top:4px solid var(--blue);border-radius:16px;padding:22px;box-shadow:0 8px 22px rgba(20,70,100,.05)}
+.obj-card:nth-child(even){border-top-color:var(--red)}
+.obj-card h4{font-family:var(--font-display);font-weight:800;font-size:15px;margin-bottom:8px}
+.obj-card p{font-size:13.5px;color:var(--slate)}
+.mgmt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.mgmt-card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:22px;text-align:center}
+.mgmt-card .num{font-family:var(--font-mono);font-weight:700;color:var(--blue);font-size:12px;margin-bottom:10px}
+.mgmt-card h4{font-family:var(--font-display);font-weight:800;font-size:14.5px;margin-bottom:5px}
+.mgmt-card p{font-size:12.5px;color:var(--slate)}
+.branch-head{background:linear-gradient(135deg,#eef8fe,#fff);border:2px solid var(--blue);border-radius:20px;padding:24px 28px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.branch-head span{font-size:12.5px;color:var(--blue);font-weight:700}
+.branch-head h4{font-family:var(--font-display);font-weight:800;font-size:19px}
+.branch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.branch-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
+.branch-card span{font-size:11.5px;color:var(--slate)}
+.branch-card h4{font-family:var(--font-display);font-weight:800;font-size:15px;margin-top:4px}
+
+/* ============ PRODUCTS ============ */
+.filter-bar{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:30px}
+.search-box{position:relative;margin-bottom:16px}
+.search-box input{width:100%;padding:13px 44px 13px 16px;border-radius:14px;border:1.5px solid var(--line);font-size:14.5px;background:var(--paper)}
+.search-box input:focus{outline:none;border-color:var(--blue)}
+.search-box svg{position:absolute;top:50%;right:16px;transform:translateY(-50%);width:18px;height:18px;color:var(--slate)}
+.filter-group{margin-bottom:6px}
+.filter-group .flabel{font-size:11.5px;color:var(--slate);font-weight:700;margin-bottom:8px;display:block}
+.chip-row{display:flex;gap:9px;flex-wrap:wrap}
+.fchip{font-size:13px;font-weight:600;padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);color:var(--slate);background:#fff;cursor:pointer;transition:.15s}
+.fchip:hover{border-color:var(--blue)}
+.fchip.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.results-count{font-size:13px;color:var(--slate);margin-bottom:16px}
+.product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pcard{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:.15s}
+.pcard:hover{box-shadow:0 14px 30px rgba(13,42,63,.08)}
+.pcard .img{height:130px;background:#f2f7fa;display:flex;align-items:center;justify-content:center;color:var(--line)}
+.pcard .img svg{width:40px;height:40px}
+.pcard .body{padding:18px}
+.pcard .cat{font-size:10.5px;font-weight:700;color:var(--blue-deep);background:#eef6fb;display:inline-block;padding:3px 9px;border-radius:8px;margin-bottom:8px}
+.pcard h4{font-family:var(--font-display);font-weight:800;font-size:16px}
+.pcard .gen{color:var(--blue);font-size:12px;font-weight:600;margin:3px 0 10px}
+.pcard .meta{font-size:12.5px;color:var(--slate);margin-bottom:6px}
+.pcard .badge{font-size:11px;font-weight:700;padding:5px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:5px;margin-top:8px;background:#eaf7ef;color:var(--success)}
+.pcard .badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.empty-state{text-align:center;padding:60px 20px;color:var(--slate)}
+.product-note{margin-top:34px;padding:18px 22px;background:#fff7e8;border-right:4px solid var(--sand);border-radius:10px;font-size:13.5px;line-height:1.9}
+.partners-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:16px}
+.partner-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}
+.partner-card .logo{height:40px;margin-bottom:14px}
+.partner-card .flag{font-size:13px;color:var(--slate);margin-bottom:10px}
+.partner-card h4{font-family:var(--font-display);font-weight:800;font-size:16px;margin-bottom:8px}
+.partner-card p{font-size:13.5px;color:var(--slate);margin-bottom:10px}
+.partner-card a{font-size:13px;color:var(--blue);font-weight:700}
+
+/* ============ ACTIVITIES ============ */
+.activity-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.activity-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:30px;display:flex;gap:20px;align-items:flex-start}
+.activity-card .ic{width:44px;height:44px;color:var(--blue);flex-shrink:0}
+.activity-card h4{font-family:var(--font-display);font-weight:800;font-size:18px;margin-bottom:8px}
+.activity-card p{color:var(--slate);font-size:14px}
+.focus-note{margin-top:30px;text-align:center}
+
+/* ============ CONTACT ============ */
+.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.contact-card{background:var(--ink);color:#fff;border-radius:18px;padding:24px}
+.contact-card .role{font-size:12.5px;color:#9fc1d6;margin-bottom:10px;font-weight:600}
+.contact-card .num{font-family:var(--font-mono);font-size:19px;font-weight:600;direction:ltr;text-align:right;margin-bottom:12px}
+.contact-card .actions{display:flex;gap:8px;flex-wrap:wrap}
+.contact-card .wa{font-size:12.5px;color:#d9f7e2;font-weight:700}
+
+/* ============ FOOTER ============ */
+footer.site{background:var(--ink);color:#c9d8e1;text-align:center;padding:30px 0;font-size:13px}
+
+/* ============ TOAST ============ */
+#toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:14px 26px;border-radius:14px;font-size:13.5px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:200;display:flex;align-items:center;gap:10px}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.success{border-right:4px solid var(--success)}
+#toast.error{border-right:4px solid var(--danger)}
+
+/* ============ MODAL ============ */
+.modal-bg{position:fixed;inset:0;background:rgba(13,42,63,.5);display:flex;align-items:center;justify-content:center;z-index:150;padding:20px}
+.modal{background:#fff;border-radius:22px;padding:32px;max-width:520px;width:100%;max-height:88vh;overflow:auto}
+.modal h3{font-family:var(--font-display);font-weight:800;font-size:19px;margin-bottom:6px}
+.modal .sub{font-size:13px;color:var(--slate);margin-bottom:22px}
+.form-row{margin-bottom:16px}
+.form-row label{display:block;font-size:12.5px;font-weight:700;color:var(--slate);margin-bottom:7px}
+.form-row input,.form-row select,.form-row textarea{width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--paper);font-size:14px}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{outline:none;border-color:var(--blue)}
+.form-row textarea{min-height:80px;resize:vertical}
+.form-row .hint{font-size:11px;color:var(--slate);margin-top:5px}
+.form-row .err{font-size:11.5px;color:var(--danger);margin-top:5px;display:none}
+.form-row.invalid input{border-color:var(--danger)}
+.form-row.invalid .err{display:block}
+.modal-actions{display:flex;gap:10px;margin-top:24px}
+
+/* ============ ADMIN ============ */
+#page-admin{background:var(--paper);min-height:100vh}
+.admin-login-wrap{min-height:90vh;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.admin-login-card{background:#fff;border-radius:24px;padding:44px;max-width:400px;width:100%;box-shadow:0 20px 50px rgba(13,42,63,.1)}
+.admin-login-card .lockup{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:8px}
+.admin-login-card h2{font-family:var(--font-display);font-weight:800;font-size:22px;text-align:center;margin-bottom:4px}
+.admin-login-card .sub{text-align:center;color:var(--slate);font-size:13px;margin-bottom:28px}
+.demo-note{background:#eef6fb;border:1px dashed #b9d8e9;border-radius:12px;padding:12px 14px;font-size:11.5px;color:var(--blue-deep);margin-top:18px;line-height:1.7}
+
+.admin-shell{display:flex;min-height:100vh}
+.admin-sidebar{width:250px;background:var(--ink);color:#cfe0ea;flex-shrink:0;display:flex;flex-direction:column;padding:24px 0}
+.admin-sidebar .brand{color:#fff;padding:0 22px 24px;border-bottom:1px solid #ffffff1a;margin-bottom:16px}
+.admin-nav{display:flex;flex-direction:column;gap:2px;padding:0 12px;flex-grow:1}
+.admin-nav button{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:none;border:none;color:#b9cddb;text-align:right;cursor:pointer;font-size:13.5px;font-weight:600;width:100%}
+.admin-nav button svg{width:18px;height:18px;flex-shrink:0}
+.admin-nav button:hover{background:#ffffff0f;color:#fff}
+.admin-nav button.active{background:var(--blue);color:#fff}
+.admin-sidebar .logout{margin:12px 12px 0;padding:0 2px}
+.admin-main{flex-grow:1;min-width:0}
+.admin-topbar{background:#fff;border-bottom:1px solid var(--line);padding:16px 30px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.admin-topbar .who b{display:block;font-size:14px}
+.admin-topbar .who span{font-size:12px;color:var(--slate)}
+.admin-menu-toggle{display:none;align-items:center;gap:8px;background:none;border:1px solid var(--line);border-radius:20px;padding:8px 14px;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer}
+.admin-sidebar-backdrop{display:none}
+.admin-content{padding:30px}
+.admin-content h2{font-family:var(--font-display);font-weight:800;font-size:24px;margin-bottom:4px}
+.admin-content .sub{color:var(--slate);font-size:13.5px;margin-bottom:26px}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:34px}
+.stat-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}
+.stat-card .n{font-family:var(--font-display);font-weight:900;font-size:30px;color:var(--blue)}
+.stat-card .l{font-size:12.5px;color:var(--slate);margin-top:4px}
+.admin-panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;margin-bottom:24px;overflow-x:auto}
+table.admin-table{min-width:560px}
+.panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:12px}
+.panel-head h3{font-family:var(--font-display);font-weight:800;font-size:16px}
+table.admin-table{width:100%;border-collapse:collapse;font-size:13.5px}
+table.admin-table th{background:var(--blue);color:#fff;text-align:right;padding:12px 14px;font-weight:700;font-size:12.5px}
+table.admin-table th:first-child{border-radius:10px 0 0 0}
+table.admin-table th:last-child{border-radius:0 10px 0 0}
+table.admin-table td{padding:12px 14px;border-bottom:1px solid var(--line)}
+table.admin-table tr:nth-child(even) td{background:var(--paper)}
+table.admin-table td.actions{display:flex;gap:6px}
+.icon-btn{width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--slate)}
+.icon-btn:hover{border-color:var(--blue);color:var(--blue)}
+.icon-btn.del:hover{border-color:var(--danger);color:var(--danger)}
+.icon-btn svg{width:15px;height:15px}
+.status-pill{font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px}
+.status-pill.on{background:#eaf7ef;color:var(--success)}
+.status-pill.off{background:#f1f3f5;color:var(--slate)}
+.role-desc{font-size:11.5px;color:var(--slate);margin-top:6px;background:var(--paper);padding:8px 10px;border-radius:8px}
+
+@media(max-width:960px){
+  nav.main{display:none}
+  .menu-toggle{display:block}
+  .hero-inner,.grid-2,.summary-grid,.obj-grid,.mgmt-grid,.branch-grid,.grid-3,.grid-4,.product-grid,.activity-grid,.contact-grid,.partners-grid,.stat-grid{grid-template-columns:repeat(2,1fr)}
+  .admin-menu-toggle{display:flex}
+  .admin-sidebar{position:fixed;top:0;bottom:0;right:0;width:min(280px,80vw);z-index:120;transform:translateX(100%);transition:transform .2s;overflow-y:auto}
+  .admin-sidebar.open{transform:translateX(0)}
+  .admin-sidebar-backdrop.open{display:block;position:fixed;inset:0;background:rgba(13,42,63,.5);z-index:110}
+}
+@media(max-width:640px){
+  .summary-grid,.obj-grid,.mgmt-grid,.branch-grid,.grid-3,.grid-4,.product-grid,.activity-grid,.contact-grid,.partners-grid,.stat-grid,.grid-2,.hero-inner{grid-template-columns:1fr}
+  .hero-inner{padding:40px 18px}
+  .page section{padding:48px 0}
+  .admin-content{padding:18px}
+  .admin-topbar{padding:14px 18px}
+}
+
+/* ============ LTR (English) overrides — public site only, admin stays RTL ============ */
+html[dir="ltr"] .search-box input{padding:13px 16px 13px 44px}
+html[dir="ltr"] .search-box svg{right:auto;left:16px}
+html[dir="ltr"] .product-note{border-right:none;border-left:4px solid var(--sand)}
+html[dir="ltr"] .contact-card .num{text-align:left}
+</style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site" id="siteHeader">
+  <div class="nav-row">
+    <a href="#/" class="brand"><span class="capsule" id="brandMark"></span> <span data-i18n="brand_full">سبأ للأنشطة المتعددة</span></a>
+    <nav class="main" id="mainNav">
+      <a href="#/" data-route="/" data-i18n="nav_home">الرئيسية</a>
+      <a href="#/about" data-route="/about" data-i18n="nav_about">من نحن</a>
+      <a href="#/products" data-route="/products" data-i18n="nav_products">المنتجات</a>
+      <a href="#/activities" data-route="/activities" data-i18n="nav_activities">الأنشطة الأخرى</a>
+      <a href="#/contact" data-route="/contact" data-i18n="nav_contact">تواصل معنا</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="lang-btn" id="langBtn">English</button>
+      <button class="menu-toggle" id="menuToggle">☰</button>
+    </div>
+  </div>
+</header>
+
+<main id="app">
+
+<!-- ===================== PAGE: HOME ===================== -->
+<section class="page" id="page-home">
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <h1><span data-i18n="hero_h1_pre">سبأ</span> <span data-i18n="hero_h1_span">للأنشطة المتعددة</span></h1>
+        <p id="heroSubtitle">نحو مستقبل أفضل من خلال تنوع الأنشطة، الشراكات الدولية، الجودة، والالتزام بخدمة المجتمع.</p>
+        <div class="btn-row">
+          <a href="#/about" class="btn primary" data-i18n="btn_about">تعرف علينا</a>
+          <a href="#/contact" class="btn secondary" data-i18n="nav_contact">تواصل معنا</a>
+        </div>
+      </div>
+      <div class="hero-art"><span class="capsule" data-size="120"></span></div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="section-title"><h2 data-i18n="home_summary_title">لمحة سريعة عن سبأ</h2><p data-i18n="home_summary_sub">كل ما تحتاج معرفته عن المجموعة في مكان واحد</p></div>
+      <div class="summary-grid" id="homeSummaryGrid"></div>
+    </div>
+  </section>
+</section>
+
+<!-- ===================== PAGE: ABOUT ===================== -->
+<section class="page hidden" id="page-about">
+  <section style="padding-top:50px">
+    <div class="wrap">
+      <div class="section-title"><h2 data-i18n="nav_about">من نحن</h2><p data-i18n="about_sub">سبأ للأنشطة المتعددة — سبأ الطبية</p></div>
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="font-family:var(--font-display);color:var(--blue);margin-bottom:12px" data-i18n="about_company_title">نبذة عن الشركة</h3>
+          <p id="aboutNabza" style="margin-bottom:12px">مجموعة سبأ للأنشطة المتعددة هي شركة سودانية خالصة، تأسست بجهد سوداني ورؤية وطنية طموحة، إيمانًا بأن القطاع الخاص يمكن أن يكون ركيزة أساسية في دعم الاقتصاد السوداني وبناء مستقبل أكثر إنتاجًا واستدامة.</p>
+          <p style="margin-bottom:12px" data-i18n="about_p2">تركز المجموعة بصورة أساسية على المجال الطبي والدوائي، من خلال صناعة واستيراد وتوزيع وتسويق الدواء، وتسعى إلى استجلاب الخبرات والمصانع الدولية وتوطين صناعة الدواء داخل السودان.</p>
+          <p data-i18n="about_p3">كما تمتد أنشطة المجموعة إلى مجالات أخرى مهمة، من بينها النشاط الزراعي والهندسي والخدمي، بما يعزز مساهمتها في الاقتصاد الوطني.</p>
+        </div>
+        <div class="card">
+          <h3 style="font-family:var(--font-display);color:var(--blue);margin-bottom:12px" data-i18n="about_vision_title">رؤيتنا</h3>
+          <p style="margin-bottom:20px" data-i18n="about_vision">أن نكون مؤسسة سودانية رائدة وموثوقة في القطاع الطبي والدوائي، وأن نساهم في بناء منظومة صحية وصناعية متطورة تجعل السودان قادرًا على تلبية احتياجاته الدوائية.</p>
+          <h3 style="font-family:var(--font-display);color:var(--blue);margin-bottom:12px" data-i18n="about_mission_title">رسالتنا</h3>
+          <p data-i18n="about_mission">تقديم منتجات وخدمات طبية ودوائية موثوقة، وبناء شراكات دولية فاعلة، ونقل المعرفة والخبرة، وتطوير الكفاءات السودانية بمهنية ومسؤولية.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#fff">
+    <div class="wrap">
+      <div class="section-title"><h2 data-i18n="objectives_title">أهدافنا وتطلعاتنا</h2><p data-i18n="objectives_sub">رؤية وطنية طموحة ومسؤولية تجاه صحة الإنسان والاقتصاد السوداني</p></div>
+      <div class="obj-grid" id="objectivesGrid"></div>
+      <div class="card" style="margin-top:26px;text-align:center">
+        <h3 style="font-family:var(--font-display);color:var(--blue);margin-bottom:10px" data-i18n="goal_title">غايتنا</h3>
+        <p data-i18n="goal_text">نعمل ونتطلع إلى وطنٍ معافى وسليم، وثقافة صحية واعية، وأن يصبح السودان قبلةً يتجه إليها الجميع لتلقي العلاج.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-title"><h2 data-i18n="management_title">الإدارة التنفيذية</h2><p data-i18n="management_sub">قيادة مهنية نحو مستقبل دوائي وصحي أفضل</p></div>
+      <div class="mgmt-grid" id="managementGrid"></div>
+    </div>
+  </section>
+
+  <section style="background:#fff">
+    <div class="wrap">
+      <div class="section-title"><h2 data-i18n="branches_title">المركز الرئيسي والأفرع</h2><p data-i18n="branches_sub">حضور متنامٍ لسبأ الطبية داخل السودان</p></div>
+      <div id="branchesArea"></div>
+    </div>
+  </section>
+</section>
+
+<!-- ===================== PAGE: PRODUCTS ===================== -->
+<section class="page hidden" id="page-products">
+  <section style="padding-top:50px">
+    <div class="wrap">
+      <div class="section-title"><h2 data-i18n="products_title">منتجات سبأ الطبية</h2><p data-i18n="products_sub">مجموعة مختارة من المنتجات الدوائية والصحية، قابلة للفلترة والبحث</p></div>
+
+      <div class="filter-bar">
+        <div class="search-box">
+          <input type="text" id="productSearch" placeholder="ابحث بالاسم التجاري أو الاسم العلمي..." data-i18n-ph="search_placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+        </div>
+        <div class="filter-group">
+          <span class="flabel" data-i18n="filter_category">التصنيف العلاجي</span>
+          <div class="chip-row" id="catFilters"></div>
+        </div>
+        <div class="filter-group" style="margin-top:14px">
+          <span class="flabel" data-i18n="filter_form">الشكل الصيدلاني</span>
+          <div class="chip-row" id="formFilters"></div>
+        </div>
+        <div class="filter-group" style="margin-top:14px">
+          <span class="flabel" data-i18n="filter_mfr">الشركة المصنّعة</span>
+          <div class="chip-row" id="mfrFilters"></div>
+        </div>
+      </div>
+
+      <div class="results-count" id="resultsCount"></div>
+      <div class="product-grid" id="productGrid"></div>
+      <div class="empty-state hidden" id="emptyState" data-i18n="empty_state">لا توجد منتجات مطابقة لبحثك. جرّب تعديل الفلاتر.</div>
+
+      <div class="product-note">
+        <strong data-i18n="product_note_label">تنبيه طبي:</strong> <span data-i18n="product_note">المعلومات الواردة في هذا القسم تعريفية وليست بديلًا عن النشرة الدوائية أو استشارة الطبيب والصيدلي. المضادات الحيوية والأدوية ذات الجرعات العالية تُستخدم وفق التشخيص والوصفة الطبية واللوائح المحلية.</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#fff">
+    <div class="wrap">
+      <div class="section-title"><h2 data-i18n="partners_title">شركاؤنا الدوليون</h2><p data-i18n="partners_sub">شراكات استراتيجية نحو مستقبل دوائي أفضل</p></div>
+      <div class="partners-grid">
+        <div class="partner-card">
+          <div class="flag">🇵🇰 <span data-i18n="pakistan">باكستان</span></div>
+          <h4>SAMI Pharmaceuticals (Pvt.) Ltd.</h4>
+          <p data-i18n="partner1_desc">شريك دوائي من باكستان ضمن توجه سبأ الطبية لبناء علاقات تصنيع وتوريد دولية.</p>
+          <a href="https://samipharma.com/" target="_blank" rel="noopener" data-i18n="partner_link">الموقع الرسمي للشركة ↗</a>
+        </div>
+        <div class="partner-card">
+          <img class="logo" src="midmark-logo.png" alt="Midmark Health Care">
+          <div class="flag">🇵🇰 <span data-i18n="pakistan">باكستان</span></div>
+          <h4>Midmark Health Care</h4>
+          <p data-i18n="partner2_desc">شريك التصنيع الدوائي لعدد من منتجات سبأ الطبية، ومن بينها Vimacef وLevocure وLulast.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ===================== PAGE: ACTIVITIES ===================== -->
+<section class="page hidden" id="page-activities">
+  <section style="padding-top:50px">
+    <div class="wrap">
+      <div class="section-title"><h2 data-i18n="activities_title">الأنشطة الأخرى للمجموعة</h2><p id="activitiesIntro">إلى جانب سبأ الطبية، تضم سبأ للأنشطة المتعددة أنشطة أخرى متنوعة.</p></div>
+      <div class="activity-grid" id="activitiesGrid"></div>
+      <div class="card focus-note">
+        <h3 style="font-family:var(--font-display);color:var(--blue);margin-bottom:8px" data-i18n="activities_focus_title">سبأ الطبية هي محور الموقع</h3>
+        <p data-i18n="activities_focus">يعرض هذا الموقع بصورة أساسية أعمال سبأ الطبية ومنتجاتها وشراكاتها وخدماتها، بينما توضح هذه الصفحة بقية أنشطة المجموعة بصورة مختصرة.</p>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ===================== PAGE: CONTACT ===================== -->
+<section class="page hidden" id="page-contact">
+  <section style="padding-top:50px">
+    <div class="wrap">
+      <div class="section-title"><h2 data-i18n="nav_contact">تواصل معنا</h2><p data-i18n="contact_sub">يسعدنا استقبال استفساراتكم وتواصلكم مع الإدارات المختصة</p></div>
+      <div class="contact-grid" id="contactGrid"></div>
+    </div>
+  </section>
+</section>
+
+<!-- ===================== PAGE: ADMIN (internal tool — Arabic only, RTL always) ===================== -->
+<section class="page hidden" id="page-admin">
+
+  <!-- login -->
+  <div class="admin-login-wrap" id="adminLoginView">
+    <div class="admin-login-card">
+      <div class="lockup"><span class="capsule" data-size="34"></span></div>
+      <h2>لوحة تحكم سبأ</h2>
+      <p class="sub">الدخول مخصص للموظفين المخوّلين فقط</p>
+      <form id="loginForm">
+        <div class="form-row" id="phoneRow">
+          <label>رقم الهاتف السوداني</label>
+          <input type="text" id="loginPhone" placeholder="0912345678" dir="ltr" style="text-align:left">
+          <div class="hint">مثال: 0912345678 أو 0111511196</div>
+          <div class="err">الرجاء إدخال رقم هاتف سوداني صحيح</div>
+        </div>
+        <div class="form-row" id="emailRow">
+          <label>البريد الإلكتروني</label>
+          <input type="email" id="loginEmail" placeholder="name@sabamed.sd" dir="ltr" style="text-align:left">
+          <div class="err">الرجاء إدخال بريد إلكتروني صحيح، أو غير مسجّل في قائمة الموظفين</div>
+        </div>
+        <div class="form-row" id="passwordRow">
+          <label>كلمة المرور</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" dir="ltr" style="text-align:left">
+          <div class="err">كلمة المرور غير صحيحة</div>
+        </div>
+        <button type="submit" class="btn primary block" id="loginSubmitBtn">دخول</button>
+      </form>
+      <div class="demo-note">الدخول محمي فعليًا عبر Supabase Auth (بريد إلكتروني وكلمة مرور)، بعد التحقق من تطابق رقم الهاتف والبريد مع سجل موظف نشط.</div>
+    </div>
+  </div>
+
+  <!-- dashboard shell -->
+  <div class="admin-shell hidden" id="adminShell">
+    <div class="admin-sidebar-backdrop" id="adminSidebarBackdrop"></div>
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="brand"><span class="capsule" data-size="22"></span><span class="label">لوحة سبأ</span></div>
+      <nav class="admin-nav" id="adminNav">
+        <button data-view="overview" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg><span class="label">نظرة عامة</span></button>
+        <button data-view="content-home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span class="label">محتوى الرئيسية</span></button>
+        <button data-view="content-about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span class="label">من نحن</span></button>
+        <button data-view="products"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="8" width="16" height="9" rx="4"/><path d="M12 8v9"/></svg><span class="label">المنتجات</span></button>
+        <button data-view="orders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/><path d="M9 13h6M9 17h6"/></svg><span class="label">الطلبات</span></button>
+        <button data-view="content-activities"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M12 20V4M20 20v-7"/></svg><span class="label">الأنشطة الأخرى</span></button>
+        <button data-view="contacts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L7.9 9.7a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2.3Z"/></svg><span class="label">تواصل معنا</span></button>
+        <button data-view="employees"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2 21c0-3.5 3-6 7-6s7 2.5 7 6"/><circle cx="18" cy="8" r="2.5"/><path d="M22 21c0-2.6-1.8-4.7-4.3-5.5"/></svg><span class="label">الموظفون</span></button>
+      </nav>
+      <div class="logout"><button class="btn secondary block small" id="logoutBtn" style="background:transparent;border-color:#ffffff40;color:#fff">تسجيل الخروج</button></div>
+    </aside>
+
+    <div class="admin-main">
+      <div class="admin-topbar">
+        <button class="admin-menu-toggle" id="adminMenuToggle">☰ <span>الأقسام</span></button>
+        <div class="who"><b id="whoName">—</b><span id="whoRole">—</span></div>
+        <a href="#/" class="btn ghost">↩ عرض الموقع العام</a>
+      </div>
+      <div class="admin-content" id="adminContent"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site" id="siteFooter">
+  <div class="wrap" data-i18n="footer_copy">© 2026 Saba Multi-Activities Group — جميع الحقوق محفوظة</div>
+</footer>
+
+<div id="toast"></div>
+<div id="modalRoot"></div>
+
+<script>
+/* ======================================================================
+   I18N — public site is bilingual (AR/EN); the admin panel stays Arabic-only
+   ====================================================================== */
+const I18N = {
+  ar: {
+    brand_full:'سبأ للأنشطة المتعددة',
+    nav_home:'الرئيسية', nav_about:'من نحن', nav_products:'المنتجات', nav_activities:'الأنشطة الأخرى', nav_contact:'تواصل معنا',
+    hero_h1_pre:'سبأ', hero_h1_span:'للأنشطة المتعددة',
+    btn_about:'تعرف علينا',
+    home_summary_title:'لمحة سريعة عن سبأ', home_summary_sub:'كل ما تحتاج معرفته عن المجموعة في مكان واحد',
+    card_about_more:'اقرأ المزيد ←', card_products_more:'تصفح كل المنتجات ←',
+    card_activities_desc:'الزراعية، الهندسية، والاستيراد والتصدير — إلى جانب سبأ الطبية.', card_activities_more:'استعرض الأنشطة ←',
+    card_contact_more:'كل بيانات التواصل ←', products_count_suffix:'منتجات دوائية متوفرة حاليًا',
+
+    about_sub:'سبأ للأنشطة المتعددة — سبأ الطبية',
+    about_company_title:'نبذة عن الشركة',
+    about_p2:'تركز المجموعة بصورة أساسية على المجال الطبي والدوائي، من خلال صناعة واستيراد وتوزيع وتسويق الدواء، وتسعى إلى استجلاب الخبرات والمصانع الدولية وتوطين صناعة الدواء داخل السودان.',
+    about_p3:'كما تمتد أنشطة المجموعة إلى مجالات أخرى مهمة، من بينها النشاط الزراعي والهندسي والخدمي، بما يعزز مساهمتها في الاقتصاد الوطني.',
+    about_vision_title:'رؤيتنا',
+    about_vision:'أن نكون مؤسسة سودانية رائدة وموثوقة في القطاع الطبي والدوائي، وأن نساهم في بناء منظومة صحية وصناعية متطورة تجعل السودان قادرًا على تلبية احتياجاته الدوائية.',
+    about_mission_title:'رسالتنا',
+    about_mission:'تقديم منتجات وخدمات طبية ودوائية موثوقة، وبناء شراكات دولية فاعلة، ونقل المعرفة والخبرة، وتطوير الكفاءات السودانية بمهنية ومسؤولية.',
+    objectives_title:'أهدافنا وتطلعاتنا', objectives_sub:'رؤية وطنية طموحة ومسؤولية تجاه صحة الإنسان والاقتصاد السوداني',
+    goal_title:'غايتنا', goal_text:'نعمل ونتطلع إلى وطنٍ معافى وسليم، وثقافة صحية واعية، وأن يصبح السودان قبلةً يتجه إليها الجميع لتلقي العلاج.',
+    management_title:'الإدارة التنفيذية', management_sub:'قيادة مهنية نحو مستقبل دوائي وصحي أفضل',
+    branches_title:'المركز الرئيسي والأفرع', branches_sub:'حضور متنامٍ لسبأ الطبية داخل السودان',
+    head_office_label:'المركز الرئيسي',
+
+    products_title:'منتجات سبأ الطبية', products_sub:'مجموعة مختارة من المنتجات الدوائية والصحية، قابلة للفلترة والبحث',
+    search_placeholder:'ابحث بالاسم التجاري أو الاسم العلمي...',
+    filter_category:'التصنيف العلاجي', filter_form:'الشكل الصيدلاني', filter_mfr:'الشركة المصنّعة', filter_all:'الكل',
+    empty_state:'لا توجد منتجات مطابقة لبحثك. جرّب تعديل الفلاتر.',
+    product_note_label:'تنبيه طبي:',
+    product_note:'المعلومات الواردة في هذا القسم تعريفية وليست بديلًا عن النشرة الدوائية أو استشارة الطبيب والصيدلي. المضادات الحيوية والأدوية ذات الجرعات العالية تُستخدم وفق التشخيص والوصفة الطبية واللوائح المحلية.',
+    partners_title:'شركاؤنا الدوليون', partners_sub:'شراكات استراتيجية نحو مستقبل دوائي أفضل',
+    pakistan:'باكستان',
+    partner1_desc:'شريك دوائي من باكستان ضمن توجه سبأ الطبية لبناء علاقات تصنيع وتوريد دولية.',
+    partner2_desc:'شريك التصنيع الدوائي لعدد من منتجات سبأ الطبية، ومن بينها Vimacef وLevocure وLulast.',
+    partner_link:'الموقع الرسمي للشركة ↗',
+    field_form:'الشكل:', field_mfr:'المصنّع:',
+
+    activities_title:'الأنشطة الأخرى للمجموعة',
+    activities_focus_title:'سبأ الطبية هي محور الموقع',
+    activities_focus:'يعرض هذا الموقع بصورة أساسية أعمال سبأ الطبية ومنتجاتها وشراكاتها وخدماتها، بينما توضح هذه الصفحة بقية أنشطة المجموعة بصورة مختصرة.',
+
+    contact_sub:'يسعدنا استقبال استفساراتكم وتواصلكم مع الإدارات المختصة',
+    call_btn:'اتصال', whatsapp_btn:'واتساب مباشر',
+    footer_copy:'© 2026 Saba Multi-Activities Group — جميع الحقوق محفوظة',
+
+    order_now:'اطلب الآن',
+    order_modal_title:'طلب منتج',
+    order_modal_sub:'أدخل بياناتك وسيتواصل معك فريقنا بخصوص:',
+    order_label_name:'الاسم الكامل',
+    order_label_phone:'رقم الهاتف',
+    order_err_phone:'الرجاء إدخال رقم هاتف سوداني صحيح',
+    order_label_email:'البريد الإلكتروني (اختياري)',
+    order_err_email:'بريد إلكتروني غير صحيح',
+    order_submit:'إرسال الطلب',
+    order_cancel:'إلغاء',
+    order_fill_required:'الرجاء تعبئة الاسم ورقم هاتف صحيح',
+    order_error:'تعذّر إرسال الطلب',
+    order_success:'تم استلام طلبك بنجاح، سيتواصل معك فريقنا قريبًا',
+  },
+  en: {
+    brand_full:'Saba Multi-Activities Group',
+    nav_home:'Home', nav_about:'About Us', nav_products:'Products', nav_activities:'Other Activities', nav_contact:'Contact Us',
+    hero_h1_pre:'Saba', hero_h1_span:'Multi-Activities Group',
+    btn_about:'Learn More',
+    home_summary_title:'A Quick Look at Saba', home_summary_sub:'Everything you need to know about the Group in one place',
+    card_about_more:'Read more ←', card_products_more:'Browse all products ←',
+    card_activities_desc:'Agriculture, engineering, and import & export — alongside Saba Medical.', card_activities_more:'View activities ←',
+    card_contact_more:'All contact details ←', products_count_suffix:'medical products currently available',
+
+    about_sub:'Saba Multi-Activities Group — Saba Medical',
+    about_company_title:'About the Company',
+    about_p2:'The Group focuses primarily on the medical and pharmaceutical field, through manufacturing, importing, distributing and marketing medicine, and seeks to attract international expertise and factories and localize pharmaceutical manufacturing within Sudan.',
+    about_p3:'The Group\'s activities also extend to other important fields, including agriculture, engineering and services, enhancing its contribution to the national economy.',
+    about_vision_title:'Our Vision',
+    about_vision:'To be a leading and trusted Sudanese institution in the medical and pharmaceutical sector, and to contribute to building an advanced health and industrial system that makes Sudan able to meet its pharmaceutical needs.',
+    about_mission_title:'Our Mission',
+    about_mission:'Providing reliable medical and pharmaceutical products and services, building effective international partnerships, transferring knowledge and expertise, and developing Sudanese talent professionally and responsibly.',
+    objectives_title:'Our Objectives & Aspirations', objectives_sub:'An ambitious national vision and a responsibility toward human health and the Sudanese economy',
+    goal_title:'Our Goal', goal_text:'We work toward and aspire to a healthy and sound nation, an aware health culture, and for Sudan to become a destination everyone turns to for treatment.',
+    management_title:'Executive Management', management_sub:'Professional leadership toward a better pharmaceutical and health future',
+    branches_title:'Head Office & Branches', branches_sub:'A growing presence for Saba Medical across Sudan',
+    head_office_label:'Head Office',
+
+    products_title:'Saba Medical Products', products_sub:'A curated selection of pharmaceutical and health products, filterable and searchable',
+    search_placeholder:'Search by trade name or generic name...',
+    filter_category:'Therapeutic Category', filter_form:'Pharmaceutical Form', filter_mfr:'Manufacturer', filter_all:'All',
+    empty_state:'No products match your search. Try adjusting the filters.',
+    product_note_label:'Medical Notice:',
+    product_note:'The information in this section is for reference only and is not a substitute for the package insert or consulting a physician or pharmacist. Antibiotics and high-dose medications are used according to diagnosis, prescription, and local regulations.',
+    partners_title:'Our International Partners', partners_sub:'Strategic partnerships toward a better pharmaceutical future',
+    pakistan:'Pakistan',
+    partner1_desc:'A pharmaceutical partner from Pakistan as part of Saba Medical\'s drive to build international manufacturing and supply relationships.',
+    partner2_desc:'The pharmaceutical manufacturing partner for a number of Saba Medical products, including Vimacef, Levocure and Lulast.',
+    partner_link:'Company official website ↗',
+    field_form:'Form:', field_mfr:'Manufacturer:',
+
+    activities_title:'Other Activities of the Group',
+    activities_focus_title:'Saba Medical Is the Focus of This Site',
+    activities_focus:'This site primarily showcases Saba Medical\'s work, products, partnerships and services, while this page briefly outlines the Group\'s other activities.',
+
+    contact_sub:'We are happy to receive your inquiries and connect you with the relevant departments',
+    call_btn:'Call', whatsapp_btn:'WhatsApp',
+    footer_copy:'© 2026 Saba Multi-Activities Group — All rights reserved',
+
+    order_now:'Order Now',
+    order_modal_title:'Order a Product',
+    order_modal_sub:'Enter your details and our team will contact you regarding:',
+    order_label_name:'Full Name',
+    order_label_phone:'Phone Number',
+    order_err_phone:'Please enter a valid Sudanese phone number',
+    order_label_email:'Email (optional)',
+    order_err_email:'Invalid email address',
+    order_submit:'Submit Order',
+    order_cancel:'Cancel',
+    order_fill_required:'Please fill in your name and a valid phone number',
+    order_error:'Could not submit the order',
+    order_success:'Your order has been received — our team will contact you shortly',
+  },
+};
+
+// canonical (Arabic, as stored in the DB) → bilingual display labels for fixed taxonomy values
+const CATEGORY_LABELS = {
+  'مضادات العدوى البكتيرية': { ar:'مضادات العدوى البكتيرية', en:'Antibacterial Infections' },
+  'الجهاز التنفسي والحساسية': { ar:'الجهاز التنفسي والحساسية', en:'Respiratory & Allergy' },
+  'فيتامين D وصحة العظام': { ar:'فيتامين D وصحة العظام', en:'Vitamin D & Bone Health' },
+};
+const FORM_LABELS = {
+  'كبسولات': { ar:'كبسولات', en:'Capsules' },
+  'مسحوق لتحضير معلق': { ar:'مسحوق لتحضير معلق', en:'Powder for Oral Suspension' },
+  'أقراص': { ar:'أقراص', en:'Tablets' },
+  'أمبول للحقن': { ar:'أمبول للحقن', en:'Injectable Ampoule' },
+  'كبسولة جيلاتينية رخوة': { ar:'كبسولة جيلاتينية رخوة', en:'Soft Gelatin Capsule' },
+};
+const STATUS_LABELS = { 'متوفر': { ar:'متوفر', en:'Available' } };
+
+let currentLang = localStorage.getItem('saba_lang') === 'en' ? 'en' : 'ar';
+function t(key){ return (I18N[currentLang] && I18N[currentLang][key]) ?? I18N.ar[key] ?? key; }
+function trLabel(map, value){ const e = map[value]; return e ? e[currentLang] : (value || ''); }
+function applyStaticI18n(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{ el.placeholder = t(el.dataset.i18nPh); });
+  document.getElementById('langBtn').textContent = currentLang === 'ar' ? 'English' : 'العربية';
+  document.title = currentLang === 'ar'
+    ? 'سبأ للأنشطة المتعددة | Saba Multi-Activities Group'
+    : 'Saba Multi-Activities Group | سبأ للأنشطة المتعددة';
+}
+function setLang(lang){
+  currentLang = lang;
+  localStorage.setItem('saba_lang', lang);
+  applyPageDirection();
+  applyStaticI18n();
+  router(true);
+}
+// admin panel always stays Arabic/RTL regardless of the public-site language toggle
+function applyPageDirection(){
+  const onAdmin = location.hash.replace('#','') === '/admin';
+  const dir = onAdmin ? 'rtl' : (currentLang === 'ar' ? 'rtl' : 'ltr');
+  const lang = onAdmin ? 'ar' : currentLang;
+  document.documentElement.dir = dir;
+  document.documentElement.lang = lang;
+}
+
+/* ======================================================================
+   DATA — single source of truth, reused across pages (no duplication)
+   ====================================================================== */
+const sb = window.supabase.createClient(window.SUPABASE_CONFIG.url, window.SUPABASE_CONFIG.anonKey);
+
+// live data caches — populated from Supabase, never hard-coded
+let PRODUCTS = [];
+let CONTACTS = [];
+let EMPLOYEES = [];      // only ever populated for مدير النظام (RLS-enforced)
+let ORDERS = [];         // only ever populated for admin roles allowed to view orders (RLS-enforced)
+let MANAGEMENT = [];
+let BRANCHES = [];
+let HEAD_OFFICE = null;
+let OBJECTIVES = [];
+let ACTIVITIES = [];
+let CONTENT = { home_hero_subtitle:'', about_nabza:'', activities_intro:'', home_hero_subtitle_en:'', about_nabza_en:'', activities_intro_en:'' };
+
+const CATEGORIES = ['مضادات العدوى البكتيرية','الجهاز التنفسي والحساسية','فيتامين D وصحة العظام'];
+const FORMS = ['كبسولات','مسحوق لتحضير معلق','أقراص','أمبول للحقن','كبسولة جيلاتينية رخوة'];
+const MANUFACTURERS = ['Midmark Health Care','SAMI Pharmaceuticals'];
+// least-privileged first: this order also drives the default selection in the
+// add-employee form, so a forgotten dropdown never silently grants full admin
+const ROLE_DESCRIPTIONS = {
+  'مسؤول تواصل':'تعديل بيانات صفحة تواصل معنا فقط.',
+  'مسؤول منتجات':'إضافة/تعديل/حذف المنتجات والفلاتر فقط.',
+  'محرر محتوى':'تعديل نصوص وصور صفحات: الرئيسية، من نحن، الأنشطة الأخرى.',
+  'مدير النظام':'صلاحية كاملة: إدارة الصفحات، المنتجات، التواصل، وإضافة/تعطيل الموظفين.',
+};
+// which sidebar views each role may see — mirrors the PRD permissions table
+const ROLE_VIEWS = {
+  'مدير النظام': ['overview','content-home','content-about','products','orders','content-activities','contacts','employees'],
+  'محرر محتوى': ['overview','content-home','content-about','content-activities'],
+  'مسؤول منتجات': ['overview','products','orders'],
+  'مسؤول تواصل': ['overview','contacts'],
+};
+
+let productFilters = { cat:'الكل', form:'الكل', mfr:'الكل', q:'' };
+let currentAdminView = 'overview';
+let currentUser = null;      // { name, role } — from employees table, once authenticated
+let currentSession = null;   // Supabase auth session
+
+/* ======================================================================
+   DATA FETCHERS — every read goes through Supabase (RLS decides what's visible)
+   ====================================================================== */
+async function fetchPublicData(){
+  const [p, c, m, b, o, a, pc] = await Promise.all([
+    sb.from('products').select('*').order('id'),
+    sb.from('contacts').select('*').order('sort_order'),
+    sb.from('management').select('*').order('sort_order'),
+    sb.from('branches').select('*').order('sort_order'),
+    sb.from('objectives').select('*').order('sort_order'),
+    sb.from('activities').select('*').order('sort_order'),
+    sb.from('page_content').select('*'),
+  ]);
+  [p,c,m,b,o,a,pc].forEach(r=>{ if(r.error) console.error(r.error); });
+  PRODUCTS = (p.data||[]).map(x=>({id:x.id, name:x.name, name_en:x.name_en, generic:x.generic, generic_en:x.generic_en, category:x.category, form:x.form, uses:x.uses, uses_en:x.uses_en, manufacturer:x.manufacturer, status:x.status}));
+  CONTACTS = (c.data||[]).map(x=>({id:x.id, role:x.role, role_en:x.role_en, phone:x.phone, whatsapp:x.whatsapp}));
+  MANAGEMENT = (m.data||[]).map(x=>({num:x.num, name:x.name, role:x.role, role_en:x.role_en}));
+  const branchRows = b.data||[];
+  HEAD_OFFICE = branchRows.find(x=>x.is_head_office) || null;
+  BRANCHES = branchRows.filter(x=>!x.is_head_office);
+  OBJECTIVES = (o.data||[]).map(x=>({t:x.title, t_en:x.title_en, d:x.description, d_en:x.description_en}));
+  ACTIVITIES = (a.data||[]).map(x=>({t:x.title, t_en:x.title_en, d:x.description, d_en:x.description_en, icon:x.icon}));
+  (pc.data||[]).forEach(row=>{
+    CONTENT[row.page+'_'+row.field_key] = row.field_value;
+    CONTENT[row.page+'_'+row.field_key+'_en'] = row.field_value_en;
+  });
+}
+
+async function fetchEmployeesIfAllowed(){
+  const { data, error } = await sb.from('employees').select('*').order('created_at');
+  if(error){ EMPLOYEES = []; return; }
+  EMPLOYEES = data || [];
+}
+
+async function fetchOrdersIfAllowed(){
+  const { data, error } = await sb.from('orders').select('*').order('created_at', { ascending:false });
+  if(error){ ORDERS = []; return; }
+  ORDERS = data || [];
+}
+
+/* ======================================================================
+   ICONS
+   ====================================================================== */
+const ICONS = {
+  about: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="19"/><path d="M24 15v18M15 24h18"/></svg>',
+  products: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="16" width="28" height="16" rx="8"/><path d="M24 16v16"/></svg>',
+  activities: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 40V16M24 40V8M40 40v-14"/></svg>',
+  contact: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M40 30v6a4 4 0 0 1-4.4 4 36 36 0 0 1-15.6-5.6A35 35 0 0 1 9.6 24 36 36 0 0 1 4 8.4 4 4 0 0 1 8 4h6a4 4 0 0 1 4 3.4c.2 1.8.6 3.6 1.2 5.3a4 4 0 0 1-1 4.2L15.8 19.3a29 29 0 0 0 12.9 12.9l2.4-2.4a4 4 0 0 1 4.2-1c1.7.6 3.5 1 5.3 1.2a4 4 0 0 1 3.4 4.1Z"/></svg>',
+  agri: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 40V20"/><path d="M24 20c0-8-6-11-12-11 0 8 4 12 12 11Z"/><path d="M24 24c0-8 6-11 12-11 0 8-4 12-12 11Z"/></svg>',
+  eng: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="7"/><path d="M24 6v6M24 36v6M6 24h6M36 24h6M11 11l4.2 4.2M32.8 32.8L37 37M37 11l-4.2 4.2M15.2 32.8L11 37"/></svg>',
+  trade: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16h20M20 10l6 6-6 6"/><path d="M42 32H22M28 26l-6 6 6 6"/></svg>',
+  other: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="14" height="14" rx="3"/><rect x="26" y="8" width="14" height="14" rx="3"/><rect x="8" y="26" width="14" height="14" rx="3"/><rect x="26" y="26" width="14" height="14" rx="3"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>',
+  edit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+  trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/></svg>',
+  power: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.8 0"/></svg>',
+  pill: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><rect x="10" y="16" width="28" height="16" rx="8"/><path d="M24 16v16"/></svg>',
+};
+
+function capsuleSVG(size){
+  const w = size, h = size*0.4;
+  return `<svg width="${w}" height="${h}" viewBox="0 0 120 48" style="overflow:visible">
+    <path d="M60,0 H24 A24,24 0 0 0 24,48 H60 Z" fill="#ef3340"/>
+    <path d="M60,0 H96 A24,24 0 0 1 96,48 H60 Z" fill="#1976b9"/>
+    <rect x="58" y="0" width="4" height="48" fill="#f7fafc"/>
+  </svg>`;
+}
+function mountCapsules(){
+  document.querySelectorAll('.capsule').forEach(el=>{
+    const size = el.dataset.size || 24;
+    el.innerHTML = capsuleSVG(size);
+    el.style.transform = 'rotate(45deg)';
+  });
+}
+
+/* ======================================================================
+   TOAST
+   ====================================================================== */
+function toast(msg, type){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show ' + (type || 'success');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>{ t.className = ''; }, 2800);
+}
+
+/* ======================================================================
+   MODAL
+   ====================================================================== */
+function openModal(html){
+  const root = document.getElementById('modalRoot');
+  root.innerHTML = `<div class="modal-bg" id="modalBg"><div class="modal">${html}</div></div>`;
+  document.getElementById('modalBg').addEventListener('click', (e)=>{ if(e.target.id==='modalBg') closeModal(); });
+}
+function closeModal(){ document.getElementById('modalRoot').innerHTML = ''; }
+
+/* ======================================================================
+   RENDER: HOME
+   ====================================================================== */
+function renderHome(){
+  const featured = PRODUCTS.slice(0,3).map(p=>`<span>${(currentLang==='en' ? (p.name_en||p.name) : p.name)}</span>`).join('');
+  const primaryContact = CONTACTS[0];
+  const aboutText = currentLang==='en' ? (CONTENT.about_nabza_en||CONTENT.about_nabza) : CONTENT.about_nabza;
+  document.getElementById('homeSummaryGrid').innerHTML = `
+    <a href="#/about" class="summary-card">
+      <div class="ic">${ICONS.about}</div>
+      <h3>${t('nav_about')}</h3>
+      <p>${(aboutText||'').slice(0,90)}…</p>
+      <span class="go">${t('card_about_more')}</span>
+    </a>
+    <a href="#/products" class="summary-card">
+      <div class="ic">${ICONS.products}</div>
+      <h3>${t('nav_products')}</h3>
+      <p>${PRODUCTS.length} ${t('products_count_suffix')}</p>
+      <div class="mini-list">${featured}</div>
+      <span class="go">${t('card_products_more')}</span>
+    </a>
+    <a href="#/activities" class="summary-card">
+      <div class="ic">${ICONS.activities}</div>
+      <h3>${t('nav_activities')}</h3>
+      <p>${t('card_activities_desc')}</p>
+      <span class="go">${t('card_activities_more')}</span>
+    </a>
+    <a href="#/contact" class="summary-card">
+      <div class="ic">${ICONS.contact}</div>
+      <h3>${t('nav_contact')}</h3>
+      <p>${primaryContact ? (currentLang==='en' ? (primaryContact.role_en||primaryContact.role) : primaryContact.role) : ''}</p>
+      <div class="mini-list">${primaryContact ? `<span dir="ltr">${primaryContact.phone}</span>` : ''}</div>
+      <span class="go">${t('card_contact_more')}</span>
+    </a>
+  `;
+  const heroSubtitle = currentLang==='en' ? (CONTENT.home_hero_subtitle_en||CONTENT.home_hero_subtitle) : CONTENT.home_hero_subtitle;
+  document.getElementById('heroSubtitle').textContent = heroSubtitle || document.getElementById('heroSubtitle').textContent;
+}
+
+/* ======================================================================
+   RENDER: ABOUT
+   ====================================================================== */
+function renderAbout(){
+  const nabza = currentLang==='en' ? (CONTENT.about_nabza_en||CONTENT.about_nabza) : CONTENT.about_nabza;
+  document.getElementById('aboutNabza').textContent = nabza || document.getElementById('aboutNabza').textContent;
+
+  document.getElementById('objectivesGrid').innerHTML = OBJECTIVES.map(o=>`
+    <div class="obj-card"><h4>${currentLang==='en' ? (o.t_en||o.t) : o.t}</h4><p>${currentLang==='en' ? (o.d_en||o.d) : o.d}</p></div>
+  `).join('');
+
+  document.getElementById('managementGrid').innerHTML = MANAGEMENT.map(m=>`
+    <div class="mgmt-card"><div class="num">${m.num||''}</div><h4>${m.name}</h4><p>${currentLang==='en' ? (m.role_en||m.role) : m.role}</p></div>
+  `).join('');
+
+  document.getElementById('branchesArea').innerHTML = `
+    <div class="branch-head"><span>${t('head_office_label')}</span><h4>${HEAD_OFFICE ? (currentLang==='en' ? (HEAD_OFFICE.name_en||HEAD_OFFICE.name) : HEAD_OFFICE.name) : '—'}</h4></div>
+    <div class="branch-grid">
+      ${BRANCHES.map(b=>`<div class="branch-card"><span>${currentLang==='en' ? (b.state_en||b.state) : b.state}</span><h4>${currentLang==='en' ? (b.name_en||b.name) : b.name}</h4></div>`).join('')}
+    </div>
+  `;
+}
+
+/* ======================================================================
+   RENDER: PRODUCTS (with live filters)
+   ====================================================================== */
+function buildChip(label, group, value, active){
+  return `<button class="fchip ${active?'active':''}" data-group="${group}" data-value="${value}">${label}</button>`;
+}
+function renderProductFilters(){
+  const all = t('filter_all');
+  document.getElementById('catFilters').innerHTML =
+    buildChip(all,'cat','الكل', productFilters.cat==='الكل') +
+    CATEGORIES.map(c=>buildChip(trLabel(CATEGORY_LABELS,c),'cat',c, productFilters.cat===c)).join('');
+  document.getElementById('formFilters').innerHTML =
+    buildChip(all,'form','الكل', productFilters.form==='الكل') +
+    FORMS.map(f=>buildChip(trLabel(FORM_LABELS,f),'form',f, productFilters.form===f)).join('');
+  document.getElementById('mfrFilters').innerHTML =
+    buildChip(all,'mfr','الكل', productFilters.mfr==='الكل') +
+    MANUFACTURERS.map(m=>buildChip(m,'mfr',m, productFilters.mfr===m)).join('');
+
+  document.querySelectorAll('.filter-bar .fchip').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      productFilters[btn.dataset.group] = btn.dataset.value;
+      renderProductFilters();
+      renderProductGrid();
+    });
+  });
+}
+function renderProductGrid(){
+  const q = productFilters.q.trim().toLowerCase();
+  const filtered = PRODUCTS.filter(p=>{
+    if(productFilters.cat!=='الكل' && p.category!==productFilters.cat) return false;
+    if(productFilters.form!=='الكل' && p.form!==productFilters.form) return false;
+    if(productFilters.mfr!=='الكل' && p.manufacturer!==productFilters.mfr) return false;
+    if(q && !(p.name.toLowerCase().includes(q) || p.generic.toLowerCase().includes(q) || (p.name_en||'').toLowerCase().includes(q) || (p.generic_en||'').toLowerCase().includes(q))) return false;
+    return true;
+  });
+  document.getElementById('resultsCount').textContent = currentLang==='en'
+    ? `${filtered.length} of ${PRODUCTS.length} products`
+    : `${filtered.length} من ${PRODUCTS.length} منتج`;
+  document.getElementById('emptyState').classList.toggle('hidden', filtered.length>0);
+  document.getElementById('productGrid').innerHTML = filtered.map(p=>`
+    <div class="pcard">
+      <div class="img">${ICONS.pill}</div>
+      <div class="body">
+        <span class="cat">${trLabel(CATEGORY_LABELS,p.category)}</span>
+        <h4>${currentLang==='en' ? (p.name_en||p.name) : p.name}</h4>
+        <div class="gen">${currentLang==='en' ? (p.generic_en||p.generic) : p.generic}</div>
+        <div class="meta"><strong>${t('field_form')}</strong> ${trLabel(FORM_LABELS,p.form)}</div>
+        <div class="meta">${currentLang==='en' ? (p.uses_en||p.uses) : p.uses}</div>
+        <div class="meta"><strong>${t('field_mfr')}</strong> ${p.manufacturer||'—'}</div>
+        <span class="badge">${trLabel(STATUS_LABELS,p.status)}</span>
+        <button class="btn primary block" style="margin-top:12px" data-order-product="${p.id}">${t('order_now')}</button>
+      </div>
+    </div>
+  `).join('');
+  document.querySelectorAll('[data-order-product]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const product = PRODUCTS.find(p=> p.id === Number(btn.dataset.orderProduct));
+      openOrderModal(product);
+    });
+  });
+}
+function renderProducts(){
+  renderProductFilters();
+  renderProductGrid();
+  const search = document.getElementById('productSearch');
+  search.value = productFilters.q;
+  search.oninput = ()=>{ productFilters.q = search.value; renderProductGrid(); };
+}
+
+/* ======================================================================
+   ORDER NOW — public order-request form (bilingual), writes to `orders`
+   ====================================================================== */
+function openOrderModal(product){
+  if(!product) return;
+  const productLabel = currentLang==='en' ? (product.name_en||product.name) : product.name;
+  openModal(`
+    <h3>${t('order_modal_title')}</h3>
+    <p class="sub">${t('order_modal_sub')} <strong>${productLabel}</strong></p>
+    <form id="orderForm">
+      <div class="form-row" id="ordNameRow"><label>${t('order_label_name')}</label><input type="text" id="ordName" required></div>
+      <div class="form-row" id="ordPhoneRow"><label>${t('order_label_phone')}</label><input type="text" id="ordPhone" dir="ltr" style="text-align:left" placeholder="0912345678">
+        <div class="err">${t('order_err_phone')}</div></div>
+      <div class="form-row" id="ordEmailRow"><label>${t('order_label_email')}</label><input type="email" id="ordEmail" dir="ltr" style="text-align:left" placeholder="name@example.com">
+        <div class="err">${t('order_err_email')}</div></div>
+      <div class="modal-actions">
+        <button type="submit" class="btn primary block">${t('order_submit')}</button>
+        <button type="button" class="btn secondary block" id="cancelOrder">${t('order_cancel')}</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('cancelOrder').addEventListener('click', closeModal);
+  document.getElementById('orderForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const name = document.getElementById('ordName').value.trim();
+    const phone = document.getElementById('ordPhone').value.trim();
+    const email = document.getElementById('ordEmail').value.trim();
+    const nameRow = document.getElementById('ordNameRow');
+    const phoneRow = document.getElementById('ordPhoneRow');
+    const emailRow = document.getElementById('ordEmailRow');
+    let ok = true;
+    if(!name){ nameRow.classList.add('invalid'); ok=false; } else nameRow.classList.remove('invalid');
+    if(!isValidSudanPhone(phone)){ phoneRow.classList.add('invalid'); ok=false; } else phoneRow.classList.remove('invalid');
+    if(email && !isValidEmail(email)){ emailRow.classList.add('invalid'); ok=false; } else emailRow.classList.remove('invalid');
+    if(!ok){ toast(t('order_fill_required'),'error'); return; }
+
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    const { error } = await sb.from('orders').insert({
+      product_id: product.id,
+      product_name: product.name,
+      product_name_en: product.name_en || null,
+      customer_name: name,
+      customer_phone: phone,
+      customer_email: email || null,
+    });
+    submitBtn.disabled = false;
+    if(error){ toast(t('order_error') + ': ' + error.message, 'error'); return; }
+    closeModal();
+    toast(t('order_success'));
+  });
+}
+
+/* ======================================================================
+   RENDER: ACTIVITIES
+   ====================================================================== */
+function renderActivities(){
+  const intro = currentLang==='en' ? (CONTENT.activities_intro_en||CONTENT.activities_intro) : CONTENT.activities_intro;
+  document.getElementById('activitiesIntro').textContent = intro || document.getElementById('activitiesIntro').textContent;
+  document.getElementById('activitiesGrid').innerHTML = ACTIVITIES.map(a=>`
+    <div class="activity-card"><div class="ic">${ICONS[a.icon]||ICONS.other}</div><div><h4>${currentLang==='en' ? (a.t_en||a.t) : a.t}</h4><p>${currentLang==='en' ? (a.d_en||a.d) : a.d}</p></div></div>
+  `).join('');
+}
+
+/* ======================================================================
+   RENDER: CONTACT (shared source with home)
+   ====================================================================== */
+function renderContact(){
+  document.getElementById('contactGrid').innerHTML = CONTACTS.map(c=>`
+    <div class="contact-card">
+      <div class="role">${currentLang==='en' ? (c.role_en||c.role) : c.role}</div>
+      <div class="num" dir="ltr">${c.phone}</div>
+      <div class="actions">
+        <a class="btn small" style="background:#ffffff1a;color:#fff" href="tel:${c.phone}">${t('call_btn')}</a>
+        ${c.whatsapp ? `<a class="btn small wa" style="background:#ffffff1a" href="https://wa.me/249${c.phone.replace(/^0/,'')}" target="_blank">${t('whatsapp_btn')}</a>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ======================================================================
+   ROUTER
+   ====================================================================== */
+const ROUTES = ['/','/about','/products','/activities','/contact','/admin'];
+let dataLoaded = false;
+async function router(skipDataFetch){
+  let hash = location.hash.replace('#','') || '/';
+  if(!ROUTES.includes(hash)) hash = '/';
+
+  if(!dataLoaded){
+    await fetchPublicData();
+    dataLoaded = true;
+  }
+
+  applyPageDirection();
+
+  document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+  const map = {'/':'page-home','/about':'page-about','/products':'page-products','/activities':'page-activities','/contact':'page-contact','/admin':'page-admin'};
+  document.getElementById(map[hash]).classList.remove('hidden');
+  document.querySelectorAll('nav.main a').forEach(a=> a.classList.toggle('active', a.dataset.route===hash));
+  document.getElementById('siteFooter').classList.toggle('hidden', hash==='/admin');
+  document.getElementById('siteHeader').classList.toggle('hidden', hash==='/admin');
+  if(!skipDataFetch) window.scrollTo({top:0, behavior:'instant'});
+  if(hash==='/') renderHome();
+  if(hash==='/about') renderAbout();
+  if(hash==='/products') renderProducts();
+  if(hash==='/activities') renderActivities();
+  if(hash==='/contact') renderContact();
+  if(hash==='/admin') await renderAdminEntry();
+  document.getElementById('mainNav').style.display='';
+}
+window.addEventListener('hashchange', router);
+document.getElementById('langBtn').addEventListener('click', ()=> setLang(currentLang==='ar' ? 'en' : 'ar'));
+
+/* ======================================================================
+   ADMIN — auth (Supabase Auth email+password, gated by phone+email match)
+   ====================================================================== */
+function isValidSudanPhone(v){
+  return /^0(1|9)\d{8}$/.test(v.trim());
+}
+function isValidEmail(v){
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+}
+
+async function refreshCurrentUser(){
+  const { data: { session } } = await sb.auth.getSession();
+  currentSession = session;
+  if(!session){ currentUser = null; return; }
+  const { data, error } = await sb.from('employees').select('name, role, active').eq('user_id', session.user.id).maybeSingle();
+  if(error || !data || !data.active){ currentUser = null; return; }
+  currentUser = { name: data.name, role: data.role };
+}
+
+async function renderAdminEntry(){
+  await refreshCurrentUser();
+  document.getElementById('adminLoginView').classList.toggle('hidden', !!currentUser);
+  document.getElementById('adminShell').classList.toggle('hidden', !currentUser);
+  document.getElementById('loginForm').classList.remove('hidden');
+  if(currentUser){
+    document.getElementById('whoName').textContent = currentUser.name;
+    document.getElementById('whoRole').textContent = currentUser.role;
+    const allowed = ROLE_VIEWS[currentUser.role] || ['overview'];
+    if(currentUser.role === 'مدير النظام'){ await fetchEmployeesIfAllowed(); }
+    if(allowed.includes('orders')){ await fetchOrdersIfAllowed(); }
+    document.querySelectorAll('#adminNav button[data-view]').forEach(b=>{
+      b.classList.toggle('hidden', !allowed.includes(b.dataset.view));
+    });
+    if(!allowed.includes(currentAdminView)) currentAdminView = 'overview';
+    setAdminView(currentAdminView);
+  }
+}
+
+document.getElementById('loginForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const phone = document.getElementById('loginPhone').value;
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+  const phoneRow = document.getElementById('phoneRow');
+  const emailRow = document.getElementById('emailRow');
+  const passwordRow = document.getElementById('passwordRow');
+  let ok = true;
+  if(!isValidSudanPhone(phone)){ phoneRow.classList.add('invalid'); ok=false; } else phoneRow.classList.remove('invalid');
+  if(!isValidEmail(email)){ emailRow.classList.add('invalid'); ok=false; } else emailRow.classList.remove('invalid');
+  if(!password){ passwordRow.classList.add('invalid'); ok=false; } else passwordRow.classList.remove('invalid');
+  if(!ok){ toast('تحقق من صحة البيانات المُدخلة','error'); return; }
+
+  const btn = document.getElementById('loginSubmitBtn');
+  btn.disabled = true; btn.textContent = 'جارٍ التحقق...';
+  const { data: isEmployee, error: verifyErr } = await sb.rpc('verify_employee_login', { p_phone: phone.trim(), p_email: email.trim() });
+  if(verifyErr || !isEmployee){
+    btn.disabled = false; btn.textContent = 'دخول';
+    toast('رقم الهاتف والبريد الإلكتروني غير مطابقين لأي موظف نشط','error');
+    return;
+  }
+  const { error: passErr } = await sb.auth.signInWithPassword({ email: email.trim(), password });
+  btn.disabled = false; btn.textContent = 'دخول';
+  if(passErr){
+    passwordRow.classList.add('invalid');
+    toast('تعذّر تسجيل الدخول: ' + passErr.message, 'error');
+    return;
+  }
+  passwordRow.classList.remove('invalid');
+  document.getElementById('loginPassword').value = '';
+  toast('تم تسجيل الدخول بنجاح');
+  await renderAdminEntry();
+});
+
+document.getElementById('logoutBtn').addEventListener('click', async ()=>{
+  await sb.auth.signOut();
+  currentUser = null;
+  document.getElementById('loginForm').reset();
+  await renderAdminEntry();
+});
+
+sb.auth.onAuthStateChange((_event, _session)=>{
+  if(location.hash.replace('#','') === '/admin'){ renderAdminEntry(); }
+});
+
+/* ======================================================================
+   ADMIN — navigation between internal views
+   ====================================================================== */
+document.getElementById('adminNav').addEventListener('click', (e)=>{
+  const btn = e.target.closest('button[data-view]');
+  if(!btn || btn.classList.contains('hidden')) return;
+  setAdminView(btn.dataset.view);
+  closeAdminSidebar();
+});
+function openAdminSidebar(){
+  document.getElementById('adminSidebar').classList.add('open');
+  document.getElementById('adminSidebarBackdrop').classList.add('open');
+}
+function closeAdminSidebar(){
+  document.getElementById('adminSidebar').classList.remove('open');
+  document.getElementById('adminSidebarBackdrop').classList.remove('open');
+}
+document.getElementById('adminMenuToggle').addEventListener('click', openAdminSidebar);
+document.getElementById('adminSidebarBackdrop').addEventListener('click', closeAdminSidebar);
+function setAdminView(view){
+  currentAdminView = view;
+  document.querySelectorAll('#adminNav button').forEach(b=> b.classList.toggle('active', b.dataset.view===view));
+  const renderers = {
+    overview: adminOverview, 'content-home': adminContentHome, 'content-about': adminContentAbout,
+    products: adminProducts, orders: adminOrders, 'content-activities': adminContentActivities, contacts: adminContacts, employees: adminEmployees,
+  };
+  document.getElementById('adminContent').innerHTML = renderers[view] ? renderers[view]() : '';
+  bindAdminViewEvents(view);
+}
+
+function adminOverview(){
+  return `
+    <h2>نظرة عامة</h2>
+    <p class="sub">ملخص سريع لحالة الموقع والمحتوى</p>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="n">${PRODUCTS.length}</div><div class="l">منتج مُدرج</div></div>
+      <div class="stat-card"><div class="n">${EMPLOYEES.length || '—'}</div><div class="l">موظف مُفعّل للوحة التحكم</div></div>
+      <div class="stat-card"><div class="n">${BRANCHES.length + (HEAD_OFFICE?1:0)}</div><div class="l">فرع + المركز الرئيسي</div></div>
+      <div class="stat-card"><div class="n">${CONTACTS.length}</div><div class="l">جهة تواصل رسمية</div></div>
+      ${(ROLE_VIEWS[currentUser?.role]||[]).includes('orders') ? `<div class="stat-card"><div class="n">${ORDERS.filter(o=>o.status==='جديد').length}</div><div class="l">طلب جديد لم يُتابَع بعد</div></div>` : ''}
+    </div>
+    <div class="admin-panel">
+      <h3 style="font-family:var(--font-display);margin-bottom:10px">أهلًا بك، ${currentUser ? currentUser.name : ''}</h3>
+      <p style="color:var(--slate);font-size:14px">صلاحيتك الحالية: <strong>${currentUser ? currentUser.role : ''}</strong> — القائمة الجانبية تعرض فقط الأقسام المتاحة لك. أي تعديل يُنشر فورًا على الموقع العام عبر قاعدة البيانات.</p>
+    </div>
+  `;
+}
+
+function adminContentHome(){
+  return `
+    <h2>محتوى الصفحة الرئيسية</h2>
+    <p class="sub">النص المعروض أسفل عنوان البطل في الصفحة الرئيسية — بالعربية والإنجليزية</p>
+    <div class="admin-panel">
+      <div class="form-row"><label>الوصف التعريفي (عربي)</label>
+        <textarea id="editHeroSubtitle">${CONTENT.home_hero_subtitle||''}</textarea>
+      </div>
+      <div class="form-row"><label>الوصف التعريفي (إنجليزي)</label>
+        <textarea id="editHeroSubtitleEn" dir="ltr" style="text-align:left">${CONTENT.home_hero_subtitle_en||''}</textarea>
+      </div>
+      <button class="btn primary" id="saveHero">حفظ ونشر</button>
+    </div>
+  `;
+}
+function adminContentAbout(){
+  return `
+    <h2>محتوى صفحة «من نحن»</h2>
+    <p class="sub">الفقرة الأولى من نبذة الشركة (عربي وإنجليزي) — بقية الحقول (الرؤية، الأهداف، الإدارة، الأفرع) تُدار من جداول منفصلة بنفس المبدأ</p>
+    <div class="admin-panel">
+      <div class="form-row"><label>نبذة عن الشركة (عربي)</label>
+        <textarea id="editNabza">${CONTENT.about_nabza||''}</textarea>
+      </div>
+      <div class="form-row"><label>نبذة عن الشركة (إنجليزي)</label>
+        <textarea id="editNabzaEn" dir="ltr" style="text-align:left">${CONTENT.about_nabza_en||''}</textarea>
+      </div>
+      <button class="btn primary" id="saveNabza">حفظ ونشر</button>
+    </div>
+  `;
+}
+function adminContentActivities(){
+  return `
+    <h2>محتوى صفحة «الأنشطة الأخرى»</h2>
+    <p class="sub">مقدمة الصفحة (عربي وإنجليزي) — قائمة الأنشطة أدناه للاطلاع (تعديلها التفصيلي عبر نفس مبدأ الجداول)</p>
+    <div class="admin-panel">
+      <div class="form-row"><label>مقدمة الصفحة (عربي)</label>
+        <textarea id="editActivitiesIntro">${CONTENT.activities_intro||''}</textarea>
+      </div>
+      <div class="form-row"><label>مقدمة الصفحة (إنجليزي)</label>
+        <textarea id="editActivitiesIntroEn" dir="ltr" style="text-align:left">${CONTENT.activities_intro_en||''}</textarea>
+      </div>
+      <button class="btn primary" id="saveActivities">حفظ ونشر</button>
+    </div>
+    <div class="admin-panel">
+      <div class="panel-head"><h3>الأنشطة الحالية</h3></div>
+      <table class="admin-table"><thead><tr><th>النشاط</th><th>الوصف</th></tr></thead>
+      <tbody>${ACTIVITIES.map(a=>`<tr><td>${a.t}</td><td>${a.d}</td></tr>`).join('')}</tbody></table>
+    </div>
+  `;
+}
+
+function adminProducts(){
+  return `
+    <h2>إدارة المنتجات</h2>
+    <p class="sub">إضافة، تعديل، أو حذف منتجات صفحة المنتجات العامة — محفوظة فعليًا في قاعدة البيانات</p>
+    <div class="admin-panel">
+      <div class="panel-head">
+        <h3>كل المنتجات (${PRODUCTS.length})</h3>
+        <button class="btn primary small" id="addProductBtn">+ إضافة منتج</button>
+      </div>
+      <table class="admin-table">
+        <thead><tr><th>الاسم التجاري</th><th>الاسم العلمي</th><th>التصنيف</th><th>الشكل</th><th>الحالة</th><th></th></tr></thead>
+        <tbody>${PRODUCTS.map(p=>`
+          <tr>
+            <td>${p.name}</td><td>${p.generic}</td><td>${p.category}</td><td>${p.form}</td>
+            <td><span class="status-pill on">${p.status}</span></td>
+            <td class="actions">
+              <button class="icon-btn del" data-del-product="${p.id}">${ICONS.trash}</button>
+            </td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function adminContacts(){
+  return `
+    <h2>إدارة تواصل معنا</h2>
+    <p class="sub">مصدر بيانات واحد تُسحب منه الصفحة الرئيسية وصفحة تواصل معنا — لا تكرار</p>
+    <div class="admin-panel">
+      <div class="panel-head"><h3>جهات التواصل (${CONTACTS.length})</h3></div>
+      <table class="admin-table">
+        <thead><tr><th>المسمى الوظيفي</th><th>رقم الهاتف</th><th>واتساب</th></tr></thead>
+        <tbody>${CONTACTS.map(c=>`
+          <tr><td>${c.role}</td><td dir="ltr" style="text-align:right">${c.phone}</td><td>${c.whatsapp?'مفعّل':'—'}</td></tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function adminOrders(){
+  return `
+    <h2>الطلبات</h2>
+    <p class="sub">طلبات "اطلب الآن" الواردة من صفحة المنتجات العامة، ببيانات العميل الكاملة</p>
+    <div class="admin-panel">
+      <div class="panel-head"><h3>كل الطلبات (${ORDERS.length})</h3></div>
+      <table class="admin-table">
+        <thead><tr><th>التاريخ</th><th>اسم العميل</th><th>رقم الهاتف</th><th>البريد الإلكتروني</th><th>المنتج المطلوب</th><th>الحالة</th><th></th></tr></thead>
+        <tbody>${ORDERS.map(o=>`
+          <tr>
+            <td>${new Date(o.created_at).toLocaleString('ar-SD', { dateStyle:'medium', timeStyle:'short' })}</td>
+            <td>${o.customer_name}</td>
+            <td dir="ltr" style="text-align:right"><a href="tel:${o.customer_phone}" style="color:inherit;text-decoration:underline">${o.customer_phone}</a></td>
+            <td dir="ltr" style="text-align:right">${o.customer_email ? `<a href="mailto:${o.customer_email}" style="color:inherit;text-decoration:underline">${o.customer_email}</a>` : '—'}</td>
+            <td>${o.product_name}</td>
+            <td><span class="status-pill ${o.status==='تم التواصل'?'on':'off'}">${o.status}</span></td>
+            <td class="actions">
+              <button class="icon-btn" data-toggle-order="${o.id}" title="${o.status==='جديد'?'تعليم كـ تم التواصل':'إرجاع إلى جديد'}">${ICONS.power}</button>
+              <button class="icon-btn del" data-del-order="${o.id}">${ICONS.trash}</button>
+            </td>
+          </tr>`).join('') || `<tr><td colspan="7" style="text-align:center;color:var(--slate);padding:24px">لا توجد طلبات بعد</td></tr>`}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function adminEmployees(){
+  const myId = currentSession?.user?.id;
+  return `
+    <h2>الموظفون والصلاحيات</h2>
+    <p class="sub">من يملك حق الدخول للوحة التحكم والتعديل — يظهر هذا القسم فقط لمدير النظام</p>
+    <div class="admin-panel">
+      <div class="panel-head">
+        <h3>كل الموظفين (${EMPLOYEES.length})</h3>
+        <button class="btn primary small" id="addEmployeeBtn">+ إضافة موظف</button>
+      </div>
+      <table class="admin-table">
+        <thead><tr><th>الاسم</th><th>الهاتف</th><th>البريد الإلكتروني</th><th>الدور</th><th>الحالة</th><th></th></tr></thead>
+        <tbody>${EMPLOYEES.map(emp=>{
+          const isMe = !!myId && emp.user_id === myId;
+          return `
+          <tr>
+            <td>${emp.name}${isMe ? ' <span style="color:var(--slate);font-size:11px">(أنت)</span>' : ''}</td><td dir="ltr" style="text-align:right">${emp.phone}</td><td dir="ltr" style="text-align:right">${emp.email}</td>
+            <td>${emp.role}</td>
+            <td><span class="status-pill ${emp.active?'on':'off'}">${emp.active?'نشط':'معطل'}</span></td>
+            <td class="actions">${isMe
+              ? `<span style="color:var(--slate);font-size:11.5px">لا يمكنك تعديل حسابك من هنا</span>`
+              : `<button class="icon-btn" data-toggle-emp="${emp.id}">${ICONS.power}</button>
+                 <button class="icon-btn del" data-del-emp="${emp.id}">${ICONS.trash}</button>`}
+            </td>
+          </tr>`;}).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+/* ======================================================================
+   ADMIN — bind events per view (real Supabase writes)
+   ====================================================================== */
+function bindAdminViewEvents(view){
+  if(view==='content-home'){
+    document.getElementById('saveHero').addEventListener('click', async ()=>{
+      const val = document.getElementById('editHeroSubtitle').value;
+      const valEn = document.getElementById('editHeroSubtitleEn').value;
+      const { error } = await sb.from('page_content').upsert({ page:'home', field_key:'hero_subtitle', field_value: val, field_value_en: valEn }, { onConflict:'page,field_key' });
+      if(error){ toast('تعذّر الحفظ: ' + error.message, 'error'); return; }
+      CONTENT.home_hero_subtitle = val;
+      CONTENT.home_hero_subtitle_en = valEn;
+      toast('تم حفظ محتوى الصفحة الرئيسية ونشره');
+    });
+  }
+  if(view==='content-about'){
+    document.getElementById('saveNabza').addEventListener('click', async ()=>{
+      const val = document.getElementById('editNabza').value;
+      const valEn = document.getElementById('editNabzaEn').value;
+      const { error } = await sb.from('page_content').upsert({ page:'about', field_key:'nabza', field_value: val, field_value_en: valEn }, { onConflict:'page,field_key' });
+      if(error){ toast('تعذّر الحفظ: ' + error.message, 'error'); return; }
+      CONTENT.about_nabza = val;
+      CONTENT.about_nabza_en = valEn;
+      toast('تم حفظ محتوى «من نحن» ونشره');
+    });
+  }
+  if(view==='content-activities'){
+    document.getElementById('saveActivities').addEventListener('click', async ()=>{
+      const val = document.getElementById('editActivitiesIntro').value;
+      const valEn = document.getElementById('editActivitiesIntroEn').value;
+      const { error } = await sb.from('page_content').upsert({ page:'activities', field_key:'intro', field_value: val, field_value_en: valEn }, { onConflict:'page,field_key' });
+      if(error){ toast('تعذّر الحفظ: ' + error.message, 'error'); return; }
+      CONTENT.activities_intro = val;
+      CONTENT.activities_intro_en = valEn;
+      toast('تم حفظ محتوى الأنشطة الأخرى ونشره');
+    });
+  }
+  if(view==='products'){
+    document.getElementById('addProductBtn').addEventListener('click', openAddProductModal);
+    document.querySelectorAll('[data-del-product]').forEach(btn=>{
+      btn.addEventListener('click', ()=> confirmDelete('هل تريد حذف هذا المنتج نهائيًا؟', async ()=>{
+        const { error } = await sb.from('products').delete().eq('id', Number(btn.dataset.delProduct));
+        if(error){ toast('تعذّر الحذف: ' + error.message, 'error'); return; }
+        PRODUCTS = PRODUCTS.filter(p=> p.id !== Number(btn.dataset.delProduct));
+        toast('تم حذف المنتج');
+        setAdminView('products');
+      }));
+    });
+  }
+  if(view==='orders'){
+    document.querySelectorAll('[data-toggle-order]').forEach(btn=>{
+      btn.addEventListener('click', async ()=>{
+        const order = ORDERS.find(o=> String(o.id) === btn.dataset.toggleOrder);
+        const newStatus = order.status === 'جديد' ? 'تم التواصل' : 'جديد';
+        const { error } = await sb.from('orders').update({ status: newStatus }).eq('id', order.id);
+        if(error){ toast('تعذّر التحديث: ' + error.message, 'error'); return; }
+        order.status = newStatus;
+        toast('تم تحديث حالة الطلب');
+        setAdminView('orders');
+      });
+    });
+    document.querySelectorAll('[data-del-order]').forEach(btn=>{
+      btn.addEventListener('click', ()=> confirmDelete('هل تريد حذف هذا الطلب نهائيًا؟', async ()=>{
+        const { error } = await sb.from('orders').delete().eq('id', Number(btn.dataset.delOrder));
+        if(error){ toast('تعذّر الحذف: ' + error.message, 'error'); return; }
+        ORDERS = ORDERS.filter(o=> o.id !== Number(btn.dataset.delOrder));
+        toast('تم حذف الطلب');
+        setAdminView('orders');
+      }));
+    });
+  }
+  if(view==='employees'){
+    document.getElementById('addEmployeeBtn').addEventListener('click', openAddEmployeeModal);
+    document.querySelectorAll('[data-toggle-emp]').forEach(btn=>{
+      btn.addEventListener('click', async ()=>{
+        const emp = EMPLOYEES.find(x=> x.id === btn.dataset.toggleEmp);
+        if(emp.user_id === currentSession?.user?.id){ toast('لا يمكنك تعديل حسابك الخاص من هنا','error'); return; }
+        const { error } = await sb.from('employees').update({ active: !emp.active }).eq('id', emp.id);
+        if(error){ toast('تعذّر التحديث: ' + error.message, 'error'); return; }
+        emp.active = !emp.active;
+        toast(emp.active ? 'تم تفعيل الموظف' : 'تم تعطيل الموظف');
+        setAdminView('employees');
+      });
+    });
+    document.querySelectorAll('[data-del-emp]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const emp = EMPLOYEES.find(x=> x.id === btn.dataset.delEmp);
+        if(emp.user_id === currentSession?.user?.id){ toast('لا يمكنك حذف حسابك الخاص من هنا','error'); return; }
+        confirmDelete('هل تريد حذف بيانات هذا الموظف نهائيًا؟', async ()=>{
+          const { error } = await sb.from('employees').delete().eq('id', btn.dataset.delEmp);
+          if(error){ toast('تعذّر الحذف: ' + error.message, 'error'); return; }
+          EMPLOYEES = EMPLOYEES.filter(x=> x.id !== btn.dataset.delEmp);
+          toast('تم حذف الموظف');
+          setAdminView('employees');
+        });
+      });
+    });
+  }
+}
+
+function confirmDelete(msg, onConfirm){
+  openModal(`
+    <h3>تأكيد الحذف</h3>
+    <p class="sub">${msg}</p>
+    <div class="modal-actions">
+      <button class="btn danger block" id="confirmDelBtn">حذف نهائيًا</button>
+      <button class="btn secondary block" id="cancelDelBtn">إلغاء</button>
+    </div>
+  `);
+  document.getElementById('confirmDelBtn').addEventListener('click', async ()=>{ await onConfirm(); closeModal(); });
+  document.getElementById('cancelDelBtn').addEventListener('click', closeModal);
+}
+
+/* ---- add product modal ---- */
+function openAddProductModal(){
+  openModal(`
+    <h3>إضافة منتج جديد</h3>
+    <p class="sub">سيظهر المنتج فورًا في صفحة المنتجات العامة بعد الحفظ — الحقول الإنجليزية اختيارية</p>
+    <form id="addProductForm">
+      <div class="form-row"><label>الاسم التجاري (عربي/الاسم الأصلي)</label><input type="text" id="npName" required></div>
+      <div class="form-row"><label>الاسم التجاري (إنجليزي)</label><input type="text" id="npNameEn" dir="ltr" style="text-align:left"></div>
+      <div class="form-row"><label>الاسم العلمي / المادة الفعالة</label><input type="text" id="npGeneric" required></div>
+      <div class="form-row"><label>الاسم العلمي (إنجليزي)</label><input type="text" id="npGenericEn" dir="ltr" style="text-align:left"></div>
+      <div class="form-row"><label>التصنيف العلاجي</label>
+        <select id="npCategory">${CATEGORIES.map(c=>`<option>${c}</option>`).join('')}</select></div>
+      <div class="form-row"><label>الشكل الصيدلاني</label>
+        <select id="npForm">${FORMS.map(f=>`<option>${f}</option>`).join('')}</select></div>
+      <div class="form-row"><label>الشركة المصنّعة</label>
+        <select id="npMfr">${MANUFACTURERS.map(m=>`<option>${m}</option>`).join('')}</select></div>
+      <div class="form-row"><label>الاستخدامات الرئيسية (عربي)</label><textarea id="npUses" required></textarea></div>
+      <div class="form-row"><label>الاستخدامات الرئيسية (إنجليزي)</label><textarea id="npUsesEn" dir="ltr" style="text-align:left"></textarea></div>
+      <div class="modal-actions">
+        <button type="submit" class="btn primary block">حفظ ونشر</button>
+        <button type="button" class="btn secondary block" id="cancelAddProduct">إلغاء</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('cancelAddProduct').addEventListener('click', closeModal);
+  document.getElementById('addProductForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const name = document.getElementById('npName').value.trim();
+    const generic = document.getElementById('npGeneric').value.trim();
+    const uses = document.getElementById('npUses').value.trim();
+    if(!name || !generic || !uses){ toast('الرجاء تعبئة كل الحقول المطلوبة','error'); return; }
+    const row = {
+      name, generic,
+      name_en: document.getElementById('npNameEn').value.trim() || null,
+      generic_en: document.getElementById('npGenericEn').value.trim() || null,
+      category: document.getElementById('npCategory').value,
+      form: document.getElementById('npForm').value,
+      manufacturer: document.getElementById('npMfr').value,
+      uses, uses_en: document.getElementById('npUsesEn').value.trim() || null,
+      status:'متوفر',
+    };
+    const { data, error } = await sb.from('products').insert(row).select().single();
+    if(error){ toast('تعذّر الحفظ: ' + error.message, 'error'); return; }
+    PRODUCTS.push(data);
+    closeModal();
+    toast('تم إضافة المنتج بنجاح');
+    setAdminView('products');
+  });
+}
+
+/* ---- add employee modal ---- */
+function suggestPassword(){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+  let out = '';
+  for(let i=0;i<8;i++) out += chars[Math.floor(Math.random()*chars.length)];
+  return out + '#' + Math.floor(Math.random()*90+10);
+}
+function openAddEmployeeModal(){
+  openModal(`
+    <h3>إضافة موظف جديد</h3>
+    <p class="sub">حدّد كلمة مرور دخوله الآن — كل موظف له كلمة مرور خاصة به، منفصلة عن كلمة مرورك</p>
+    <form id="addEmployeeForm">
+      <div class="form-row"><label>الاسم الكامل</label><input type="text" id="neName" required></div>
+      <div class="form-row" id="nePhoneRow"><label>رقم الهاتف السوداني</label><input type="text" id="nePhone" dir="ltr" style="text-align:left" placeholder="09xxxxxxxx">
+        <div class="err">صيغة رقم هاتف سوداني غير صحيحة</div></div>
+      <div class="form-row" id="neEmailRow"><label>البريد الإلكتروني</label><input type="email" id="neEmail" dir="ltr" style="text-align:left" placeholder="name@sabamed.sd">
+        <div class="err">بريد إلكتروني غير صحيح</div></div>
+      <div class="form-row" id="nePasswordRow"><label>كلمة مرور دخوله للوحة التحكم</label>
+        <div style="display:flex;gap:8px">
+          <input type="text" id="nePassword" dir="ltr" style="text-align:left;font-family:var(--font-mono)" value="${suggestPassword()}">
+          <button type="button" class="btn secondary small" id="regenPassword" style="white-space:nowrap">توليد جديدة</button>
+        </div>
+        <div class="hint">يمكنك تعديلها كما تشاء (6 أحرف على الأقل) — شاركها مع الموظف بعد الحفظ</div>
+        <div class="err">كلمة المرور يجب ألا تقل عن 6 أحرف</div></div>
+      <div class="form-row"><label>الصلاحية</label>
+        <select id="neRole">${Object.keys(ROLE_DESCRIPTIONS).map(r=>`<option>${r}</option>`).join('')}</select>
+        <div class="role-desc" id="neRoleDesc">${ROLE_DESCRIPTIONS[Object.keys(ROLE_DESCRIPTIONS)[0]]}</div>
+      </div>
+      <div class="modal-actions">
+        <button type="submit" class="btn primary block">إضافة الموظف</button>
+        <button type="button" class="btn secondary block" id="cancelAddEmp">إلغاء</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('cancelAddEmp').addEventListener('click', closeModal);
+  document.getElementById('regenPassword').addEventListener('click', ()=>{
+    document.getElementById('nePassword').value = suggestPassword();
+  });
+  document.getElementById('neRole').addEventListener('change', (e)=>{
+    document.getElementById('neRoleDesc').textContent = ROLE_DESCRIPTIONS[e.target.value];
+  });
+  document.getElementById('addEmployeeForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const name = document.getElementById('neName').value.trim();
+    const phone = document.getElementById('nePhone').value.trim();
+    const email = document.getElementById('neEmail').value.trim();
+    const password = document.getElementById('nePassword').value;
+    let ok = true;
+    if(!isValidSudanPhone(phone)){ document.getElementById('nePhoneRow').classList.add('invalid'); ok=false; } else document.getElementById('nePhoneRow').classList.remove('invalid');
+    if(!isValidEmail(email)){ document.getElementById('neEmailRow').classList.add('invalid'); ok=false; } else document.getElementById('neEmailRow').classList.remove('invalid');
+    if(password.length < 6){ document.getElementById('nePasswordRow').classList.add('invalid'); ok=false; } else document.getElementById('nePasswordRow').classList.remove('invalid');
+    if(!name || !ok){ toast('تحقق من الاسم ورقم الهاتف والبريد الإلكتروني وكلمة المرور','error'); return; }
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    const row = { name, phone, email, role: document.getElementById('neRole').value, active:true };
+    const { data, error } = await sb.from('employees').insert(row).select().single();
+    if(error){ submitBtn.disabled = false; toast('تعذّر الإضافة: ' + error.message, 'error'); return; }
+    EMPLOYEES.push(data);
+
+    const { data: fnData, error: fnError } = await sb.functions.invoke('admin-create-employee', { body: { email, password } });
+    if(fnError || !fnData || fnData.error){
+      closeModal();
+      setAdminView('employees');
+      toast('أُضيف الموظف في السجل، لكن تعذّر إنشاء حساب الدخول: ' + (fnData?.error || fnError?.message || ''), 'error');
+      return;
+    }
+    // an existing auth account (e.g. from a previously deleted employee with the
+    // same email) doesn't fire the usual insert trigger that links user_id — do it here
+    if(fnData.reused && fnData.userId){
+      await sb.from('employees').update({ user_id: fnData.userId }).eq('id', data.id);
+      data.user_id = fnData.userId;
+    }
+    closeModal();
+    setAdminView('employees');
+    openModal(`
+      <h3>تم إضافة الموظف بنجاح</h3>
+      <p class="sub">شارك بيانات الدخول التالية مع الموظف${fnData.reused ? ' — كان هناك حساب سابق بنفس البريد فأُعيد تعيين كلمة مروره' : ''}</p>
+      <div class="form-row"><label>رقم الهاتف</label><input type="text" readonly value="${phone}" dir="ltr" style="text-align:left"></div>
+      <div class="form-row"><label>البريد الإلكتروني</label><input type="text" readonly value="${email}" dir="ltr" style="text-align:left"></div>
+      <div class="form-row"><label>كلمة المرور</label><input type="text" readonly value="${fnData.password}" dir="ltr" style="text-align:left;font-family:var(--font-mono)"></div>
+      <div class="modal-actions"><button type="button" class="btn primary block" id="closeNewEmpCreds">تم</button></div>
+    `);
+    document.getElementById('closeNewEmpCreds').addEventListener('click', closeModal);
+  });
+}
+
+/* ======================================================================
+   MOBILE MENU
+   ====================================================================== */
+document.getElementById('menuToggle').addEventListener('click', ()=>{
+  const nav = document.getElementById('mainNav');
+  const open = nav.style.display === 'flex';
+  nav.style.cssText = open ? '' : 'display:flex;position:absolute;top:100%;right:0;left:0;background:#fff;flex-direction:column;padding:14px 22px;box-shadow:0 10px 20px rgba(13,42,63,.08)';
+});
+
+/* ======================================================================
+   INIT
+   ====================================================================== */
+applyPageDirection();
+applyStaticI18n();
+mountCapsules();
+router();
+</script>
+</body>
+</html>

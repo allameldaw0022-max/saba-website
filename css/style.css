@@ -522,6 +522,7 @@ section { scroll-margin-top: var(--header-h); }
   border-radius: var(--radius-pill);
   padding: 0.25rem 0.75rem;
 }
+.work-link { margin-top: var(--space-3); padding: 0.7rem 1.5rem; font-size: 0.9rem; }
 
 /* ---------- Strengths ---------- */
 .strengths { padding: var(--space-7) 0; }
