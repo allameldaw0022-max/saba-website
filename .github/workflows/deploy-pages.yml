@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - claude/abazr-portfolio-site-2ls6dg
+      - main
   workflow_dispatch:
 
 permissions:
