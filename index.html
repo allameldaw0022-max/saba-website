@@ -198,6 +198,8 @@ html[dir="ltr"] .summary-card::before{transform-origin:left}
 .activity-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:30px;display:flex;gap:20px;align-items:flex-start;transition:.2s cubic-bezier(.2,.7,.3,1)}
 .activity-card:hover{box-shadow:var(--shadow-sm);transform:translateY(-3px)}
 .activity-card .ic{width:48px;height:48px;color:var(--blue);flex-shrink:0;background:var(--blue-50);border-radius:var(--r-md);padding:10px}
+.activity-card .ic.has-logo{width:64px;height:64px;background:#fff;padding:0;border-radius:50%;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow-xs)}
+.activity-card .ic.has-logo img{width:100%;height:100%;object-fit:cover}
 .activity-card h4{font-family:var(--font-display);font-weight:800;font-size:18px;margin-bottom:8px}
 .activity-card p{color:var(--slate);font-size:14px}
 .focus-note{margin-top:30px;text-align:center}
@@ -471,7 +473,9 @@ html[dir="ltr"] .contact-card .num{text-align:left}
 <section class="page hidden" id="page-activities">
   <section style="padding-top:50px">
     <div class="wrap">
-      <div class="section-title"><h2 data-i18n="activities_title">الأنشطة الأخرى للمجموعة</h2><p id="activitiesIntro">إلى جانب سبأ الطبية، تضم سبأ للأنشطة المتعددة أنشطة أخرى متنوعة.</p></div>
+      <div class="section-title">
+        <img src="saba-group-logo.png" alt="Saba Multi-Activities Group" style="height:64px;margin:0 auto 18px;display:block">
+        <h2 data-i18n="activities_title">الأنشطة الأخرى للمجموعة</h2><p id="activitiesIntro">إلى جانب سبأ الطبية، تضم سبأ للأنشطة المتعددة أنشطة أخرى متنوعة.</p></div>
       <div class="activity-grid" id="activitiesGrid"></div>
       <div class="card focus-note">
         <h3 style="font-family:var(--font-display);color:var(--blue);margin-bottom:8px" data-i18n="activities_focus_title">سبأ الطبية هي محور الموقع</h3>
@@ -783,7 +787,7 @@ async function fetchPublicData(){
     sb.from('page_content').select('*'),
   ]);
   [p,c,m,b,o,a,pc].forEach(r=>{ if(r.error) console.error(r.error); });
-  PRODUCTS = (p.data||[]).map(x=>({id:x.id, name:x.name, name_en:x.name_en, generic:x.generic, generic_en:x.generic_en, category:x.category, form:x.form, uses:x.uses, uses_en:x.uses_en, manufacturer:x.manufacturer, status:x.status}));
+  PRODUCTS = (p.data||[]).map(x=>({id:x.id, name:x.name, name_en:x.name_en, generic:x.generic, generic_en:x.generic_en, category:x.category, form:x.form, uses:x.uses, uses_en:x.uses_en, manufacturer:x.manufacturer, status:x.status, image_url:x.image_url}));
   CONTACTS = (c.data||[]).map(x=>({id:x.id, role:x.role, role_en:x.role_en, phone:x.phone, whatsapp:x.whatsapp}));
   MANAGEMENT = (m.data||[]).map(x=>({num:x.num, name:x.name, role:x.role, role_en:x.role_en}));
   const branchRows = b.data||[];
@@ -827,6 +831,8 @@ const ICONS = {
   power: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.8 0"/></svg>',
   pill: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><rect x="10" y="16" width="28" height="16" rx="8"/><path d="M24 16v16"/></svg>',
 };
+// real sub-brand emblems for the Group's other business units — falls back to the generic ICONS above when a unit has no dedicated logo yet
+const ACTIVITY_LOGOS = { agri:'saba-agri-logo.png', eng:'saba-eng-logo.png', trade:'saba-trade-logo.png' };
 
 function mountCapsules(){
   document.querySelectorAll('.capsule').forEach(el=>{
@@ -970,7 +976,7 @@ function renderProductGrid(){
   document.getElementById('emptyState').classList.toggle('hidden', filtered.length>0);
   document.getElementById('productGrid').innerHTML = filtered.map(p=>`
     <div class="pcard">
-      <div class="img"><span class="cat">${trLabel(CATEGORY_LABELS,p.category)}</span>${ICONS.pill}</div>
+      <div class="img"><span class="cat">${trLabel(CATEGORY_LABELS,p.category)}</span>${p.image_url ? `<img src="${p.image_url}" alt="${currentLang==='en' ? (p.name_en||p.name) : p.name}" style="width:100%;height:100%;object-fit:cover">` : ICONS.pill}</div>
       <div class="body">
         <h4>${currentLang==='en' ? (p.name_en||p.name) : p.name}</h4>
         <div class="gen">${currentLang==='en' ? (p.generic_en||p.generic) : p.generic}</div>
@@ -1056,9 +1062,11 @@ function openOrderModal(product){
 function renderActivities(){
   const intro = currentLang==='en' ? (CONTENT.activities_intro_en||CONTENT.activities_intro) : CONTENT.activities_intro;
   document.getElementById('activitiesIntro').textContent = intro || document.getElementById('activitiesIntro').textContent;
-  document.getElementById('activitiesGrid').innerHTML = ACTIVITIES.map(a=>`
-    <div class="activity-card"><div class="ic">${ICONS[a.icon]||ICONS.other}</div><div><h4>${currentLang==='en' ? (a.t_en||a.t) : a.t}</h4><p>${currentLang==='en' ? (a.d_en||a.d) : a.d}</p></div></div>
-  `).join('');
+  document.getElementById('activitiesGrid').innerHTML = ACTIVITIES.map(a=>{
+    const logo = ACTIVITY_LOGOS[a.icon];
+    const icHtml = logo ? `<img src="${logo}" alt="${currentLang==='en' ? (a.t_en||a.t) : a.t}">` : (ICONS[a.icon]||ICONS.other);
+    return `<div class="activity-card"><div class="ic${logo?' has-logo':''}">${icHtml}</div><div><h4>${currentLang==='en' ? (a.t_en||a.t) : a.t}</h4><p>${currentLang==='en' ? (a.d_en||a.d) : a.d}</p></div></div>`;
+  }).join('');
 }
 
 /* ======================================================================
@@ -1304,9 +1312,10 @@ function adminProducts(){
         <button class="btn primary small" id="addProductBtn">+ إضافة منتج</button>
       </div>
       <table class="admin-table">
-        <thead><tr><th>الاسم التجاري</th><th>الاسم العلمي</th><th>التصنيف</th><th>الشكل</th><th>الحالة</th><th></th></tr></thead>
+        <thead><tr><th></th><th>الاسم التجاري</th><th>الاسم العلمي</th><th>التصنيف</th><th>الشكل</th><th>الحالة</th><th></th></tr></thead>
         <tbody>${PRODUCTS.map(p=>`
           <tr>
+            <td>${p.image_url ? `<img src="${p.image_url}" alt="" style="width:36px;height:36px;border-radius:8px;object-fit:cover">` : `<span style="color:var(--line)">${ICONS.pill}</span>`}</td>
             <td>${p.name}</td><td>${p.generic}</td><td>${p.category}</td><td>${p.form}</td>
             <td><span class="status-pill on">${p.status}</span></td>
             <td class="actions">
@@ -1524,6 +1533,11 @@ function openAddProductModal(){
         <select id="npMfr">${MANUFACTURERS.map(m=>`<option>${m}</option>`).join('')}</select></div>
       <div class="form-row"><label>الاستخدامات الرئيسية (عربي)</label><textarea id="npUses" required></textarea></div>
       <div class="form-row"><label>الاستخدامات الرئيسية (إنجليزي)</label><textarea id="npUsesEn" dir="ltr" style="text-align:left"></textarea></div>
+      <div class="form-row"><label>صورة المنتج (اختياري)</label>
+        <input type="file" id="npImage" accept="image/*">
+        <div class="hint">تظهر الصورة في بطاقة المنتج بصفحة المنتجات العامة — يمكنك تركها فارغة إن لم تتوفر صورة</div>
+        <img id="npImagePreview" class="hidden" style="margin-top:10px;height:90px;border-radius:12px;border:1px solid var(--line);object-fit:cover">
+      </div>
       <div class="modal-actions">
         <button type="submit" class="btn primary block">حفظ ونشر</button>
         <button type="button" class="btn secondary block" id="cancelAddProduct">إلغاء</button>
@@ -1531,12 +1545,32 @@ function openAddProductModal(){
     </form>
   `);
   document.getElementById('cancelAddProduct').addEventListener('click', closeModal);
+  document.getElementById('npImage').addEventListener('change', (e)=>{
+    const file = e.target.files[0];
+    const preview = document.getElementById('npImagePreview');
+    if(!file){ preview.classList.add('hidden'); preview.src=''; return; }
+    preview.src = URL.createObjectURL(file);
+    preview.classList.remove('hidden');
+  });
   document.getElementById('addProductForm').addEventListener('submit', async (e)=>{
     e.preventDefault();
     const name = document.getElementById('npName').value.trim();
     const generic = document.getElementById('npGeneric').value.trim();
     const uses = document.getElementById('npUses').value.trim();
     if(!name || !generic || !uses){ toast('الرجاء تعبئة كل الحقول المطلوبة','error'); return; }
+
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+
+    let image_url = null;
+    const file = document.getElementById('npImage').files[0];
+    if(file){
+      const path = `products/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]+/g,'-')}`;
+      const { error: upErr } = await sb.storage.from('product-images').upload(path, file);
+      if(upErr){ submitBtn.disabled = false; toast('تعذّر رفع الصورة: ' + upErr.message, 'error'); return; }
+      image_url = sb.storage.from('product-images').getPublicUrl(path).data.publicUrl;
+    }
+
     const row = {
       name, generic,
       name_en: document.getElementById('npNameEn').value.trim() || null,
@@ -1546,8 +1580,10 @@ function openAddProductModal(){
       manufacturer: document.getElementById('npMfr').value,
       uses, uses_en: document.getElementById('npUsesEn').value.trim() || null,
       status:'متوفر',
+      image_url,
     };
     const { data, error } = await sb.from('products').insert(row).select().single();
+    submitBtn.disabled = false;
     if(error){ toast('تعذّر الحفظ: ' + error.message, 'error'); return; }
     PRODUCTS.push(data);
     closeModal();
