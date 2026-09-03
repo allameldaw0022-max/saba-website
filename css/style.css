@@ -439,35 +439,15 @@ section { scroll-margin-top: var(--header-h); }
   gap: var(--space-6);
   align-items: start;
 }
-.market-mockup {
+.shot-frame {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
 }
-.market-body { padding: var(--space-3); }
-.market-search {
-  height: 38px;
-  border-radius: var(--radius-pill);
-  background: linear-gradient(90deg, var(--accent-soft), var(--accent-2-soft));
-  margin-bottom: var(--space-3);
-}
-.market-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
-.market-card {
-  aspect-ratio: 1;
-  border-radius: var(--radius-sm);
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  position: relative;
-  overflow: hidden;
-}
-.market-card::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: var(--gradient);
-  opacity: 0.18;
-}
+.shot-viewport { aspect-ratio: 16 / 11; overflow: hidden; background: var(--bg-elevated); }
+.shot-viewport img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
 .featured-text { color: var(--text-secondary); margin-bottom: var(--space-2); }
 .featured-focus-title { font-size: 1.1rem; font-weight: 700; margin: var(--space-3) 0 var(--space-2); }
 .featured-focus-list {
@@ -498,10 +478,13 @@ section { scroll-margin-top: var(--header-h); }
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  padding: var(--space-4);
+  overflow: hidden;
   transition: transform var(--transition), border-color var(--transition);
 }
 .work-card:hover { transform: translateY(-4px); border-color: var(--accent-2); }
+.work-card .shot-frame { border: none; border-radius: 0; box-shadow: none; }
+.work-card .shot-viewport { aspect-ratio: 21 / 9; }
+.work-card-body { padding: var(--space-4); }
 .work-card-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); margin-bottom: 0.6rem; flex-wrap: wrap; }
 .work-title { font-size: 1.1rem; font-weight: 700; }
 .work-badge {
