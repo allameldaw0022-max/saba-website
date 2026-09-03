@@ -493,6 +493,7 @@ section { scroll-margin-top: var(--header-h); }
 
 .other-works { margin-top: var(--space-6); }
 .other-works-title { font-size: 1.25rem; font-weight: 700; margin-bottom: var(--space-3); }
+.other-works .work-card + .work-card { margin-top: var(--space-3); }
 .work-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
