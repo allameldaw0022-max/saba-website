@@ -520,6 +520,15 @@ section { scroll-margin-top: var(--header-h); }
 .work-card:hover { transform: translateY(-4px); border-color: var(--accent-2); }
 .work-card .shot-frame { border: none; border-radius: 0; box-shadow: none; }
 .work-card .shot-viewport { aspect-ratio: 21 / 9; }
+.work-card--phone { padding-top: var(--space-4); }
+.work-card--phone .shot-frame {
+  max-width: 220px;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+.work-card--phone .shot-viewport { aspect-ratio: 9 / 17; }
 .work-card-body { padding: var(--space-4); }
 .work-card-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); margin-bottom: 0.6rem; flex-wrap: wrap; }
 .work-title { font-size: 1.1rem; font-weight: 700; }
